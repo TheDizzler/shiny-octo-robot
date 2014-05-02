@@ -1,0 +1,6 @@
+package vdindustries.qdapreport;
+
+
+public class ReportListFragment extends Fragment {
+	
+}

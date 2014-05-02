@@ -1,0 +1,15 @@
+package vdindustries.qdapreport;
+
+import android.support.v4.app.Fragment;
+
+
+public class ReportListFragment extends Fragment {
+	
+	
+	public ReportListFragment() {
+	
+		
+		
+	}
+	
+}

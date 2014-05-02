@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name = "Test Project">
+		
+	<floor floorID="Floor 2">
+		<floorplan floorsrc="client/images/levels/floor 2 v1.jpg" />
+		
+		<room no="201">
+		    
+		    <touchButton x="45" y="35" width="123" height="91"/>
+			<roomplan roomsrc="client/images/floor_2/201_d1.jpg" />
+			
+			<trade type="Framing">
+				<deficiency reportID="r0001">
+
+				    <completed>false</completed>
+				    <priority>true</priority>
+					<coordinates x="100" y="225"/>
+					<image galID = "c000001" galsrc="client/images/cameraphotos/pic001.jpg" />
+					<description>
+						<object>Drywall</object>
+						<item>Backing</item>
+						<verb>Missing</verb>
+						<direction>Below</direction>
+						<location>Window</location>
+					</description>
+					
+				</deficiency>
+				
+				<deficiency reportID="r0002">
+				    
+				    <completed>true</completed>
+				    <priority>false</priority>
+					<coordinates x="375" y="50" />
+					<image galID = "c000002" galsrc="client/images/cameraphotos/pic002.jpg" />
+					<image id = "c000003" galsrc="client/images/cameraphotos/pic003.jpg" />
+					<description>
+						<object> </object>
+						<item> </item>
+						<verb> </verb>
+						<direction> </direction>
+						<location> </location>
+					</description>
+				</deficiency>
+				
+				<deficiency reportID="r0003">
+
+					<completed>false</completed>
+					<priority>false</priority>
+					<coordinates x="300" y="300" />
+					<image galID = "c000002" galsrc="client/images/cameraphotos/pic002.jpg" />
+					<image id = "c000003" galsrc="client/images/cameraphotos/pic003.jpg" />
+					<description>
+						<object> </object>
+						<item> </item>
+						<verb> </verb>
+						<direction> </direction>
+						<location> </location>
+					</description>
+				</deficiency>
+				</trade>
+		</room>
+			
+				
+		<room no="202">
+		    
+			<roomplan roomsrc="client/images/floor_2/202_b2.jpg" />
+			
+			<trade type="Framing">
+				<deficiency reportID="r0004">
+					
+					<completed>false</completed>
+					<priority>false</priority>
+					<coordinates x="20" y="70" />
+					<image galID="c000004" galsrc="client/images/cameraphotos/pic004.jpg" />
+					<description>
+						<object> </object>
+						<item> </item>
+						<verb> </verb>
+						<direction> </direction>
+						<location> </location>
+					</description>
+				</deficiency>
+				
+				<deficiency reportID="r0005">
+					
+					<completed>false</completed>
+					<priority>false</priority>
+					<coordinates x="340" y="50" />
+					<description>
+						<object> </object>
+						<item> </item>
+						<verb> </verb>
+						<direction> </direction>
+						<location> </location>
+					</description>
+				</deficiency>
+			</trade>
+			
+		</room>
+		
+		<room no="203">
+		    <roomplan roomsrc="client/images/floor_2/203_b1.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="205">
+			<roomplan roomsrc="client/images/floor_2/205_a1.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="206">
+			<roomplan roomsrc="client/images/floor_2/206_a2.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="207">
+			<roomplan roomsrc="client/images/floor_2/207_a3.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="208">
+		    <roomplan roomsrc="client/images/floor_2/208_a4.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="209">
+			<roomplan roomsrc="client/images/floor_2/209_e1.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="210">
+			<roomplan roomsrc="client/images/floor_2/210_c2.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="211">
+			<roomplan roomsrc="client/images/floor_2/211_c1.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="212">
+			<roomplan roomsrc="client/images/floor_2/212_f.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+	</floor>
+		
+	<floor floorID = "Floor 3">
+		<floorplan floorsrc="client/images/levels/floor 3.jpg" />
+		
+		<room no="301">
+			<roomplan roomsrc="client/images/floor_3/301_d1.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+			
+		<room no="302">
+			<roomplan roomsrc="client/images/floor_3/302_b2.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+	
+		<room no="303">
+			<roomplan roomsrc="client/images/floor_3/303_b1.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="305">
+			<roomplan roomsrc="client/images/floor_3/305_a1.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="306">
+			<roomplan roomsrc="client/images/floor_3/306_a2.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="307">
+			<roomplan roomsrc="client/images/floor_3/307_a3.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="308">
+			<roomplan roomsrc="client/images/floor_3/308_a4.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="309">
+			<roomplan roomsrc="client/images/floor_3/309_e1.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="310">
+			<roomplan roomsrc="client/images/floor_3/310_c2.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="311">
+			<roomplan roomsrc="client/images/floor_3/311_c1.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="312">
+			<roomplan roomsrc="client/images/floor_3/312_f.jpg" />
+			<trade type="Framing">
+			</trade>
+		</room>
+		
+		<room no="Test">
+			<roomplan roomsrc="client/images/floor_3/testgrid.jpg" />
+			<trade type="Framing">
+			    
+				
+			    <deficiency reportID="rtest">
+					
+			        <completed>false</completed>
+			        <priority>true</priority>
+					<coordinates x="25" y="25"/>
+					<image galID = "c000001" galsrc="client/images/cameraphotos/pic001.jpg" />
+					<description>
+						<object>Drywall</object>
+						<item>Backing</item>
+						<verb>Missing</verb>
+						<direction>Below</direction>
+						<location>Window</location>
+					</description>
+					
+				</deficiency>
+					
+			    <deficiency reportID="rtest2">
+				
+			        <completed>false</completed>
+			        <priority>true</priority>
+					<coordinates x="50" y="50"/>
+					<image galID = "c000001" galsrc="client/images/cameraphotos/pic001.jpg" />
+					<description>
+						<object>Drywall</object>
+						<item>Backing</item>
+						<verb>Missing</verb>
+						<direction>Below</direction>
+						<location>Window</location>
+					</description>
+				</deficiency>
+				
+			    <deficiency reportID="rtest3">
+				
+			        <completed>true</completed>
+			        <priority>false</priority>
+					<coordinates x="100" y="100"/>
+					<image galID = "c000001" galsrc="client/images/cameraphotos/pic001.jpg" />
+					<description>
+						<object>Drywall</object>
+						<item>Backing</item>
+						<verb>Missing</verb>
+						<direction>Below</direction>
+						<location>Window</location>
+					</description>
+					
+				</deficiency>
+			</trade>
+		</room>
+	</floor>
+	
+	<floor floorID = "PH">
+	    <floorplan floorsrc="client/images/levels/ph.jpg" />
+	    
+	    <room no = "PH01">
+	        <roomplan roomsrc="client/images/penthouse/ph1_e3.jpg" />
+	        <trade type="Framing">
+			</trade>
+	    </room>
+	    
+	    <room no = "PH02">
+	        <roomplan roomsrc="client/images/penthouse/ph2_d2.jpg" />
+	        <trade type="Framing">
+			</trade>
+	    </room>
+	    
+	    <room no = "PH03">
+	        <roomplan roomsrc="client/images/penthouse/ph3_a5.jpg" />
+	        <trade type="Framing">
+			</trade>
+	    </room>
+	    
+	    <room no = "PH05">
+	        <roomplan roomsrc="client/images/penthouse/ph5_a6.jpg" />
+	        <trade type="Framing">
+			</trade>
+	    </room>
+	    
+	    <room no = "PH06">
+	        <roomplan roomsrc="client/images/penthouse/ph6_a7.jpg" />
+	        <trade type="Framing">
+			</trade>
+	    </room>
+	    
+	    <room no = "PH07">
+	        <roomplan roomsrc="client/images/penthouse/ph7_a8.jpg" />
+	        <trade type="Framing">
+			</trade>
+	    </room>
+	    
+	    <room no = "PH08">
+	        <roomplan roomsrc="client/images/penthouse/ph8_e1.jpg" />
+	        <trade type="Framing">
+			</trade>
+	    </room>
+	    
+	    <room no = "PH09">
+	        <roomplan roomsrc="client/images/penthouse/ph9_c2.jpg" />
+	        <trade type="Framing">
+			</trade>
+	    </room>
+	    
+	    <room no = "PH10">
+	        <roomplan roomsrc="client/images/penthouse/ph10_e2.jpg" />
+	        <trade type="Framing">
+			</trade>
+	    </room>
+	    
+	    <room no = "PH11">
+	        <roomplan roomsrc="client/images/penthouse/ph1_e3.jpg" />
+	        <trade type="Framing">
+			</trade>
+	    </room>
+	    
+	    
+	</floor>
+
+</project>

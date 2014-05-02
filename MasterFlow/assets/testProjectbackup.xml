@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name = "Test Project">
+		
+	<floor floorID="Floor 2">
+		<floorplan floorsrc="client/images/Levels/Floor 2 v1.jpg" />
+		
+		<room no="201">
+		    
+		    <touchButton x="45" y="35" width="123" height="91"/>
+			<roomplan roomsrc="client/images/Floor_2/201_D1.jpg" />
+			
+			<trade type="Framing">
+				<deficiency reportID="r0001">
+				
+					<coordinates x="100" y="225"/>
+					<image galID = "c000001" galsrc="client/images/cameraphotos/pic001.jpg" />
+					<description>
+						<object>Drywall </object>
+						<item>backing </item>
+						<verb>missing </verb>
+						<direction>below </direction>
+						<location>window </location>
+					</description>
+					
+				</deficiency>
+				
+				<deficiency reportID="r0002">
+
+					<coordinates x="375" y="50" />
+					<image galID = "c000002" galsrc="client/images/cameraphotos/pic002.jpg" />
+					<image id = "c000003" galsrc="client/images/cameraphotos/pic003.jpg" />
+					<description>
+						<object> </object>
+						<item> </item>
+						<verb> </verb>
+						<direction> </direction>
+						<location> </location>
+					</description>
+				</deficiency>
+				
+				<deficiency reportID="r0003">
+
+					<coordinates x="300" y="300" />
+					<image galID = "c000002" galsrc="client/images/cameraphotos/pic002.jpg" />
+					<image id = "c000003" galsrc="client/images/cameraphotos/pic003.jpg" />
+					<description>
+						<object> </object>
+						<item> </item>
+						<verb> </verb>
+						<direction> </direction>
+						<location> </location>
+					</description>
+				</deficiency>
+				</trade>
+		</room>
+			
+				
+		<room no="202">
+		    
+			<roomplan roomsrc="client/images/Floor_2/202_B2.jpg" />
+			
+			<trade type="Framing">
+				<deficiency reportID="r0004">
+					
+					<coordinates x="0" y="0" />
+					<image galID="c000004" galsrc="client/images/cameraphotos/pic004.jpg" />
+					<description>
+						<object> </object>
+						<item> </item>
+						<verb> </verb>
+						<direction> </direction>
+						<location> </location>
+					</description>
+				</deficiency>
+				
+				<deficiency reportID="r0005">
+					
+					<coordinates x="0" y="50" />
+					<description>
+						<object> </object>
+						<item> </item>
+						<verb> </verb>
+						<direction> </direction>
+						<location> </location>
+					</description>
+				</deficiency>
+			</trade>
+			
+		</room>
+		
+		<room no="203">
+		    <roomplan roomsrc="client/images/Floor_2/203_B1.jpg" />
+			
+		</room>
+		
+		<room no="205">
+			<roomplan roomsrc="client/images/Floor_2/205_A1.jpg" />
+		</room>
+		
+		<room no="206">
+			<roomplan roomsrc="client/images/Floor_2/206_A2.jpg" />
+		</room>
+		
+		<room no="207">
+			<roomplan roomsrc="client/images/Floor_2/207_A3.jpg" />
+		</room>
+		
+		<room no="208">
+		    <roomplan roomsrc="client/images/Floor_2/208_A4.jpg" />
+			
+		</room>
+		
+		<room no="209">
+			<roomplan roomsrc="client/images/Floor_2/209_E1.jpg" />
+			
+		</room>
+		
+		<room no="210">
+			<roomplan roomsrc="client/images/Floor_2/210_c2.jpg" />
+		</room>
+		
+		<room no="211">
+			<roomplan roomsrc="client/images/Floor_2/211_C1.jpg" />
+		</room>
+		
+		<room no="212">
+			<roomplan roomsrc="client/images/Floor_2/212_F.jpg" />
+		</room>
+	</floor>
+		
+	<floor floorID = "Floor 3">
+		<floorplan floorsrc="client/images/Levels/Floor 3.jpg" />
+		
+		<room no="301">
+			<roomplan roomsrc="client/images/Floor_3/301_D1.jpg" />
+		</room>
+			
+		<room no="302">
+			<roomplan roomsrc="client/images/Floor_3/302_B2.jpg" />
+		</room>
+	
+		<room no="303">
+			<roomplan roomsrc="client/images/Floor_3/303_B1.jpg" />
+		</room>
+		
+		<room no="305">
+			<roomplan roomsrc="client/images/Floor_3/305_A1.jpg" />
+		</room>
+		
+		<room no="306">
+			<roomplan roomsrc="client/images/Floor_3/306_A2.jpg" />
+		</room>
+		
+		<room no="307">
+			<roomplan roomsrc="client/images/Floor_3/307_A3.jpg" />
+		</room>
+		
+		<room no="308">
+			<roomplan roomsrc="client/images/Floor_3/308_A4.jpg" />
+		</room>
+		
+		<room no="309">
+			<roomplan roomsrc="client/images/Floor_3/309_E1.jpg" />
+		</room>
+		
+		<room no="310">
+			<roomplan roomsrc="client/images/Floor_3/310_C2.jpg" />
+		</room>
+		
+		<room no="311">
+			<roomplan roomsrc="client/images/Floor_3/311_C1.jpg" />
+		</room>
+		
+		<room no="312">
+			<roomplan roomsrc="client/images/Floor_3/312_F.jpg" />
+		</room>
+	</floor>
+	
+	<floor floorID = "PH">
+	    <floorplan floorsrc="client/images/Levels/PH.jpg" />
+	    
+	    <room no = "PH1">
+	        <roomplan roomsrc="client/images/Penthouse/PH1_E3.jpg" />
+	    </room>
+	    
+	    <room no = "PH2">
+	        <roomplan roomsrc="client/images/Penthouse/PH2_D2.jpg" />
+	    </room>
+	    
+	    <room no = "PH3">
+	        <roomplan roomsrc="client/images/Penthouse/PH3_A5.jpg" />
+	    </room>
+	    
+	    <room no = "PH5">
+	        <roomplan roomsrc="client/images/Penthouse/PH5_A6.jpg" />
+	    </room>
+	    
+	    <room no = "PH6">
+	        <roomplan roomsrc="client/images/Penthouse/PH6_A7.jpg" />
+	    </room>
+	    
+	    <room no = "PH7">
+	        <roomplan roomsrc="client/images/Penthouse/PH7_A8.jpg" />
+	    </room>
+	    
+	    <room no = "PH8">
+	        <roomplan roomsrc="client/images/Penthouse/PH8_E1.jpg" />
+	    </room>
+	    
+	    <room no = "PH9">
+	        <roomplan roomsrc="client/images/Penthouse/PH9_C2.jpg" />
+	    </room>
+	    
+	    <room no = "PH10">
+	        <roomplan roomsrc="client/images/Penthouse/PH10_E2.jpg" />
+	    </room>
+	    
+	    <room no = "PH11">
+	        <roomplan roomsrc="client/images/Penthouse/PH1_E3.jpg" />
+	    </room>
+	    
+	    
+	</floor>
+
+</project>

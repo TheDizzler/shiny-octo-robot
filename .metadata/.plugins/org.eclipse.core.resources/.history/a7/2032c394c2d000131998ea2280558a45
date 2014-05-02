@@ -1,0 +1,23 @@
+package vdindustries.masterflow.content;
+
+
+public class Deficiency {
+	
+	String trade; // unnecessary?
+	
+	String reportID; // Maybe have first three characters of ID from project name?
+	boolean completed;
+	boolean priority;
+	int X, Y;
+	String object, item, verb, direction, location;
+	
+	public Deficiency(String reportID, int X, int Y,
+	                  String object, String item,
+	                  String verb, String direction,
+	                  String location) {
+		
+		
+		
+	}
+	
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;MasterFlow/assets/testProject.xml&apos; to &apos;testproject.xml&apos;" description="Rename resource &apos;testProject.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="assets/testProject.xml" name="testproject.xml" stamp="1398971049674" updateReferences="true"/>
+</session>
