@@ -57,9 +57,10 @@ public class TradeListActivity extends ActionBarActivity implements TradeListFra
 			// adding or replacing the detail fragment using a
 			// fragment transaction.
 			Bundle arguments = new Bundle();
-//			arguments.putString(TradeDetailFragment.ARG_ITEM_ID, id);
-//			TradeDetailFragment fragment = new TradeDetailFragment();
-			DeficiencyFragment fragment = new DeficiencyFragment();
+			arguments.putString(TradeDetailFragment.ARG_ITEM_ID, id);
+			TradeDetailFragment fragment = new TradeDetailFragment();
+//			arguments.putString(DeficiencyFragment.ARG_ITEM_ID, id);
+//			DeficiencyFragment fragment = new DeficiencyFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
 										.replace(R.id.trade_detail_container, fragment)

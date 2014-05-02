@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="app_name">QdapReportView</string>
-    <string name="title_trade_detail">Trade Detail</string>
-    <string name="testimg">a test image</string>
-
-</resources>
