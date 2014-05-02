@@ -1,8 +1,6 @@
 package vdindustries.masterflow;
 
-import vdindustries.masterflow.content.DeficiencyParser;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
@@ -59,8 +57,9 @@ public class TradeListActivity extends ActionBarActivity implements TradeListFra
 			// adding or replacing the detail fragment using a
 			// fragment transaction.
 			Bundle arguments = new Bundle();
-			arguments.putString(TradeDetailFragment.ARG_ITEM_ID, id);
-			TradeDetailFragment fragment = new TradeDetailFragment();
+//			arguments.putString(TradeDetailFragment.ARG_ITEM_ID, id);
+//			TradeDetailFragment fragment = new TradeDetailFragment();
+			DeficiencyFragment fragment = new DeficiencyFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
 										.replace(R.id.trade_detail_container, fragment)

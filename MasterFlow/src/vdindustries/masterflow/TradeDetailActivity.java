@@ -36,9 +36,12 @@ public class TradeDetailActivity extends ActionBarActivity {
 			// Create the detail fragment and add it to the activity
 			// using a fragment transaction.
 			Bundle arguments = new Bundle();
-			arguments.putString(TradeDetailFragment.ARG_ITEM_ID,
-				getIntent().getStringExtra(TradeDetailFragment.ARG_ITEM_ID));
-			TradeDetailFragment fragment = new TradeDetailFragment();
+//			arguments.putString(TradeDetailFragment.ARG_ITEM_ID,
+//				getIntent().getStringExtra(TradeDetailFragment.ARG_ITEM_ID));
+//			TradeDetailFragment fragment = new TradeDetailFragment();
+//			arguments.putString(DeficiencyFragment.ARG_ITEM_ID,
+//				getIntent().getStringExtra(DeficiencyFragment.ARG_ITEM_ID));
+			DeficiencyFragment fragment = new DeficiencyFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
 				.add(R.id.trade_detail_container, fragment)

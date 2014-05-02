@@ -1095,6 +1095,7 @@ containing a value of this type.
 
     For more on layout aliases, see:
     http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
+
     
 
     Layout alias to replace the single-pane version of the layout with a
@@ -1102,12 +1103,24 @@ containing a value of this type.
 
     For more on layout aliases, see:
     http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
+
     
          */
         public static final int activity_trade_list=0x7f030018;
         public static final int activity_trade_twopane=0x7f030019;
-        public static final int fragment_trade_detail=0x7f03001a;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001b;
+        /** 
+    Layout alias to replace the single-pane version of the layout with a
+    two-pane version on Large screens.
+
+    For more on layout aliases, see:
+    http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
+    
+         */
+        public static final int fragment_deficiency=0x7f03001e;
+        public static final int fragment_deficiency_grid=0x7f03001a;
+        public static final int fragment_deficiency_list=0x7f03001b;
+        public static final int fragment_trade_detail=0x7f03001c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
