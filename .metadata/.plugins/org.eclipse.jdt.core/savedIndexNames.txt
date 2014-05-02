@@ -1,8 +1,6 @@
 INDEX VERSION 1.126+C:\Qdap-Android\.metadata\.plugins\org.eclipse.jdt.core
-186257063.index
 1340929665.index
 1284074322.index
 2206777053.index
 3871394155.index
-3423756494.index
 431022192.index
