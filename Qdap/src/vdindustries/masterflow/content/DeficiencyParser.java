@@ -41,7 +41,13 @@ public class DeficiencyParser {
 			listFloorNodes = root.getElementsByTagName("floor");
 			listTrades = root.getElementsByTagName("trade");
 			
-		} catch (SAXException | IOException | ParserConfigurationException e) {
+		} catch (SAXException  e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

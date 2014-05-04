@@ -1,74 +1,88 @@
 package qdap;
 
-import vdindustries.masterflow.R;
-import vdindustries.masterflow.R.id;
-import vdindustries.masterflow.R.layout;
-import vdindustries.masterflow.R.menu;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.content.Intent;
+import java.util.ArrayList;
+
+import android.app.ExpandableListActivity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.ExpandableListView;
 
-public class Floors extends ActionBarActivity {
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_floors);
-
-		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.floors, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_floors,
-					container, false);
-			return rootView;
-		}
-	}
+public class Floors extends ExpandableListActivity{
 	
-	public void checklist(View view) {
-	    Intent intent = new Intent(this, Checklist.class);
-	    startActivity(intent);
-	}
+	  // Create ArrayList to hold parent Items and Child Items
+    private ArrayList<String> parentItems = new ArrayList<String>();
+    private ArrayList<Object> childItems = new ArrayList<Object>();
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) 
+    {
+
+        super.onCreate(savedInstanceState);
+
+        
+        // Create Expandable List and set it's properties
+        ExpandableListView expandableList = getExpandableListView(); 
+        expandableList.setDividerHeight(2);
+        expandableList.setGroupIndicator(null);
+        expandableList.setClickable(true);
+
+        // Set the Items of Parent
+        setGroupParents();
+        // Set The Child Data
+        setChildData();
+
+        // Create the Adapter
+        MyExpandableAdapter adapter = new MyExpandableAdapter(parentItems, childItems);
+
+        adapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
+        
+        // Set the Adapter to expandableList
+        expandableList.setAdapter(adapter);
+        expandableList.setOnChildClickListener(this);
+    }
+
+    // method to add parent Items
+    public void setGroupParents() 
+    {
+        parentItems.add("2nd Floor");
+        parentItems.add("3rd Floor");
+        parentItems.add("4th Floor");
+        
+    }
+
+    // method to set child data of each parent
+    public void setChildData() 
+    {
+
+
+        ArrayList<String> child = new ArrayList<String>();
+        child.add("200");
+        child.add("201");
+        child.add("202");
+        child.add("203");
+  
+        
+        childItems.add(child);
+
+
+        child = new ArrayList<String>();
+        child.add("300");
+        child.add("301");
+        child.add("302");
+        child.add("303");
+        
+        childItems.add(child);
+
+ 
+        child = new ArrayList<String>();
+        child.add("400");
+        child.add("401");
+        child.add("402");
+        child.add("403");
+        
+        childItems.add(child);
+
+        
+    }
 }
