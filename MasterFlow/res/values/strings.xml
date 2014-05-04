@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MasterFlow</string>
+    <string name="app_name">Qdap - Quality Dev App</string>
     <string name="title_trade_detail">Trade Detail</string>
     <string name="title_activity_login">Login</string>
     <string name="title">Title</string>

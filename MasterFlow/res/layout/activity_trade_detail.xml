@@ -3,6 +3,6 @@
     android:id="@+id/trade_detail_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="vdindustries.masterflow.TradeDetailActivity"
+    tools:context="vdindustries.reportsview.TradeDetailActivity"
     tools:ignore="MergeRootFrame" />
 

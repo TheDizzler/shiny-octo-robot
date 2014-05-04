@@ -1,0 +1,23 @@
+package vdindustries.masterflow;
+
+import java.util.List;
+
+import android.content.Context;
+import android.widget.ArrayAdapter;
+
+
+public class TestListAdapter extends ArrayAdapter {
+	
+	
+	private Context context;
+    private boolean useList = true;
+    
+    
+	public TestListAdapter(Context context, List objects) {
+	
+		super(context,  objects);
+	}
+	
+
+	
+}

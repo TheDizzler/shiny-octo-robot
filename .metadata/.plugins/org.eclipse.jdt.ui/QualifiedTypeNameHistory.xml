@@ -21,4 +21,6 @@
 <fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="vdindustries.masterflow.content.Deficiency"/>
 <fullyQualifiedTypeName name="android.support.v4.app.ListFragment"/>
+<fullyQualifiedTypeName name="vdindustries.masterflow.TestListAdapter"/>
+<fullyQualifiedTypeName name="vdindustries.masterflow.TradeListActivity"/>
 </qualifiedTypeNameHistroy>

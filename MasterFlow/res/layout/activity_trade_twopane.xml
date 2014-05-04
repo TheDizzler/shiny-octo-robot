@@ -8,7 +8,7 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context="vdindustries.masterflow.TradeListActivity" >
+    tools:context="vdindustries.reportsview.TradeListActivity" >
 
     <!--
     This layout is a two-pane layout for the Trades
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/trade_list"
-        android:name="vdindustries.masterflow.TradeListFragment"
+        android:name="vdindustries.reportsview.TradeListFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

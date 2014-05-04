@@ -1,0 +1,13 @@
+package vdindustries.masterflow;
+
+
+public class TestListItem {
+	
+	public String	itemTitle;
+	
+	public TestListItem(String title) {
+	
+		this.itemTitle = title;
+	}
+	
+}
