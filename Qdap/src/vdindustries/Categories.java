@@ -1,4 +1,4 @@
-package qdap;
+package vdindustries;
 
 import vdindustries.masterflow.R;
 import vdindustries.reportsview.TradeListActivity;

@@ -20,7 +20,7 @@
 
        
         <activity
-            android:name="qdap.Login"
+            android:name="vdindustries.Login"
             android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,15 +41,15 @@
                 android:value="vdindustries.masterflow.TradeListActivity" />
         </activity>
         <activity
-            android:name="qdap.Categories"
+            android:name="vdindustries.Categories"
             android:label="@string/title_activity_categories" >
         </activity>
         <activity
-            android:name="qdap.Floors"
+            android:name="vdindustries.Floors"
             android:label="@string/title_activity_floors" >
         </activity>
         <activity
-            android:name="qdap.Checklist"
+            android:name="vdindustries.Checklist"
             android:label="@string/title_activity_checklist" >
         </activity>
     </application>

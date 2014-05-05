@@ -1,4 +1,4 @@
-package qdap;
+package vdindustries;
 
 import vdindustries.masterflow.R;
 import vdindustries.masterflow.R.id;
@@ -16,12 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
-public class Floors extends ActionBarActivity {
+public class Login extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_floors);
+		setContentView(R.layout.activity_login);
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
@@ -33,7 +33,7 @@ public class Floors extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.floors, menu);
+		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
 
@@ -60,14 +60,15 @@ public class Floors extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_floors,
+			View rootView = inflater.inflate(R.layout.fragment_login,
 					container, false);
 			return rootView;
 		}
 	}
 	
-	public void checklist(View view) {
-	    Intent intent = new Intent(this, Checklist.class);
+	//Login to Categories
+	public void login(View view) {
+	    Intent intent = new Intent(this, Categories.class);
 	    startActivity(intent);
 	}
 

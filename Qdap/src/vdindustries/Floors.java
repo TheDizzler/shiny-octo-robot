@@ -1,4 +1,4 @@
-package qdap;
+package vdindustries;
 
 import vdindustries.masterflow.R;
 import vdindustries.masterflow.R.id;
@@ -7,6 +7,7 @@ import vdindustries.masterflow.R.menu;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,12 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
-public class Checklist extends ActionBarActivity {
+public class Floors extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_checklist);
+		setContentView(R.layout.activity_floors);
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
@@ -32,7 +33,7 @@ public class Checklist extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.checklist, menu);
+		getMenuInflater().inflate(R.menu.floors, menu);
 		return true;
 	}
 
@@ -59,10 +60,15 @@ public class Checklist extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_checklist,
+			View rootView = inflater.inflate(R.layout.fragment_floors,
 					container, false);
 			return rootView;
 		}
+	}
+	
+	public void checklist(View view) {
+	    Intent intent = new Intent(this, Checklist.class);
+	    startActivity(intent);
 	}
 
 }

@@ -1,4 +1,4 @@
-package qdap;
+package vdindustries;
 
 import vdindustries.masterflow.R;
 import vdindustries.masterflow.R.id;
@@ -7,7 +7,6 @@ import vdindustries.masterflow.R.menu;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,12 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
-public class Login extends ActionBarActivity {
+public class Checklist extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+		setContentView(R.layout.activity_checklist);
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
@@ -33,7 +32,7 @@ public class Login extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.login, menu);
+		getMenuInflater().inflate(R.menu.checklist, menu);
 		return true;
 	}
 
@@ -60,16 +59,10 @@ public class Login extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_login,
+			View rootView = inflater.inflate(R.layout.fragment_checklist,
 					container, false);
 			return rootView;
 		}
-	}
-	
-	//Login to Categories
-	public void login(View view) {
-	    Intent intent = new Intent(this, Categories.class);
-	    startActivity(intent);
 	}
 
 }

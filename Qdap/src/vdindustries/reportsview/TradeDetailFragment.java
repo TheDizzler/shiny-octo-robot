@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import vdindustries.content.DeficiencyParser;
+import vdindustries.content.TradeContent;
+import vdindustries.content.TradeContent.TradeItem;
 import vdindustries.masterflow.R;
-import vdindustries.masterflow.content.DeficiencyParser;
-import vdindustries.masterflow.content.TradeContent;
-import vdindustries.masterflow.content.TradeContent.TradeItem;
 
 /** A fragment representing a single Trade detail screen.
  * This fragment is either contained in a {@link TradeListActivity} in two-pane

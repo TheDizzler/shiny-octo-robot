@@ -7,8 +7,8 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import vdindustries.masterflow.content.DeficiencyParser;
-import vdindustries.masterflow.content.TradeContent;
+import vdindustries.content.DeficiencyParser;
+import vdindustries.content.TradeContent;
 
 /** A list fragment representing a list of Trades. This fragment
  * also supports tablet devices by allowing list items to be given an
