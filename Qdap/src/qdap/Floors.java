@@ -1,88 +1,144 @@
 package qdap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-import android.app.ExpandableListActivity;
-import android.content.Context;
+import vdindustries.masterflow.R;
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.ExpandableListView.OnGroupCollapseListener;
+import android.widget.ExpandableListView.OnGroupExpandListener;
+import android.widget.ImageView;
+import android.widget.Toast;
 
-public class Floors extends ExpandableListActivity{
+public class Floors extends Activity {
+
+	ExpandableListAdapter listAdapter;
+	ExpandableListView expListView;
+	List<String> listDataHeader;
+	HashMap<String, List<String>> listDataChild;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.fragment_floors);
+
+		// get the listview
+		expListView = (ExpandableListView) findViewById(R.id.list);
+
+		// preparing list data
+		prepareListData();
+
+		listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+
+		// setting list adapter
+		expListView.setAdapter(listAdapter);
+
+		// Listview Group click listener
+		expListView.setOnGroupClickListener(new OnGroupClickListener() {
+
+			@Override
+			public boolean onGroupClick(ExpandableListView parent, View v,
+					int groupPosition, long id) {
+				// Toast.makeText(getApplicationContext(),
+				// "Group Clicked " + listDataHeader.get(groupPosition),
+				// Toast.LENGTH_SHORT).show();
+				if (listDataHeader.get(groupPosition) == "Top 250") {
+					ImageView img= (ImageView) findViewById(R.id.imageView1);
+					img.setImageResource(R.drawable.abc_ab_solid_dark_holo);
+				}
 	
-	  // Create ArrayList to hold parent Items and Child Items
-    private ArrayList<String> parentItems = new ArrayList<String>();
-    private ArrayList<Object> childItems = new ArrayList<Object>();
+				return false;
+			}
+		});
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) 
-    {
+		// Listview Group expanded listener
+		expListView.setOnGroupExpandListener(new OnGroupExpandListener() {
 
-        super.onCreate(savedInstanceState);
+			@Override
+			public void onGroupExpand(int groupPosition) {
+				Toast.makeText(getApplicationContext(),
+						listDataHeader.get(groupPosition) + " Expanded",
+						Toast.LENGTH_SHORT).show();
+			}
+		});
 
-        
-        // Create Expandable List and set it's properties
-        ExpandableListView expandableList = getExpandableListView(); 
-        expandableList.setDividerHeight(2);
-        expandableList.setGroupIndicator(null);
-        expandableList.setClickable(true);
+		// Listview Group collasped listener
+		expListView.setOnGroupCollapseListener(new OnGroupCollapseListener() {
 
-        // Set the Items of Parent
-        setGroupParents();
-        // Set The Child Data
-        setChildData();
+			@Override
+			public void onGroupCollapse(int groupPosition) {
+				Toast.makeText(getApplicationContext(),
+						listDataHeader.get(groupPosition) + " Collapsed",
+						Toast.LENGTH_SHORT).show();
 
-        // Create the Adapter
-        MyExpandableAdapter adapter = new MyExpandableAdapter(parentItems, childItems);
+			}
+		});
 
-        adapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
-        
-        // Set the Adapter to expandableList
-        expandableList.setAdapter(adapter);
-        expandableList.setOnChildClickListener(this);
-    }
+		// Listview on child click listener
+		expListView.setOnChildClickListener(new OnChildClickListener() {
 
-    // method to add parent Items
-    public void setGroupParents() 
-    {
-        parentItems.add("2nd Floor");
-        parentItems.add("3rd Floor");
-        parentItems.add("4th Floor");
-        
-    }
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v,
+					int groupPosition, int childPosition, long id) {
+				// TODO Auto-generated method stub
+				Toast.makeText(
+						getApplicationContext(),
+						listDataHeader.get(groupPosition)
+								+ " : "
+								+ listDataChild.get(
+										listDataHeader.get(groupPosition)).get(
+										childPosition), Toast.LENGTH_SHORT)
+						.show();
+				return false;
+			}
+		});
+	}
 
-    // method to set child data of each parent
-    public void setChildData() 
-    {
+	/*
+	 * Preparing the list data
+	 */
+	private void prepareListData() {
+		listDataHeader = new ArrayList<String>();
+		listDataChild = new HashMap<String, List<String>>();
 
+		// Adding child data
+		listDataHeader.add("Top 250");
+		listDataHeader.add("Now Showing");
+		listDataHeader.add("Coming Soon..");
 
-        ArrayList<String> child = new ArrayList<String>();
-        child.add("200");
-        child.add("201");
-        child.add("202");
-        child.add("203");
-  
-        
-        childItems.add(child);
+		// Adding child data
+		List<String> top250 = new ArrayList<String>();
+		top250.add("The Shawshank Redemption");
+		top250.add("The Godfather");
+		top250.add("The Godfather: Part II");
+		top250.add("Pulp Fiction");
+		top250.add("The Good, the Bad and the Ugly");
+		top250.add("The Dark Knight");
+		top250.add("12 Angry Men");
 
+		List<String> nowShowing = new ArrayList<String>();
+		nowShowing.add("The Conjuring");
+		nowShowing.add("Despicable Me 2");
+		nowShowing.add("Turbo");
+		nowShowing.add("Grown Ups 2");
+		nowShowing.add("Red 2");
+		nowShowing.add("The Wolverine");
 
-        child = new ArrayList<String>();
-        child.add("300");
-        child.add("301");
-        child.add("302");
-        child.add("303");
-        
-        childItems.add(child);
+		List<String> comingSoon = new ArrayList<String>();
+		comingSoon.add("2 Guns");
+		comingSoon.add("The Smurfs 2");
+		comingSoon.add("The Spectacular Now");
+		comingSoon.add("The Canyons");
+		comingSoon.add("Europa Report");
 
- 
-        child = new ArrayList<String>();
-        child.add("400");
-        child.add("401");
-        child.add("402");
-        child.add("403");
-        
-        childItems.add(child);
-
-        
-    }
+		listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
+		listDataChild.put(listDataHeader.get(1), nowShowing);
+		listDataChild.put(listDataHeader.get(2), comingSoon);
+	}
 }

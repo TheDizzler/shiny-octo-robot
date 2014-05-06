@@ -18,5 +18,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_floors">Floors</string>
     <string name="title_activity_checklist">Checklist</string>
+    <string name="title_activity_expandable_list_fragment">ExpandableListFragment</string>
+    <string name="title_activity_floor_fragment">FloorFragment</string>
 
 </resources>

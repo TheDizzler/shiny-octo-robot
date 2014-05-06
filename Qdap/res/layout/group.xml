@@ -1,15 +1,18 @@
-<CheckedTextView 
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/textViewGroupName"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_marginLeft="5dp"
-        android:gravity="center_vertical"
-        android:text="@string/hello_world"
-        android:textSize="18dp"
-        android:textColor="#FFFFFF"
-        android:padding="10dp"
-        android:textSelectHandleLeft="@string/hello_world"
-        android:background="#009999"
-        android:textStyle="bold" /> 
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="#000000">
+ 
+ 
+    <TextView
+        android:id="@+id/lblListHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+        android:textSize="17dp"
+        android:textColor="#f9f93d" />
+ 
+</LinearLayout>
