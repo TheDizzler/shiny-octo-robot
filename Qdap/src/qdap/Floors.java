@@ -6,6 +6,7 @@ import java.util.List;
 
 import vdindustries.masterflow.R;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -95,6 +96,13 @@ public class Floors extends Activity {
 										listDataHeader.get(groupPosition)).get(
 										childPosition), Toast.LENGTH_SHORT)
 						.show();
+				
+				if (listDataChild.get(
+						listDataHeader.get(groupPosition)).get(
+						childPosition).equals("The Godfather")) {
+					Intent intent = new Intent(Floors.this, Checklist.class);
+					Floors.this.startActivity(intent);
+				}
 				return false;
 			}
 		});
