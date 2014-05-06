@@ -197,7 +197,7 @@ public class DeficiencyParser {
 		
 	}
 	
-	/** Load an image from a URI. */
+	/** load an image from a URI. */
 	private Bitmap loadImageFromUri() {
 		
 		

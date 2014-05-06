@@ -29,7 +29,7 @@ public class DeficiencyParser {
 	public static NodeList		listRoomNodes;
 	
 	public static NodeList		listTrades;
-	private static AssetManager		assMan;
+	private AssetManager		assMan;
 	
 	
 	
@@ -173,15 +173,16 @@ public class DeficiencyParser {
 	}
 	
 	
-	public static void loadFloorPlan(ImageView image, String floorID) {
+	public ImageView loadFloorPlan(String floorID) {
 		
 		String file = DeficiencyParser.getFloorImageFile(floorID);
 		try {
-			image.setImageDrawable(loadImageFromAsset(file)); //CHANGE THIS LINE
+			image.setImageDrawable(loadImageFromAsset(file));
 //			image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+		
 	}
 	
 	/** TODO */
@@ -197,7 +198,7 @@ public class DeficiencyParser {
 		
 	}
 	
-	/** Load an image from a URI. */
+	/** load an image from a URI. */
 	private Bitmap loadImageFromUri() {
 		
 		
@@ -206,7 +207,7 @@ public class DeficiencyParser {
 	
 	
 	/** Loads an image from the assets directory. */
-	protected static Drawable loadImageFromAsset(String file) throws IOException {
+	protected Drawable loadImageFromAsset(String file) throws IOException {
 		
 		InputStream is = assMan.open(file);
 		return Drawable.createFromStream(is, null);

@@ -67,7 +67,7 @@ public class PlanViewActivity extends ActionBarActivity {
 			
 			public void onClick(View v) {
 			
-				DeficiencyParser.loadFloorPlan(image, btntext);
+				image = DeficiencyParser.loadFloorPlan(btntext);
 			}
 		});
 		

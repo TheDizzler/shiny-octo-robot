@@ -67,9 +67,54 @@ public class PlanViewActivity extends ActionBarActivity {
 			
 			public void onClick(View v) {
 			
-				DeficiencyParser.loadFloorPlan(image, btntext);
+				loadFloorPlan(btntext);
 			}
 		});
 		
+	}
+	
+	
+	protected void loadFloorPlan(String floorID) {
+	
+		String file = DeficiencyParser.getFloorImageFile(floorID);
+		try {
+			image.setImageDrawable(loadImageFromAsset(file));
+//			image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		
+	}
+	
+	/** TODO */
+	private Bitmap loadImageFromDirectory() {
+	
+		
+//				try {
+//				Bitmap bmap = BitmapFactory.decodeFile();
+//				} catch (IOException ex) {
+//					throw ex;
+//				}
+		return null;
+		
+	}
+	
+	
+	private Bitmap loadImageFromUri() {
+		
+		
+		return null;
+	}
+	
+	
+	/** Loads an image from the assets directory. */
+	protected Drawable loadImageFromAsset(String file) throws IOException {
+	
+		Drawable d;
+		
+		InputStream is = getAssets().open(file);
+		d = Drawable.createFromStream(is, null);
+		
+		return d;
 	}
 }

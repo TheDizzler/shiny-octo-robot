@@ -15,9 +15,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
 
 
 
@@ -29,7 +26,7 @@ public class DeficiencyParser {
 	public static NodeList		listRoomNodes;
 	
 	public static NodeList		listTrades;
-	private static AssetManager		assMan;
+	private AssetManager		assMan;
 	
 	
 	
@@ -170,45 +167,5 @@ public class DeficiencyParser {
 		def.trade = ((Element) defElem.getParentNode()).getAttribute(Deficiency.TRADE);
 		def.roomNo = ((Element) defElem.getParentNode().getParentNode()).getAttribute(Deficiency.ROOMNO);
 		return def;
-	}
-	
-	
-	public static void loadFloorPlan(ImageView image, String floorID) {
-		
-		String file = DeficiencyParser.getFloorImageFile(floorID);
-		try {
-			image.setImageDrawable(loadImageFromAsset(file)); //CHANGE THIS LINE
-//			image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-	}
-	
-	/** TODO */
-	private Bitmap loadImageFromDirectory() {
-	
-		
-//				try {
-//				Bitmap bmap = BitmapFactory.decodeFile();
-//				} catch (IOException ex) {
-//					throw ex;
-//				}
-		return null;
-		
-	}
-	
-	/** Load an image from a URI. */
-	private Bitmap loadImageFromUri() {
-		
-		
-		return null;
-	}
-	
-	
-	/** Loads an image from the assets directory. */
-	protected static Drawable loadImageFromAsset(String file) throws IOException {
-		
-		InputStream is = assMan.open(file);
-		return Drawable.createFromStream(is, null);
 	}
 }

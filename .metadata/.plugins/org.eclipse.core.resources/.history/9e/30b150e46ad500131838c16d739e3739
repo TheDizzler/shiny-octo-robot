@@ -68,7 +68,7 @@ class DownloadFromServer extends AsyncTask<String, Integer, String> {
 	private TextView	status;
 
 	
-	public DownloadFromServer(ArrayList<NameValuePair> nvp, InputStream is, TextView status) {
+	public ConnectToServer(ArrayList<NameValuePair> nvp, InputStream is, TextView status) {
 	
 		this.nvp = nvp;
 		this.is = is;

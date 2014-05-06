@@ -173,7 +173,7 @@ public class DeficiencyParser {
 	}
 	
 	
-	public static void loadFloorPlan(ImageView image, String floorID) {
+	public static ImageView loadFloorPlan(ImageView image, String floorID) {
 		
 		String file = DeficiencyParser.getFloorImageFile(floorID);
 		try {
@@ -182,6 +182,8 @@ public class DeficiencyParser {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+		
+		return image;
 	}
 	
 	/** TODO */
@@ -197,7 +199,7 @@ public class DeficiencyParser {
 		
 	}
 	
-	/** Load an image from a URI. */
+	/** load an image from a URI. */
 	private Bitmap loadImageFromUri() {
 		
 		
