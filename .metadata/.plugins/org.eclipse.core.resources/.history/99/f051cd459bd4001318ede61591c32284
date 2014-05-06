@@ -1,0 +1,8 @@
+package vdindustries.planview;
+
+import android.support.v7.app.ActionBarActivity;
+
+
+public class PlanViewActivity extends ActionBarActivity {
+	
+}

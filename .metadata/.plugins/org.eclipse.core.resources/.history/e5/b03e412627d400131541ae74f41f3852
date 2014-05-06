@@ -1,0 +1,33 @@
+package vdindustries.reportsview;
+
+import java.util.ArrayList;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+
+
+public class PlanPagerAdapter extends FragmentStatePagerAdapter {
+
+	public ArrayList<Integer> itemData;
+	
+	public PlanPagerAdapter(FragmentManager fm,
+	                        ArrayList<Integer> itemData) {
+	
+		super(fm);
+		this.itemData = itemData;
+	}
+
+	@Override public Fragment getItem(int position) {
+	
+		PlanViewFragment f = PlanViewFragment.newInstance();
+		f.setImageList(itemData.get(position));
+		return f;
+	}
+
+	@Override public int getCount() {
+	
+		return itemData.size();
+	}
+	
+}

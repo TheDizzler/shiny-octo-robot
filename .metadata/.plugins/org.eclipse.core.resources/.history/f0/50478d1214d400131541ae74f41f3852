@@ -1,0 +1,19 @@
+package vdindustries.reportsview;
+
+import android.support.v4.app.Fragment;
+
+
+public class PlanViewFragment extends Fragment {
+	
+	private Integer itemData;
+	private Bitmap plan;
+	public ProgressDialog progressDialog;
+	private ImageView imageView;
+	
+	
+	public static PlanViewFragment newInstancer() {
+		
+		PlanViewFragment f = new PlanViewFragment();
+		return f;
+	}
+}

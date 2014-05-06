@@ -1,0 +1,160 @@
+package vdindustries.reportsview;
+
+import java.util.ArrayList;
+
+import vdindustries.content.TradeContent;
+import vdindustries.masterflow.R;
+import android.os.Bundle;
+import android.provider.MediaStore.Images;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+/** A fragment representing a single Trade detail screen.
+ * This fragment is either contained in a {@link TradeListActivity} in two-pane
+ * mode (on tablets) or a {@link TradeDetailActivity} on handsets. */
+public class TradeDetailFragment extends Fragment implements
+	OnClickListener, OnPageChangeListener {
+	
+	/** The fragment argument representing the item ID that this fragment
+	 * represents. */
+	public static final String		ARG_ITEM_ID	= "item_id";
+	private TradeContent.TradeItem	tradeItem;
+	
+	private Button					btnImagePrevious, btnImageNext;
+	private int						position	= 0, totalImage;
+	private ViewPager				viewPage;
+	private ArrayList<Integer>		itemData;
+	private FragmentPagerAdapter	adapter;
+	private Images					imageId;
+	
+	/** Mandatory empty constructor for the fragment manager to instantiate the
+	 * fragment (e.g. upon screen orientation changes). */
+	public TradeDetailFragment() {
+	
+	}
+	
+	
+	@Override public void onCreate(
+		Bundle savedInstanceState) {
+	
+		super.onCreate(savedInstanceState);
+		
+//		if (getArguments().containsKey(ARG_ITEM_ID)) {
+//			tradeItem = TradeContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+//		}
+		
+		setContentView(R.layout.imageview_page);
+		
+		viewPage = (ViewPager) findViewById(R.id.viewPager);
+		btnImagePrevious = (Button) findViewById(R.id.btnImagePrevious);
+		btnImageNext = (Button) findViewById(R.id.btnImageNext);
+		imageId = new Images();
+		itemData = imageId.getImageItem();
+		totalImage = itemData.size();
+		setPage(position);
+		
+		adapter = new PlanPagerAdapter(getSupportFragmentManager(), itemData);
+		viewPage.setAdapter(adapter);
+		viewPage.setOnPageChangeListener(ImagePagerView.this);
+		
+		btnImagePrevious.setOnClickListener(this);
+		btnImageNext.setOnClickListener(this);
+	}
+	
+	public void onClick(
+		View v) {
+	
+		if (v == btnImagePrevious) {
+			position--;
+			viewPage.setCurrentItem(position);
+		} else if (v == btnImageNext) {
+			position++;
+			viewPage.setCurrentItem(position);
+		}
+	}
+	
+	public void onPageScrollStateChanged(
+		int arg0) {
+	
+	}
+	
+	@Override public void onPageScrolled(
+		int arg0, float arg1, int arg2) {
+	
+	}
+	
+	@Override public void onPageSelected(
+		int position) {
+	
+		this.position = position;
+		setPage(position);
+	}
+	
+	private void setPage(
+		int page) {
+	
+		if (page == 0 && totalImage > 0) {
+			btnImageNext.setVisibility(View.VISIBLE);
+			btnImagePrevious.setVisibility(View.INVISIBLE);
+		} else if (page == totalImage - 1 && totalImage > 0) {
+			btnImageNext.setVisibility(View.INVISIBLE);
+			btnImagePrevious.setVisibility(View.VISIBLE);
+		} else {
+			btnImageNext.setVisibility(View.VISIBLE);
+			btnImagePrevious.setVisibility(View.VISIBLE);
+		}
+	}
+	
+//	@Override public View onCreateView(
+//		LayoutInflater inflater, ViewGroup container,
+//		Bundle savedInstanceState) {
+//	
+//		View rootView = inflater.inflate(R.layout.fragment_trade_detail, container, false);
+//		
+//		// Show the content as text in a TextView.
+//		if (tradeItem != null) {
+//			
+//			StringBuilder stringDef = new StringBuilder();
+//			for (int i = 0; i < tradeItem.deficiencies.size(); ++i) {
+//				stringDef.append(tradeItem.deficiencies.get(i).toString() + "\n");
+//			}
+//			((TextView) rootView.findViewById(R.id.trade_detail))
+//				.setText(tradeItem.deficiencies.size() + "\n" + stringDef);
+//		}
+//		
+//		return rootView;
+//	}
+	
+	
+	@Override public void onPageScrollStateChanged(
+		int arg0) {
+	
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	@Override public void onPageScrolled(
+		int arg0, float arg1, int arg2) {
+	
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	@Override public void onPageSelected(
+		int arg0) {
+	
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

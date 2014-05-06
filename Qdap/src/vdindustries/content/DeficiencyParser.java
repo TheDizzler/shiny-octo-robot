@@ -48,8 +48,30 @@ public class DeficiencyParser {
 	
 	
 	
+	public static int totalDefByUnit(String unit) {
+	
+		
+		return 4;
+	}
+	
+	
+	public static int outstandingDefByUnit(String unit) {
+	
+		
+		return 5;
+	}
+	
+	
+	public static Deficiency getDefByID(String reportID) {
+	
+		
+		return null;
+	}
+	
+	
+	
 	/** Builds a list of deficiencies by trade. */
-	public static List<Deficiency> getByTradeList(String tradeSelected) {
+	public static List<Deficiency> getDefByTradeList(String tradeSelected) {
 	
 		List<Deficiency> defList = new ArrayList<Deficiency>();
 		
@@ -76,11 +98,13 @@ public class DeficiencyParser {
 		Deficiency def = new Deficiency();
 		Element defElem = (Element) node;
 		
-		def.reportID = defElem.getAttribute(Deficiency.ID);
+		def.reportID = defElem.getAttribute(Deficiency.REPORTID);
 		
-		def.completed =  Boolean.parseBoolean(defElem.getElementsByTagName(Deficiency.COMPLETED).item(0).getTextContent());
-		def.priority  =  Boolean.parseBoolean(defElem.getElementsByTagName(Deficiency.PRIORITY).item(0).getTextContent());
-		Element coor = ((Element)defElem.getElementsByTagName("coordinates").item(0));
+		def.completed = Boolean.parseBoolean(defElem.getElementsByTagName(Deficiency.COMPLETED).item(
+			0).getTextContent());
+		def.priority = Boolean.parseBoolean(defElem.getElementsByTagName(Deficiency.PRIORITY).item(
+			0).getTextContent());
+		Element coor = ((Element) defElem.getElementsByTagName("coordinates").item(0));
 		def.X = Integer.parseInt(coor.getAttribute(Deficiency.XCOORD));
 		def.Y = Integer.parseInt(coor.getAttribute(Deficiency.YCOORD));
 		
@@ -90,16 +114,36 @@ public class DeficiencyParser {
 		def.direction = defElem.getElementsByTagName(Deficiency.DIRECTION).item(0).getTextContent();
 		def.location = defElem.getElementsByTagName(Deficiency.LOCATION).item(0).getTextContent();
 		
+		def.trade = ((Element) defElem.getParentNode()).getAttribute(Deficiency.TRADE);
+		def.roomNo = ((Element) defElem.getParentNode().getParentNode()).getAttribute(Deficiency.ROOMNO);
 		return def;
 	}
 	
 	/** Gets element string value from XML file and converts it to an int */
-	public int parseIntFromString(Element eElement, String XMLTag) {
+	private int parseIntFromString(Element eElement, String XMLTag) {
 	
 		String stringInit = eElement.getElementsByTagName(XMLTag).item(0).getTextContent();
-		int init = java.lang.Integer.parseInt(stringInit);
+		int init = Integer.parseInt(stringInit);
 		
 		return init;
 		
+	}
+	
+	/** Retrieves floor plan image file location from it's ID. */
+	public static String getFloorImageFile(String floorID) {
+	
+		
+		for (int i = 0; i < listFloorNodes.getLength(); ++i) {
+			
+			Element current = (Element) listFloorNodes.item(i);
+			if (current.getAttribute(Deficiency.FLOORID).equals(floorID)) {
+				
+				return ((Element) current.
+					getElementsByTagName(Deficiency.FLOORPLAN).item(0)).
+					getAttribute(Deficiency.FLOORPLANIMAGE);
+			}
+		}
+		
+		return null;
 	}
 }

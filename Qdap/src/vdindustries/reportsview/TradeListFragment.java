@@ -31,9 +31,6 @@ public class TradeListFragment extends ListFragment {
 	private int						mActivatedPosition			= ListView.INVALID_POSITION;
 	
 	
-	AssetManager					assMan;
-	public static DeficiencyParser	parser;
-	
 	
 	/** A callback interface that all activities containing this fragment must
 	 * implement. This mechanism allows activities to be notified of item
@@ -64,8 +61,6 @@ public class TradeListFragment extends ListFragment {
 	
 		super.onCreate(savedInstanceState);
 		
-		assMan = getActivity().getAssets();
-		parser = new DeficiencyParser(assMan);
 		setListAdapter(new ArrayAdapter<TradeContent.TradeItem>(getActivity(),
 			android.R.layout.simple_list_item_activated_1,
 			android.R.id.text1,
