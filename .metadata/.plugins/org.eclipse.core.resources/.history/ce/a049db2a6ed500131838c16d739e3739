@@ -203,7 +203,7 @@ public class DeficiencyParser {
 	}
 	
 	/** Load an image from a directory on device.
-	 * NOT YET IMPLEMENTED */
+	 * NOT YET IMPLEMENTED*/
 	private Drawable loadImageFromDirectory(String file) {
 	
 		
@@ -217,7 +217,7 @@ public class DeficiencyParser {
 	}
 	
 	/** Load an image from a URI.
-	 * NOT YET IMPLEMENTED */
+	 * NOT YET IMPLEMENTED*/
 	private Drawable loadImageFromUri(String uri) {
 		
 		

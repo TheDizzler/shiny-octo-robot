@@ -116,23 +116,6 @@ public class DeficiencyParser {
 	}
 	
 	
-	/** Retrieves room plan image file location from it's room number. */
-	private static String getRoomImageFile(String roomNo) {
-	
-		for (int i = 0; i < listRoomNodes.getLength(); ++i) {
-			
-			Element current = (Element) listRoomNodes.item(i);
-			if (current.getAttribute(Deficiency.ROOMNO).equals(roomNo)) {
-				
-				return ((Element) current.
-					getElementsByTagName(Deficiency.ROOMPLAN).item(0)).
-					getAttribute(Deficiency.ROOMIMAGE);
-			}
-		}
-		
-		return null;
-	}
-	
 	/** Retrieves floor plan image file location from it's ID. */
 	private static String getFloorImageFile(String floorID) {
 	
@@ -202,9 +185,8 @@ public class DeficiencyParser {
 		}
 	}
 	
-	/** Load an image from a directory on device.
-	 * NOT YET IMPLEMENTED */
-	private Drawable loadImageFromDirectory(String file) {
+	/** TODO */
+	private Bitmap loadImageFromDirectory() {
 	
 		
 //				try {
@@ -216,9 +198,8 @@ public class DeficiencyParser {
 		
 	}
 	
-	/** Load an image from a URI.
-	 * NOT YET IMPLEMENTED */
-	private Drawable loadImageFromUri(String uri) {
+	/** Load an image from a URI. */
+	private Bitmap loadImageFromUri() {
 		
 		
 		return null;
