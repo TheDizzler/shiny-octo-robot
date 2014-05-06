@@ -2,6 +2,7 @@ package vdindustries;
 
 import vdindustries.content.DeficiencyParser;
 import vdindustries.masterflow.R;
+import vdindustries.networking.ConnectActivity;
 import vdindustries.planview.PlanViewActivity;
 import vdindustries.reportsview.TradeListActivity;
 import android.content.Intent;
@@ -84,13 +85,14 @@ public class Categories extends ActionBarActivity {
 		startActivity(intent);
 	}
 	
+	/** temp for testing connection */
 	public void photo(View view) {
 	
-		Intent intent = new Intent(this, Categories.class);
+		Intent intent = new Intent(this, ConnectActivity.class);
 		startActivity(intent);
 	}
 	
-	/** Temp */
+	/** Temp for testing image parsing*/
 	public void notes(View view) {
 	
 		Intent intent = new Intent(this, PlanViewActivity.class);

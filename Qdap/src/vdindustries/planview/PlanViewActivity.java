@@ -23,8 +23,8 @@ import android.widget.LinearLayout;
 
 public class PlanViewActivity extends ActionBarActivity {
 	
-	List<Button> floorbtns;
-	ImageView	image;
+	List<Button>	floorbtns;
+	ImageView		image;
 	
 	
 	@Override protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +38,18 @@ public class PlanViewActivity extends ActionBarActivity {
 	}
 	
 	/** Creates a button for each floor in XML file.
-	 * Must add android:id="@+id/linear_layout" to activity XML.*/
+	 * Must add android:id="@+id/linear_layout" to activity XML. */
 	private void createFloorButtons() {
 	
-		LinearLayout l_layout = (LinearLayout) findViewById(R.id.linear_layout); 
+		LinearLayout l_layout = (LinearLayout) findViewById(R.id.linear_layout);
 		l_layout.setOrientation(LinearLayout.VERTICAL);
 		
-		floorbtns= new ArrayList<Button>();
+		floorbtns = new ArrayList<Button>();
 		NodeList floorNodes = DeficiencyParser.listFloorNodes;
 		
-		for(int i = 0; i < floorNodes.getLength(); ++i) {
+		for (int i = 0; i < floorNodes.getLength(); ++i) {
 			
-			String btntext = ((Element)floorNodes.item(i)).getAttribute("floorID");
+			String btntext = ((Element) floorNodes.item(i)).getAttribute("floorID");
 			Button btn = new Button(this);
 			btn.setText(btntext);
 			setListener(btn, btntext);
@@ -59,19 +59,20 @@ public class PlanViewActivity extends ActionBarActivity {
 			floorbtns.add(btn);
 		}
 	}
-
-
+	
+	
 	private void setListener(Button btn, final String btntext) {
 	
 		btn.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
+			
 				loadFloorPlan(btntext);
 			}
-	});
+		});
 		
 	}
-
+	
 	
 	protected void loadFloorPlan(String floorID) {
 	
@@ -84,7 +85,7 @@ public class PlanViewActivity extends ActionBarActivity {
 		}
 		
 	}
-
+	
 	/** TODO */
 	private Bitmap loadImageFromDirectory() {
 	

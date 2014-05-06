@@ -53,6 +53,10 @@
             android:name="vdindustries.Checklist"
             android:label="@string/title_activity_checklist" >
         </activity>
+        <activity
+            android:name="vdindustries.networking.ConnectActivity"
+            android:label="Test networking activity" >
+        </activity>
     </application>
 
 </manifest>
