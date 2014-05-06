@@ -23,9 +23,11 @@ public class DeficiencyParser {
 	public static InputStream	projectXML;
 	public static Element		root;
 	public static NodeList		listFloorNodes;
+	public static NodeList		listRoomNodes;
 	
 	public static NodeList		listTrades;
 	private AssetManager		assMan;
+	
 	
 	
 	public DeficiencyParser(AssetManager am) {
@@ -34,12 +36,13 @@ public class DeficiencyParser {
 		try {
 			projectXML = assMan.open("testproject.xml");
 			
-			Document xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-				projectXML);
+			Document xmlDoc = DocumentBuilderFactory.newInstance().
+				newDocumentBuilder().parse(projectXML);
 			root = xmlDoc.getDocumentElement();
 			root.normalize();
 			listFloorNodes = root.getElementsByTagName("floor");
 			listTrades = root.getElementsByTagName("trade");
+			listRoomNodes = root.getElementsByTagName("room");
 			
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			e.printStackTrace();
@@ -47,11 +50,19 @@ public class DeficiencyParser {
 	}
 	
 	
-	
+	/** Retrieves number of deficiencies in a room, completed & uncompleted */
 	public static int totalDefByUnit(String unit) {
 	
+		for (int i = 0; i < listRoomNodes.getLength(); ++i) {
+			
+			Element room = ((Element) listRoomNodes.item(i));
+			if (room.getAttribute(Deficiency.FLOORID).equalsIgnoreCase(unit)) {
+				
+				return room.getElementsByTagName("deficiency").getLength();
+			}
+		}
 		
-		return 4;
+		return 0;
 	}
 	
 	
@@ -61,13 +72,22 @@ public class DeficiencyParser {
 		return 5;
 	}
 	
-	
+	/** Retrieves a deficiency object from its reportID.
+	 * Note: this is likely very inefficient in the case of large buildings. */
 	public static Deficiency getDefByID(String reportID) {
 	
-		
+		NodeList defList = root.getElementsByTagName("deficiency");
+		for (int i = 0; i < defList.getLength(); ++i) {
+			
+			if (((Element) defList.item(i)).
+				getAttribute(Deficiency.REPORTID).
+				equalsIgnoreCase(reportID)) {
+				
+				return parseDeficiency(defList.item(i));
+			}
+		}
 		return null;
 	}
-	
 	
 	
 	/** Builds a list of deficiencies by trade. */
@@ -93,6 +113,36 @@ public class DeficiencyParser {
 	}
 	
 	
+	
+	/** Gets element string value from XML file and converts it to an int */
+	private int parseIntFromString(Element eElement, String XMLTag) {
+	
+		String stringInit = eElement.getElementsByTagName(XMLTag).item(0).getTextContent();
+		int init = Integer.parseInt(stringInit);
+		
+		return init;
+		
+	}
+	
+	/** Retrieves floor plan image file location from it's ID. */
+	public static String getFloorImageFile(String floorID) {
+	
+		
+		for (int i = 0; i < listFloorNodes.getLength(); ++i) {
+			
+			Element current = (Element) listFloorNodes.item(i);
+			if (current.getAttribute(Deficiency.FLOORID).equals(floorID)) {
+				
+				return ((Element) current.
+					getElementsByTagName(Deficiency.FLOORPLAN).item(0)).
+					getAttribute(Deficiency.FLOORIMAGE);
+			}
+		}
+		
+		return null;
+	}
+	
+	/** Builds a deficiency object from a XML node. */
 	private static Deficiency parseDeficiency(Node node) {
 	
 		Deficiency def = new Deficiency();
@@ -117,33 +167,5 @@ public class DeficiencyParser {
 		def.trade = ((Element) defElem.getParentNode()).getAttribute(Deficiency.TRADE);
 		def.roomNo = ((Element) defElem.getParentNode().getParentNode()).getAttribute(Deficiency.ROOMNO);
 		return def;
-	}
-	
-	/** Gets element string value from XML file and converts it to an int */
-	private int parseIntFromString(Element eElement, String XMLTag) {
-	
-		String stringInit = eElement.getElementsByTagName(XMLTag).item(0).getTextContent();
-		int init = Integer.parseInt(stringInit);
-		
-		return init;
-		
-	}
-	
-	/** Retrieves floor plan image file location from it's ID. */
-	public static String getFloorImageFile(String floorID) {
-	
-		
-		for (int i = 0; i < listFloorNodes.getLength(); ++i) {
-			
-			Element current = (Element) listFloorNodes.item(i);
-			if (current.getAttribute(Deficiency.FLOORID).equals(floorID)) {
-				
-				return ((Element) current.
-					getElementsByTagName(Deficiency.FLOORPLAN).item(0)).
-					getAttribute(Deficiency.FLOORPLANIMAGE);
-			}
-		}
-		
-		return null;
 	}
 }

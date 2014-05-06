@@ -19,15 +19,13 @@ public class Categories extends ActionBarActivity {
 	
 	
 	public static DeficiencyParser	parser;
-	public static AssetManager		assMan;
 	
 	
 	@Override protected void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
 		
-		assMan = getAssets();
-		parser = new DeficiencyParser(assMan);
+		parser = new DeficiencyParser(getAssets());
 		
 		setContentView(R.layout.activity_categories);
 		

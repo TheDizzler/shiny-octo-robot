@@ -72,11 +72,13 @@ public class PlanViewActivity extends ActionBarActivity {
 		
 	}
 
+	
 	protected void loadFloorPlan(String floorID) {
 	
 		String file = DeficiencyParser.getFloorImageFile(floorID);
 		try {
 			image.setImageDrawable(loadImageFromAsset(file));
+//			image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
