@@ -65,6 +65,7 @@
 
     <Button
         android:onClick="login"
-        android:text="@string/login" />
+        android:text="@string/login" 
+        android:background="@drawable/custom_button"/>
 
 </TableLayout>
