@@ -346,7 +346,8 @@ int layout fragment_checklist 0x7f030021
 int layout fragment_floors 0x7f030022
 int layout fragment_login 0x7f030023
 int layout fragment_trade_detail 0x7f030024
-int layout support_simple_spinner_dropdown_item 0x7f030025
+int layout report_item_layout 0x7f030025
+int layout support_simple_spinner_dropdown_item 0x7f030026
 int menu categories 0x7f0c0000
 int menu checklist 0x7f0c0001
 int menu floors 0x7f0c0002
