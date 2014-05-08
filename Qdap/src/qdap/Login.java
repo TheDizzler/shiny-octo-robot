@@ -70,6 +70,7 @@ public class Login extends ActionBarActivity {
 	public void login(View view) {
 	    Intent intent = new Intent(this, Categories.class);
 	    startActivity(intent);
+	    
 	}
 
 }

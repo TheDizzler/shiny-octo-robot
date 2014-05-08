@@ -4,6 +4,7 @@ import vdindustries.masterflow.R;
 import vdindustries.masterflow.R.id;
 import vdindustries.masterflow.R.layout;
 import vdindustries.masterflow.R.menu;
+import vdindustries.masterflow.content.DeficiencyParser;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -18,8 +19,10 @@ import android.os.Build;
 
 public class Categories extends ActionBarActivity {
 
+	public static DeficiencyParser dp;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		dp = new DeficiencyParser(getAssets());
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_categories);
 

@@ -1125,7 +1125,6 @@ containing a value of this type.
 
     For more on layout aliases, see:
     http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
-
     
 
     Layout alias to replace the single-pane version of the layout with a
@@ -1133,7 +1132,6 @@ containing a value of this type.
 
     For more on layout aliases, see:
     http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
-
     
          */
         public static final int activity_trade_list=0x7f03001c;

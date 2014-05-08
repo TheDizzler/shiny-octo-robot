@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import vdindustries.masterflow.R;
+import vdindustries.masterflow.content.DeficiencyParser;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,10 +50,19 @@ public class Floors extends Activity {
 				// Toast.makeText(getApplicationContext(),
 				// "Group Clicked " + listDataHeader.get(groupPosition),
 				// Toast.LENGTH_SHORT).show();
-				if (listDataHeader.get(groupPosition) == "Top 250") {
+				if (listDataHeader.get(groupPosition).equals("Floor 2")) {
 					ImageView img= (ImageView) findViewById(R.id.imageView1);
-					img.setImageResource(R.drawable.abc_ab_solid_dark_holo);
+				    DeficiencyParser.loadFloorPlan(img, "Floor 2");	
 				}
+				if (listDataHeader.get(groupPosition).equals("Floor 3")) {
+					ImageView img= (ImageView) findViewById(R.id.imageView1);
+				    DeficiencyParser.loadFloorPlan(img, "Floor 3");	
+				}
+				if (listDataHeader.get(groupPosition).equals("PH")) {
+					ImageView img= (ImageView) findViewById(R.id.imageView1);
+				    DeficiencyParser.loadFloorPlan(img, "PH");	
+				}
+			
 	
 				return false;
 			}
@@ -116,9 +126,7 @@ public class Floors extends Activity {
 		listDataChild = new HashMap<String, List<String>>();
 
 		// Adding child data
-		listDataHeader.add("Top 250");
-		listDataHeader.add("Now Showing");
-		listDataHeader.add("Coming Soon..");
+		listDataHeader.addAll(DeficiencyParser.getFloors());
 
 		// Adding child data
 		List<String> top250 = new ArrayList<String>();
