@@ -9,40 +9,50 @@
     tools:context="vdindustries.reportsview.Categories$PlaceholderFragment" >
 
     <Button
-        android:id="@+id/reports"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/photo"
-        android:text="@string/reports"
-          android:onClick="reports" />
-
-    <Button
-        android:id="@+id/checklists"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/reports"
-        android:layout_alignLeft="@+id/notes"
-        android:layout_toRightOf="@+id/reports"
-        android:text="@string/checklists" 
-          android:onClick="floors"/>
-
-    <Button
         android:id="@+id/notes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/photo"
-        android:layout_toRightOf="@+id/photo"
-        android:text="@string/notes"
-          android:onClick="notes" />
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignLeft="@+id/reports"
+        android:layout_below="@+id/checklists"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/custom_button"
+        android:onClick="notes"
+        android:text="@string/notes" />
 
     <Button
         android:id="@+id/photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignBaseline="@+id/notes"
+        android:layout_alignBottom="@+id/notes"
+        android:layout_marginRight="36dp"
+        android:layout_toLeftOf="@+id/notes"
+        android:background="@drawable/custom_button"
+        android:onClick="photo"
+        android:text="@string/photo" />
+
+    <Button
+        android:id="@+id/reports"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="63dp"
+        android:layout_marginTop="67dp"
+        android:layout_toRightOf="@+id/checklists"
+        android:background="@drawable/custom_button"
+        android:onClick="reports"
+        android:text="@string/reports" />
+
+    <Button
+        android:id="@+id/checklists"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignBottom="@+id/reports"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="152dp"
-        android:text="@string/photo"
-          android:onClick="photo" />
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="170dp"
+        android:background="@drawable/custom_button"
+        android:onClick="floors"
+        android:text="@string/checklists" />
 
 </RelativeLayout>

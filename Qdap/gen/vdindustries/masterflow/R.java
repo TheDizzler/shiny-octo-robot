@@ -981,7 +981,10 @@ containing a value of this type.
         public static final int abc_textfield_searchview_holo_light=0x7f020054;
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
-        public static final int ic_launcher=0x7f020057;
+        public static final int custom_button=0x7f020057;
+        public static final int ic_launcher=0x7f020058;
+        public static final int round_corner_clicked=0x7f020059;
+        public static final int round_corner_normal=0x7f02005a;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -1026,14 +1029,14 @@ containing a value of this type.
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
-        public static final int notes=0x7f050043;
+        public static final int notes=0x7f050040;
         public static final int password=0x7f050047;
-        public static final int photo=0x7f050041;
+        public static final int photo=0x7f050043;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int project=0x7f050049;
         public static final int radio=0x7f05002f;
-        public static final int reports=0x7f050040;
+        public static final int reports=0x7f050041;
         public static final int search_badge=0x7f050032;
         public static final int search_bar=0x7f050031;
         public static final int search_button=0x7f050033;
