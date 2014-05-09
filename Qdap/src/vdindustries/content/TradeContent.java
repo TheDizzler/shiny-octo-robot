@@ -56,7 +56,7 @@ public class TradeContent {
 		
 			this.id = id;
 			this.trade = trade;
-			this.deficiencies = DeficiencyParser.getDefByTradeList(trade);
+			this.deficiencies = DeficiencyParser.getDefsByTrade(trade);
 		}
 		
 		@Override public String toString() {

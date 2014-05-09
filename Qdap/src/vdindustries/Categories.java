@@ -25,10 +25,9 @@ public class Categories extends ActionBarActivity {
 	@Override protected void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_categories);
 		
 		parser = new DeficiencyParser(getAssets());
-		
-		setContentView(R.layout.activity_categories);
 		
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
@@ -79,7 +78,7 @@ public class Categories extends ActionBarActivity {
 		startActivity(intent);
 	}
 	
-	public void floors(View view) {
+	public void checklists(View view) {
 	
 		Intent intent = new Intent(this, Floors.class);
 		startActivity(intent);

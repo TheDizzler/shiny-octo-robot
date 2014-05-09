@@ -251,9 +251,9 @@
 		
 		<room no="Test">
 			<roomplan roomsrc="images/floor_3/testgrid.jpg" />
+			
 			<trade type="Framing">
 			    
-				
 			    <deficiency reportID="rtest">
 					
 			        <completed>false</completed>
