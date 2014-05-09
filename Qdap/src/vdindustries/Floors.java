@@ -28,11 +28,11 @@ public class Floors extends ActionBarActivity {
 	@Override protected void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_floors);
+		setContentView(R.layout.fragment_floors);
 		
 		// get the listview
 		expListView = (ExpandableListView) findViewById(R.id.list);
-		expListView = new ExpandableListView(this);
+//		expListView = new ExpandableListView(this);
 		
 		// preparing list data
 		prepareListData();
@@ -125,17 +125,17 @@ public class Floors extends ActionBarActivity {
 		listDataChild = new HashMap<String, List<String>>();
 		
 		// Adding child data
-		listDataHeader.addAll(DeficiencyParser.getFloors());
+		listDataHeader.addAll(DeficiencyParser.getFloorIDs());
 		
 		// Adding child data
 		List<String> floor2 = new ArrayList<String>();
-		floor2.addAll(DeficiencyParser.getRooms("Floor 2"));
+		floor2.addAll(DeficiencyParser.getRoomIDs("Floor 2"));
 		
 		List<String> floor3 = new ArrayList<String>();
-		floor3.addAll(DeficiencyParser.getRooms("Floor 3"));
+		floor3.addAll(DeficiencyParser.getRoomIDs("Floor 3"));
 		
 		List<String> ph = new ArrayList<String>();
-		ph.addAll(DeficiencyParser.getRooms("PH"));
+		ph.addAll(DeficiencyParser.getRoomIDs("PH"));
 		
 		listDataChild.put(listDataHeader.get(0), floor2); // Header, Child data
 		listDataChild.put(listDataHeader.get(1), floor3);
