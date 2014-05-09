@@ -68,7 +68,7 @@ public class Deficiency {
 	
 		return "reportID: " + reportID + " roomNo: " + roomNo +
 				">> " + object + " " + item + " " + verb + " " +
-				direction + " " + location";
+				direction + " " + location;
 	}
 	
 	public boolean getCompleted(){
