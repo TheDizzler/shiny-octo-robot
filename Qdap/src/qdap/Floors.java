@@ -129,32 +129,17 @@ public class Floors extends Activity {
 		listDataHeader.addAll(DeficiencyParser.getFloors());
 
 		// Adding child data
-		List<String> top250 = new ArrayList<String>();
-		top250.add("The Shawshank Redemption");
-		top250.add("The Godfather");
-		top250.add("The Godfather: Part II");
-		top250.add("Pulp Fiction");
-		top250.add("The Good, the Bad and the Ugly");
-		top250.add("The Dark Knight");
-		top250.add("12 Angry Men");
+		List<String> floor2 = new ArrayList<String>();
+		floor2.addAll(DeficiencyParser.getRooms("Floor 2"));
 
-		List<String> nowShowing = new ArrayList<String>();
-		nowShowing.add("The Conjuring");
-		nowShowing.add("Despicable Me 2");
-		nowShowing.add("Turbo");
-		nowShowing.add("Grown Ups 2");
-		nowShowing.add("Red 2");
-		nowShowing.add("The Wolverine");
+		List<String> floor3 = new ArrayList<String>();
+		floor3.addAll(DeficiencyParser.getRooms("Floor 3"));
 
-		List<String> comingSoon = new ArrayList<String>();
-		comingSoon.add("2 Guns");
-		comingSoon.add("The Smurfs 2");
-		comingSoon.add("The Spectacular Now");
-		comingSoon.add("The Canyons");
-		comingSoon.add("Europa Report");
+		List<String> ph = new ArrayList<String>();
+		ph.addAll(DeficiencyParser.getRooms("PH"));
 
-		listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
-		listDataChild.put(listDataHeader.get(1), nowShowing);
-		listDataChild.put(listDataHeader.get(2), comingSoon);
+		listDataChild.put(listDataHeader.get(0), floor2); // Header, Child data
+		listDataChild.put(listDataHeader.get(1), floor3);
+		listDataChild.put(listDataHeader.get(2), ph);
 	}
 }
