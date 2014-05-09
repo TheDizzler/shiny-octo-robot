@@ -13,7 +13,7 @@
 			<trade type="Framing">
 				<deficiency reportID="r0001">
 
-				    <completed>false</completed>
+				    <completed>true</completed>
 				    <priority>true</priority>
 					<coordinates x="100" y="225"/>
 					<description>
