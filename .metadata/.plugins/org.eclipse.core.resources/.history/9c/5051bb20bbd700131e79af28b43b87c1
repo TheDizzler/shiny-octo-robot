@@ -1,0 +1,18 @@
+package vdindustries;
+
+import android.content.Context;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ImageView;
+
+
+public class Room extends ImageView {
+
+
+	public Room(Context context, String string, ImageView imageView) {
+	
+		super(context);
+		
+		
+	}
+	
+}

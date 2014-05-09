@@ -6,7 +6,7 @@ import java.util.List;
 
 import vdindustries.content.DeficiencyParser;
 import vdindustries.masterflow.R;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -25,10 +25,17 @@ public class Floors extends ActionBarActivity {
 	List<String>					listDataHeader;
 	HashMap<String, List<String>>	listDataChild;
 	
+	ImageView						currentImage;
+	
+	Context							context;
+	
 	@Override protected void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_floors);
+		context = this;
+		
+		currentImage = (ImageView) findViewById(R.id.imageView1);
 		
 		// get the listview
 		expListView = (ExpandableListView) findViewById(R.id.list);
@@ -48,21 +55,12 @@ public class Floors extends ActionBarActivity {
 			@Override public boolean onGroupClick(ExpandableListView parent, View v,
 													int groupPosition, long id) {
 			
-				// Toast.makeText(getApplicationContext(),
-				// "Group Clicked " + listDataHeader.get(groupPosition),
-				// Toast.LENGTH_SHORT).show();
-				if (listDataHeader.get(groupPosition).equals("Floor 2")) {
-					ImageView img = (ImageView) findViewById(R.id.imageView1);
-					DeficiencyParser.loadFloorPlan(img, "Floor 2");
-				}
-				if (listDataHeader.get(groupPosition).equals("Floor 3")) {
-					ImageView img = (ImageView) findViewById(R.id.imageView1);
-					DeficiencyParser.loadFloorPlan(img, "Floor 3");
-				}
-				if (listDataHeader.get(groupPosition).equals("PH")) {
-					ImageView img = (ImageView) findViewById(R.id.imageView1);
-					DeficiencyParser.loadFloorPlan(img, "PH");
-				}
+				Toast.makeText(getApplicationContext(),
+					"Group Clicked " + listDataHeader.get(groupPosition),
+					Toast.LENGTH_SHORT).show();
+				
+				DeficiencyParser.loadFloorPlan(currentImage, listDataHeader.get(groupPosition));
+				
 				
 				
 				return false;
@@ -74,9 +72,9 @@ public class Floors extends ActionBarActivity {
 			
 			@Override public void onGroupExpand(int groupPosition) {
 			
-				Toast.makeText(getApplicationContext(),
-					listDataHeader.get(groupPosition) + " Expanded",
-					Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getApplicationContext(),
+//					listDataHeader.get(groupPosition) + " Expanded",
+//					Toast.LENGTH_SHORT).show();
 			}
 		});
 		
@@ -85,10 +83,10 @@ public class Floors extends ActionBarActivity {
 			
 			@Override public void onGroupCollapse(int groupPosition) {
 			
-				Toast.makeText(getApplicationContext(),
-					listDataHeader.get(groupPosition) + " Collapsed",
-					Toast.LENGTH_SHORT).show();
-				
+//				Toast.makeText(getApplicationContext(),
+//					listDataHeader.get(groupPosition) + " Collapsed",
+//					Toast.LENGTH_SHORT).show();
+//				
 			}
 		});
 		
@@ -98,21 +96,11 @@ public class Floors extends ActionBarActivity {
 			@Override public boolean onChildClick(ExpandableListView parent, View v,
 													int groupPosition, int childPosition, long id) {
 			
-				Toast.makeText(
-					getApplicationContext(),
-					listDataHeader.get(groupPosition)
-							+ " : "
-							+ listDataChild.get(
-								listDataHeader.get(groupPosition)).get(
-								childPosition), Toast.LENGTH_SHORT)
-					.show();
 				
-				if (listDataChild.get(
-					listDataHeader.get(groupPosition)).get(
-					childPosition).equals("The Godfather")) {
-					Intent intent = new Intent(Floors.this, Checklist.class);
-					Floors.this.startActivity(intent);
-				}
+				new Room(context, listDataChild.get(listDataHeader.get(groupPosition)).get(
+					childPosition), currentImage);
+				
+				
 				return false;
 			}
 		});
@@ -141,4 +129,6 @@ public class Floors extends ActionBarActivity {
 		listDataChild.put(listDataHeader.get(1), floor3);
 		listDataChild.put(listDataHeader.get(2), ph);
 	}
+	
+	
 }
