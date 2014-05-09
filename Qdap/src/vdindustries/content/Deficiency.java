@@ -68,8 +68,11 @@ public class Deficiency {
 	
 		return "reportID: " + reportID + " roomNo: " + roomNo +
 				">> " + object + " " + item + " " + verb + " " +
-				direction + " " + location + " << " +
-				" at (" + X + ", " + Y + ")";
+				direction + " " + location";
+	}
+	
+	public boolean getCompleted(){
+		return completed;
 	}
 	
 }
