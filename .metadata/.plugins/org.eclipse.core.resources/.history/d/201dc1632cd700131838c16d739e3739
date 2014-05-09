@@ -67,7 +67,7 @@ public class PlanViewActivity extends ActionBarActivity {
 //		DeficiencyParser.loadRoomPlan(image, room);
 		Bitmap immutable = null;
 		String file = DeficiencyParser.getRoomImageFile(room);
-		try {
+		try { // MAKE PLAN MUTABLE
 			immutable = DeficiencyParser.loadBitmapFromAsset(file);
 			
 		} catch (IOException e) {

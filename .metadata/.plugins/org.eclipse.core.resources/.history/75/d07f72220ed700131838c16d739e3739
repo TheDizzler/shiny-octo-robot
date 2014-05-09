@@ -53,8 +53,8 @@ public class PlanViewActivity extends ActionBarActivity {
 		context = this;
 		image = (ImageView) findViewById(R.id.image);
 		
-//		createFloorButtons();
-		createRoomButtons("Floor 2");
+		createFloorButtons();
+//		createRoomButtons("PH");
 //		showRoom("201");
 	}
 	
@@ -65,34 +65,33 @@ public class PlanViewActivity extends ActionBarActivity {
 		defs = new ArrayList<Deficiency>();
 		
 //		DeficiencyParser.loadRoomPlan(image, room);
-		Bitmap immutable = null;
+		
 		String file = DeficiencyParser.getRoomImageFile(room);
-		try {
-			immutable = DeficiencyParser.loadBitmapFromAsset(file);
-			
+		try { // MAKE PLAN MUTABLE
+			plan = DeficiencyParser.loadBitmapFromAsset(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		plan = convertToMutable(this, immutable);
-		canvas = new Canvas(plan);
-		defs = DeficiencyParser.getDefsByRoom(room);
-		
-		for (int i = 0; i < defs.size(); ++i) {
+//		plan = Bitmap.createBitmap(image.getMeasuredWidth(),
+//			image.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+			canvas = new Canvas(plan);
+//		defs = DeficiencyParser.getDefsByRoom(room);
 			
-			LinearLayout layout = new LinearLayout(context);
-			layout.setOrientation(LinearLayout.VERTICAL);
-			
-			layout.setLayoutParams(new LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-			
-			Bitmap flag = BitmapFactory.decodeResource(getResources(),
-				R.drawable.flag_red);
-			
-			canvas.drawBitmap(flag, defs.get(i).X, defs.get(i).Y, null);
+			for (int i = 0; i < defs.size(); ++i) {
+				
+				LinearLayout layout = new LinearLayout(context);
+				layout.setOrientation(LinearLayout.VERTICAL);
+				
+				layout.setLayoutParams(new LayoutParams(
+					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+				
+				Bitmap flag = BitmapFactory.decodeResource(getResources(),
+					R.drawable.flag_red);
+				
+				canvas.drawBitmap(flag, defs.get(i).X, defs.get(i).Y, null);
 //			layout.addView(flag);
 //			setContentView(layout);
-		}
+			}
 		
 //		BitmapDrawable dr = new BitmapDrawable(bmOverlay);
 //        dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
@@ -172,37 +171,50 @@ public class PlanViewActivity extends ActionBarActivity {
 	}
 	
 	
+	public static Bitmap convertToMutable(Bitmap imgIn) {
 	
-	/** might use the internal storage in some cases, creating temporary file
-	 * that will be deleted as soon as it isn't finished */
-	public static Bitmap convertToMutable(final Context context, final Bitmap imgIn) {
-	
-		final int width = imgIn.getWidth(), height = imgIn.getHeight();
-		final Config type = imgIn.getConfig();
-		File outputFile = null;
-		final File outputDir = context.getCacheDir();
 		try {
-			outputFile = File.createTempFile(Long.toString(System.currentTimeMillis()), null,
-				outputDir);
-			outputFile.deleteOnExit();
-			final RandomAccessFile randomAccessFile = new RandomAccessFile(outputFile, "rw");
-			final FileChannel channel = randomAccessFile.getChannel();
-			final MappedByteBuffer map = channel.map(MapMode.READ_WRITE, 0,
-				imgIn.getRowBytes() * height);
+			//this is the file going to use temporally to save the bytes. 
+			// This file will not be a image, it will store the raw image data.
+			File file = new File(Environment.getExternalStorageDirectory() + File.separator + "temp.tmp");
+			
+			//Open an RandomAccessFile
+			//Make sure you have added uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+			//into AndroidManifest.xml file
+			RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
+			
+			// get the width and height of the source bitmap.
+			int width = imgIn.getWidth();
+			int height = imgIn.getHeight();
+			Config type = imgIn.getConfig();
+			
+			//Copy the byte to the file
+			//Assume source bitmap loaded using options.inPreferredConfig = Config.ARGB_8888;
+			FileChannel channel = randomAccessFile.getChannel();
+			MappedByteBuffer map = channel.map(MapMode.READ_WRITE, 0, imgIn.getRowBytes() * height);
 			imgIn.copyPixelsToBuffer(map);
+			//recycle the source bitmap, this will be no longer used.
 			imgIn.recycle();
-			final Bitmap result = Bitmap.createBitmap(width, height, type);
+			System.gc();// try to force the bytes from the imgIn to be released
+			
+			//Create a new bitmap to load the bitmap again. Probably the memory will be available. 
+			imgIn = Bitmap.createBitmap(width, height, type);
 			map.position(0);
-			result.copyPixelsFromBuffer(map);
+			//load it back from temporary 
+			imgIn.copyPixelsFromBuffer(map);
+			//close the temporary file and channel , then delete that also
 			channel.close();
 			randomAccessFile.close();
-			outputFile.delete();
-			return result;
-		} catch (final Exception e) {} finally {
-			if (outputFile != null)
-				outputFile.delete();
+			
+			// delete the temp file
+			file.delete();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return null;
+		
+		return imgIn;
 	}
-	
 }

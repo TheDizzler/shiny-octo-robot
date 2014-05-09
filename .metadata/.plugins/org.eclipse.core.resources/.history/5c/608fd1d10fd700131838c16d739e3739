@@ -54,7 +54,7 @@ public class PlanViewActivity extends ActionBarActivity {
 		image = (ImageView) findViewById(R.id.image);
 		
 //		createFloorButtons();
-		createRoomButtons("Floor 2");
+		createRoomButtons("PH");
 //		showRoom("201");
 	}
 	
@@ -67,7 +67,7 @@ public class PlanViewActivity extends ActionBarActivity {
 //		DeficiencyParser.loadRoomPlan(image, room);
 		Bitmap immutable = null;
 		String file = DeficiencyParser.getRoomImageFile(room);
-		try {
+		try { // MAKE PLAN MUTABLE
 			immutable = DeficiencyParser.loadBitmapFromAsset(file);
 			
 		} catch (IOException e) {
@@ -76,7 +76,7 @@ public class PlanViewActivity extends ActionBarActivity {
 		
 		plan = convertToMutable(this, immutable);
 		canvas = new Canvas(plan);
-		defs = DeficiencyParser.getDefsByRoom(room);
+//		defs = DeficiencyParser.getDefsByRoom(room);
 		
 		for (int i = 0; i < defs.size(); ++i) {
 			
