@@ -67,11 +67,9 @@ public class TradeDetailFragment extends Fragment {
 		if (tradeItem != null) {
 			reportListItem = new ReportItem[tradeItem.deficiencies.size()];
 			for (int i = 0; i < tradeItem.deficiencies.size(); ++i) {
-				reportListItem[i] = new ReportItem(
-			tradeItem.deficiencies.get(i).getCompleted(),
-						//	(tradeItem.deficiencies.get(i).COMPLETED == "true") ? true: false,
-								tradeItem.deficiencies.get(i)
-								.toString(), " test: " + i);
+				reportListItem[i] = new ReportItem(tradeItem.deficiencies
+						.get(i).getCompleted(), tradeItem.deficiencies.get(i)
+						.toString(), " test: " + i);
 			}
 			ReportItemAdapter adapter = new ReportItemAdapter(getActivity(),
 					R.layout.report_item_layout, reportListItem);

@@ -16,90 +16,129 @@ import org.xml.sax.SAXException;
 
 import android.content.res.AssetManager;
 
-
-
 public class DeficiencyParser {
-	
-	public static InputStream	projectXML;
-	public static Element		root;
-	public static NodeList		listFloorNodes;
-	
-	public static NodeList		listTrades;
-	private AssetManager		assMan;
-	
-	
+
+	public static InputStream projectXML;
+	public static Element root;
+	public static NodeList listFloorNodes;
+	public static NodeList listRooms;
+	public static NodeList listTrades;
+	private AssetManager assMan;
+
 	public DeficiencyParser(AssetManager am) {
-	
+
 		assMan = am;
 		try {
 			projectXML = assMan.open("testproject.xml");
-			
-			Document xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-				projectXML);
+
+			Document xmlDoc = DocumentBuilderFactory.newInstance()
+					.newDocumentBuilder().parse(projectXML);
 			root = xmlDoc.getDocumentElement();
 			root.normalize();
 			listFloorNodes = root.getElementsByTagName("floor");
 			listTrades = root.getElementsByTagName("trade");
-			
+			listRooms = root.getElementsByTagName("room");
+
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
 	/** Builds a list of deficiencies by trade. */
 	public static List<Deficiency> getByTradeList(String tradeSelected) {
-	
+
 		List<Deficiency> defList = new ArrayList<Deficiency>();
-		
+
 		// for each <trade> element
 		for (int i = 0; i < listTrades.getLength(); ++i) {
-			
+
 			// if <trade type = tradeSelected>
-			if (((Element) listTrades.item(i)).getAttribute("type").equalsIgnoreCase(tradeSelected)) {
-				
+			if (((Element) listTrades.item(i)).getAttribute("type")
+					.equalsIgnoreCase(tradeSelected)) {
+
 				// get a list of all child deficiency elements
-				NodeList nodes = ((Element) listTrades.item(i)).getElementsByTagName("deficiency");
-				
+				NodeList nodes = ((Element) listTrades.item(i))
+						.getElementsByTagName("deficiency");
+
 				for (int j = 0; j < nodes.getLength(); ++j)
 					defList.add(parseDeficiency(nodes.item(j)));
 			}
 		}
-		
+
 		return defList;
 	}
-	
-	
+
+	/** Builds a list of deficiencies by trade for each room. */
+	public static List<Deficiency> getByTradeList(String tradeSelected,
+			String room) {
+
+		List<Deficiency> defList = new ArrayList<Deficiency>();
+
+		for (int k = 0; k < listRooms.getLength(); ++k) {
+			if (((Element) listRooms.item(k)).getAttribute("no")
+					.equalsIgnoreCase(room)) {
+
+				// for each <trade> element
+				NodeList tradeNodes = ((Element) listRooms.item(k))
+						.getElementsByTagName("trade");
+				// if <trade type = tradeSelected>
+				for (int i = 0; i < tradeNodes.getLength(); ++i) {
+					if (((Element) tradeNodes.item(i)).getAttribute("type")
+							.equalsIgnoreCase(tradeSelected)) {
+
+						// get a list of all child deficiency elements
+						NodeList nodes = ((Element) tradeNodes.item(i))
+								.getElementsByTagName("deficiency");
+
+						for (int j = 0; j < nodes.getLength(); ++j)
+							defList.add(parseDeficiency(nodes.item(j)));
+					}
+				}
+			}
+		}
+		return defList;
+	}
+
 	private static Deficiency parseDeficiency(Node node) {
-	
+
 		Deficiency def = new Deficiency();
 		Element defElem = (Element) node;
-		
+
 		def.reportID = defElem.getAttribute(Deficiency.ID);
-		
-		def.completed =  Boolean.parseBoolean(defElem.getElementsByTagName(Deficiency.COMPLETED).item(0).getTextContent());
-		def.priority  =  Boolean.parseBoolean(defElem.getElementsByTagName(Deficiency.PRIORITY).item(0).getTextContent());
-		Element coor = ((Element)defElem.getElementsByTagName("coordinates").item(0));
+
+		def.completed = Boolean.parseBoolean(defElem
+				.getElementsByTagName(Deficiency.COMPLETED).item(0)
+				.getTextContent());
+		def.priority = Boolean.parseBoolean(defElem
+				.getElementsByTagName(Deficiency.PRIORITY).item(0)
+				.getTextContent());
+		Element coor = ((Element) defElem.getElementsByTagName("coordinates")
+				.item(0));
 		def.X = Integer.parseInt(coor.getAttribute(Deficiency.XCOORD));
 		def.Y = Integer.parseInt(coor.getAttribute(Deficiency.YCOORD));
-		
-		def.object = defElem.getElementsByTagName(Deficiency.OBJECT).item(0).getTextContent();
-		def.item = defElem.getElementsByTagName(Deficiency.ITEM).item(0).getTextContent();
-		def.verb = defElem.getElementsByTagName(Deficiency.VERB).item(0).getTextContent();
-		def.direction = defElem.getElementsByTagName(Deficiency.DIRECTION).item(0).getTextContent();
-		def.location = defElem.getElementsByTagName(Deficiency.LOCATION).item(0).getTextContent();
-		
+
+		def.object = defElem.getElementsByTagName(Deficiency.OBJECT).item(0)
+				.getTextContent();
+		def.item = defElem.getElementsByTagName(Deficiency.ITEM).item(0)
+				.getTextContent();
+		def.verb = defElem.getElementsByTagName(Deficiency.VERB).item(0)
+				.getTextContent();
+		def.direction = defElem.getElementsByTagName(Deficiency.DIRECTION)
+				.item(0).getTextContent();
+		def.location = defElem.getElementsByTagName(Deficiency.LOCATION)
+				.item(0).getTextContent();
+
 		return def;
 	}
-	
+
 	/** Gets element string value from XML file and converts it to an int */
 	public int parseIntFromString(Element eElement, String XMLTag) {
-	
-		String stringInit = eElement.getElementsByTagName(XMLTag).item(0).getTextContent();
+
+		String stringInit = eElement.getElementsByTagName(XMLTag).item(0)
+				.getTextContent();
 		int init = java.lang.Integer.parseInt(stringInit);
-		
+
 		return init;
-		
+
 	}
 }

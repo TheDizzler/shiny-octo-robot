@@ -14,27 +14,42 @@ public class TradeContent {
 	public static List<TradeItem>			ITEMS		= new ArrayList<TradeItem>();
 	
 	public static Map<String, TradeItem>	ITEM_MAP	= new HashMap<String, TradeItem>();
-	
+//	public static String room ="201";
 	static {
+		/*
+		addItem(new TradeItem("1", "Framing", room));
+		addItem(new TradeItem("2", "Mechanical", room));
+		addItem(new TradeItem("3", "Electrical", room));
+		addItem(new TradeItem("4", "Security", room));
+		addItem(new TradeItem("5", "HVAC", room));
+		addItem(new TradeItem("6", "Insulation", room));
 		
-		addItem(new TradeItem("1", "Framing"));
-		addItem(new TradeItem("2", "Mechanical"));
-		addItem(new TradeItem("3", "Electrical"));
-		addItem(new TradeItem("4", "Security"));
-		addItem(new TradeItem("5", "HVAC"));
-		addItem(new TradeItem("6", "Insulation"));
-		
-		addItem(new TradeItem("7", "Drywall"));
-		addItem(new TradeItem("8", "Paint"));
-		addItem(new TradeItem("9", "Mechanical"));
-		addItem(new TradeItem("10", "Electrical"));
-		addItem(new TradeItem("11", "Flooring"));
-		addItem(new TradeItem("12", "Cabinets"));
-		addItem(new TradeItem("13", "Countertops"));
-		addItem(new TradeItem("14", "Finish Carp."));
+		addItem(new TradeItem("7", "Drywall", room));
+		addItem(new TradeItem("8", "Paint", room));
+		addItem(new TradeItem("9", "Mechanical", room));
+		addItem(new TradeItem("10", "Electrical", room));
+		addItem(new TradeItem("11", "Flooring", room));
+		addItem(new TradeItem("12", "Cabinets", room));
+		addItem(new TradeItem("13", "Countertops", room));
+		addItem(new TradeItem("14", "Finish Carp.", room));
+		*/
+	
+	addItem(new TradeItem("1", "Framing"));
+	addItem(new TradeItem("2", "Mechanical" ));
+	addItem(new TradeItem("3", "Electrical" ));
+	addItem(new TradeItem("4", "Security" ));
+	addItem(new TradeItem("5", "HVAC" ));
+	addItem(new TradeItem("6", "Insulation" ));
+	
+	addItem(new TradeItem("7", "Drywall" ));
+	addItem(new TradeItem("8", "Paint" ));
+	addItem(new TradeItem("9", "Mechanical" ));
+	addItem(new TradeItem("10", "Electrical" ));
+	addItem(new TradeItem("11", "Flooring" ));
+	addItem(new TradeItem("12", "Cabinets" ));
+	addItem(new TradeItem("13", "Countertops" ));
+	addItem(new TradeItem("14", "Finish Carp."));
 	}
-	
-	
 	private static void addItem(TradeItem item) {
 	
 		ITEMS.add(item);
@@ -48,16 +63,23 @@ public class TradeContent {
 		
 		public String	id;
 		public String	trade;
+		//public String 	room;
 		/* All project deficiencies for this trade. */
 		public List<Deficiency> deficiencies;
 		
-		
 		public TradeItem(String id, String trade) {
-		
 			this.id = id;
 			this.trade = trade;
 			this.deficiencies = DeficiencyParser.getByTradeList(trade);
 		}
+		/*
+		public TradeItem(String id, String trade, String room) {
+			this.room = room;
+			this.id = id;
+			this.trade = trade;
+			this.deficiencies = DeficiencyParser.getByTradeList(trade, room);
+		}
+		*/
 		
 		@Override public String toString() {
 		
