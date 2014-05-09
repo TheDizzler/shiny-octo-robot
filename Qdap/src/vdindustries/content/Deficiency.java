@@ -30,16 +30,16 @@ public class Deficiency {
 	
 	
 	
-	String						trade;							// unnecessary?
+	public String				trade;							// unnecessary?
 																
-	String						reportID;						// Maybe have first three characters of ID from project name?
-	boolean						completed;
-	boolean						priority;
-	int							X, Y;
-	String						object, item, verb, direction, location;
+	public String				reportID;						// Maybe have first three characters of ID from project name?
+	public boolean				completed;
+	public boolean				priority;
+	public int					X, Y;
+	public String				object, item, verb, direction, location;
 	
-	String						roomNo;
-	String						floor;
+	public String				roomNo;
+	public String				floor;
 	
 	
 	

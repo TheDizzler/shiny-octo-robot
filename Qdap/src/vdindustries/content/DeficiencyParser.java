@@ -16,6 +16,7 @@ import org.xml.sax.SAXException;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
@@ -29,10 +30,10 @@ public class DeficiencyParser {
 	public static NodeList		listRoomNodes;
 	
 	public static NodeList		listTrades;
-	private static AssetManager		assMan;
+	private static AssetManager	assMan;
 	
 	
-	
+	/** Implementation: DeficiencyParser(getAssets()) */
 	public DeficiencyParser(AssetManager am) {
 	
 		assMan = am;
@@ -68,7 +69,7 @@ public class DeficiencyParser {
 		return 0;
 	}
 	
-	
+	/** NOT IMPLEMENTED. */
 	public static int outstandingDefByUnit(String unit) {
 	
 		
@@ -109,6 +110,8 @@ public class DeficiencyParser {
 				
 				for (int j = 0; j < nodes.getLength(); ++j)
 					defList.add(parseDeficiency(nodes.item(j)));
+				
+				break;
 			}
 		}
 		
@@ -116,8 +119,43 @@ public class DeficiencyParser {
 	}
 	
 	
+	public static List<Deficiency> getDefsByRoom(String roomNo) {
+	
+		List<Deficiency> defList = new ArrayList<Deficiency>();
+		
+		for (int i = 0; i < listRoomNodes.getLength(); ++i) {
+			
+			Element roomElem = ((Element) listRoomNodes.item(i));
+			if (roomElem.getAttribute(Deficiency.ROOMNO).equalsIgnoreCase(roomNo)) {
+				
+				NodeList nodes = roomElem.getElementsByTagName("deficiency");
+				
+				for (int j = 0; j < nodes.getLength(); ++j)
+					defList.add(parseDeficiency(nodes.item(j)));
+				
+				break;
+			}
+		}
+		
+		return defList;
+	}
+	
+	
+	/** Retrieves a list of rooms on a specific floor. */
+	public static NodeList getRoomsByFloor(String floorID) {
+	
+		for (int i = 0; i < listFloorNodes.getLength(); ++i) {
+			
+			Element current = (Element) listFloorNodes.item(i);
+			if (current.getAttribute(Deficiency.FLOORID).equals(floorID)) {
+				return current.getElementsByTagName(Deficiency.ROOM);
+			}
+		}
+		return null;
+	}
+	
 	/** Retrieves room plan image file location from it's room number. */
-	private static String getRoomImageFile(String roomNo) {
+	public static String getRoomImageFile(String roomNo) {
 	
 		for (int i = 0; i < listRoomNodes.getLength(); ++i) {
 			
@@ -129,14 +167,12 @@ public class DeficiencyParser {
 					getAttribute(Deficiency.ROOMIMAGE);
 			}
 		}
-		
 		return null;
 	}
 	
 	/** Retrieves floor plan image file location from it's ID. */
 	private static String getFloorImageFile(String floorID) {
 	
-		
 		for (int i = 0; i < listFloorNodes.getLength(); ++i) {
 			
 			Element current = (Element) listFloorNodes.item(i);
@@ -147,7 +183,6 @@ public class DeficiencyParser {
 					getAttribute(Deficiency.FLOORIMAGE);
 			}
 		}
-		
 		return null;
 	}
 	
@@ -180,10 +215,10 @@ public class DeficiencyParser {
 	
 	
 	public static void loadRoomPlan(ImageView image, String roomNo) {
-		
+	
 		String file = getRoomImageFile(roomNo);
-		try {
-			image.setImageDrawable(loadImageFromAsset(file));
+		try { 
+			image.setImageBitmap(loadBitmapFromAsset(file));
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -192,7 +227,7 @@ public class DeficiencyParser {
 	
 	
 	public static void loadFloorPlan(ImageView image, String floorID) {
-		
+	
 		String file = getFloorImageFile(floorID);
 		try {
 			image.setImageDrawable(loadImageFromAsset(file)); //CHANGE THIS LINE
@@ -202,9 +237,18 @@ public class DeficiencyParser {
 		}
 	}
 	
+	
+	
+	public static Bitmap loadBitmapFromAsset(String file) throws IOException {
+	
+		InputStream is = assMan.open(file);
+		return BitmapFactory.decodeStream(is);
+	}
+
+
 	/** Load an image from a directory on device.
 	 * NOT YET IMPLEMENTED */
-	private Drawable loadImageFromDirectory(String file) {
+	private static Drawable loadImageFromDirectory(String file) {
 	
 		
 //				try {
@@ -218,8 +262,8 @@ public class DeficiencyParser {
 	
 	/** Load an image from a URI.
 	 * NOT YET IMPLEMENTED */
-	private Drawable loadImageFromUri(String uri) {
-		
+	private static Drawable loadImageFromUri(String uri) {
+	
 		
 		return null;
 	}
@@ -227,7 +271,7 @@ public class DeficiencyParser {
 	
 	/** Loads an image from the assets directory. */
 	protected static Drawable loadImageFromAsset(String file) throws IOException {
-		
+	
 		InputStream is = assMan.open(file);
 		return Drawable.createFromStream(is, null);
 	}

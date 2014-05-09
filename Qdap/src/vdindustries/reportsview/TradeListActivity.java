@@ -27,7 +27,6 @@ public class TradeListActivity extends ActionBarActivity implements TradeListFra
 	
 	
 	
-	
 	@Override protected void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
@@ -43,7 +42,8 @@ public class TradeListActivity extends ActionBarActivity implements TradeListFra
 			
 			// In two-pane mode, list items should be given the
 			// 'activated' state when touched.
-			((TradeListFragment) getSupportFragmentManager().findFragmentById(R.id.trade_list)).setActivateOnItemClick(true);
+			((TradeListFragment) getSupportFragmentManager().
+				findFragmentById(R.id.trade_list)).setActivateOnItemClick(true);
 		}
 	}
 	
@@ -60,8 +60,8 @@ public class TradeListActivity extends ActionBarActivity implements TradeListFra
 			TradeDetailFragment fragment = new TradeDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
-										.replace(R.id.trade_detail_container, fragment)
-										.commit();
+				.replace(R.id.trade_detail_container, fragment)
+				.commit();
 			
 		} else {
 			// In single-pane mode, simply start the detail activity
