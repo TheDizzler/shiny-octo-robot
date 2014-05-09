@@ -215,7 +215,7 @@ public class DeficiencyParser {
 	
 	
 	/** Retrieve a list of room IDs by floorID. */
-	public static List<String> getRooms(String floorID) {
+	public static List<String> getRoomIDs(String floorID) {
 	
 		
 		List<String> rooms = new ArrayList<String>();
@@ -234,27 +234,12 @@ public class DeficiencyParser {
 				break;
 			}
 		}
-		
-		
-		
-		
-//		for (int i = 0; i < listFloorNodes.getLength(); ++i) {
-//			
-//			Element current = (Element) listFloorNodes.item(i);
-//			
-//			if (current.getAttribute(Deficiency.FLOORID).equals(floorID)) {
-//				listRoomNodes = current.getElementsByTagName(Deficiency.ROOM);
-//				rooms.add(((Element) listRoomNodes.item(i))
-//					.getAttribute("no"));
-//				
-//			}
-//		}
 		return rooms;
 	}
 	
 	
 	/** Retrieve a list of floor IDs. */
-	public static List<String> getFloors() {
+	public static List<String> getFloorIDs() {
 	
 		
 		List<String> floors = new ArrayList<String>();
