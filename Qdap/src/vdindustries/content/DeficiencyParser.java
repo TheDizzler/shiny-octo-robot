@@ -54,6 +54,36 @@ public class DeficiencyParser {
 	}
 	
 	
+	/** Builds a list of deficiencies by trade for each room. */
+	public static List<Deficiency> getByTradeList(String tradeSelected,
+			String room) {
+
+		List<Deficiency> defList = new ArrayList<Deficiency>();
+
+		for (int k = 0; k < listRooms.getLength(); ++k) {
+			if (((Element) listRooms.item(k)).getAttribute("no")
+					.equalsIgnoreCase(room)) {
+
+				// for each <trade> element
+				NodeList tradeNodes = ((Element) listRooms.item(k))
+						.getElementsByTagName("trade");
+				// if <trade type = tradeSelected>
+				for (int i = 0; i < tradeNodes.getLength(); ++i) {
+					if (((Element) tradeNodes.item(i)).getAttribute("type")
+							.equalsIgnoreCase(tradeSelected)) {
+
+						// get a list of all child deficiency elements
+						NodeList nodes = ((Element) tradeNodes.item(i))
+								.getElementsByTagName("deficiency");
+
+						for (int j = 0; j < nodes.getLength(); ++j)
+							defList.add(parseDeficiency(nodes.item(j)));
+					}
+				}
+			}
+		}
+		return defList;
+	}
 	/** Retrieves number of deficiencies in a room, completed & uncompleted */
 	public static int totalDefByUnit(String unit) {
 	
