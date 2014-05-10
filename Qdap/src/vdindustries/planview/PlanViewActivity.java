@@ -133,7 +133,6 @@ public class PlanViewActivity extends ActionBarActivity {
 		});
 		
 		flagBtns.add(btn);
-		
 	}
 	
 	

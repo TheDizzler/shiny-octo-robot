@@ -12,6 +12,7 @@ import java.util.List;
 import vdindustries.content.Deficiency;
 import vdindustries.content.DeficiencyParser;
 import vdindustries.masterflow.R;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -20,36 +21,45 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AbsoluteLayout;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
 public class Room extends ImageView {
-
-	private ArrayList<Button>	flagBtns;
-	ImageView					image;
-	Bitmap						plan;
-	Canvas						canvas;
-	List<Deficiency>			defs;
 	
-	private Context context;
+	private ArrayList<ImageButton>	flagBtns;
+	ImageView						image;
+	Bitmap							plan;
+	Canvas							canvas;
+	List<Deficiency>				defs;
 	
+	Bitmap							protoflag	= BitmapFactory.decodeResource(getResources(),
+													R.drawable.flag_grey);
+	
+	private Context					context;
+	public String					roomNo;
 	
 	public Room(Context context, String roomNo, ImageView img) {
 	
 		super(context);
+		
 		this.context = context;
 		this.image = img;
+		this.roomNo = roomNo;
+		defs = DeficiencyParser.getDefsByRoom(roomNo);
 		showRoom(roomNo);
+		
 	}
 	
 	
 	private void showRoom(String roomNo) {
-		
+	
 		defs = new ArrayList<Deficiency>();
-		flagBtns = new ArrayList<Button>();
+		flagBtns = new ArrayList<ImageButton>();
 		
 		Bitmap immutable = null;
 		String file = DeficiencyParser.getRoomImageFile(roomNo);
@@ -61,49 +71,69 @@ public class Room extends ImageView {
 		
 		plan = convertToMutable(context, immutable);
 		canvas = new Canvas(plan);
-		defs = DeficiencyParser.getDefsByRoom(roomNo);
+		
+//		placeDeficiencies();
+		
+		image.setImageBitmap(plan);
+	}
+	
+	public void placeDeficiencies() {
+	
 		
 		for (int i = 0; i < defs.size(); ++i) {
 			
 			Deficiency def = defs.get(i);
 			if (def.trade.equalsIgnoreCase("Framing")) {
-				LinearLayout layout = new LinearLayout(context);
-				layout.setOrientation(LinearLayout.VERTICAL);
+//				LinearLayout layout = new LinearLayout(context);
+//				
+//				layout.setLayoutParams(new LayoutParams(
+//					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 				
-				layout.setLayoutParams(new LayoutParams(
-					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+//				Bitmap flag;
+//				if (def.completed)
+//					flag = BitmapFactory.decodeResource(getResources(),
+//						R.drawable.flag_grey);
+//				else if (def.priority)
+//					flag = BitmapFactory.decodeResource(getResources(),
+//						R.drawable.flag_red);
+//				else
+//					flag = BitmapFactory.decodeResource(getResources(),
+//						R.drawable.flag_blue);
 				
-				Bitmap flag;
-				if (def.completed)
-					flag = BitmapFactory.decodeResource(getResources(),
-						R.drawable.flag_grey);
-				else if (def.priority)
-					flag = BitmapFactory.decodeResource(getResources(),
-						R.drawable.flag_red);
-				else
-					flag = BitmapFactory.decodeResource(getResources(),
-						R.drawable.flag_blue);
 				
 				
 				int x = defs.get(i).X;
 				int y = defs.get(i).Y;
-				canvas.drawBitmap(flag, x, y - flag.getHeight(), null);
-				createFlagButton(roomNo, x, y);
+				
+				
+//				canvas.drawBitmap(flag, x, y - flag.getHeight(), null);
+				ImageButton btn = createFlagButton(roomNo, x, y);
+
+//				btn.setLayoutParams(absParams);
+				
+				
+				flagBtns.add(btn);
+				
 			}
 		}
 		
-		
-		image.setImageBitmap(plan);
-		
 	}
 	
-	/** Creates an invisible button over a flag. 
-	 * @param roomNo */
-	private void createFlagButton(final String roomNo, int x, int y) {
 	
-		Button btn = new Button(context);
-		btn.setVisibility(View.VISIBLE);
-		btn.setBackgroundColor(Color.TRANSPARENT);
+	/** Creates an invisible button over a flag.
+	 * @param roomNo */
+	private ImageButton createFlagButton(final String roomNo, int x, int y) {
+	
+		
+		ImageButton btn = new ImageButton(context);
+		btn.setBackgroundResource(R.drawable.flag_red);
+		
+		btn.bringToFront();
+//		btn.setVisibility(View.VISIBLE);
+//		btn.setBackgroundColor(Color.TRANSPARENT);
+//		btn.setWidth(protoflag.getWidth());
+//		btn.setHeight(protoflag.getHeight());
+//		btn.setText(roomNo);
 		btn.setX(x);
 		btn.setY(y);
 		
@@ -111,13 +141,13 @@ public class Room extends ImageView {
 			
 			@Override public void onClick(View v) {
 			
-				Toast.makeText(context, roomNo, Toast.LENGTH_SHORT)
+				Toast.makeText(context, "Oh hi room " + roomNo, Toast.LENGTH_SHORT)
 					.show();
 			}
 		});
 		
-		flagBtns.add(btn);
-		
+		btn.draw(canvas);
+		return btn;
 	}
 	
 	

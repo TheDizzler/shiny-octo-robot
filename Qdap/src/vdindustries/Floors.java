@@ -7,15 +7,19 @@ import java.util.List;
 import vdindustries.content.DeficiencyParser;
 import vdindustries.masterflow.R;
 import android.content.Context;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class Floors extends ActionBarActivity {
@@ -25,9 +29,15 @@ public class Floors extends ActionBarActivity {
 	List<String>					listDataHeader;
 	HashMap<String, List<String>>	listDataChild;
 	
+	LinearLayout					layout;
+	LinearLayout.LayoutParams		params;
+	
 	ImageView						currentImage;
+	Room							currentRoom;
 	
 	Context							context;
+	
+	ImageButton						btn;
 	
 	@Override protected void onCreate(Bundle savedInstanceState) {
 	
@@ -35,15 +45,20 @@ public class Floors extends ActionBarActivity {
 		setContentView(R.layout.fragment_floors);
 		context = this;
 		
-		currentImage = (ImageView) findViewById(R.id.imageView1);
+		layout = (LinearLayout) findViewById(R.id.room_layout);
+		params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+			LinearLayout.LayoutParams.WRAP_CONTENT);
+		
+		
+		
 		
 		// get the listview
 		expListView = (ExpandableListView) findViewById(R.id.list);
-//		expListView = new ExpandableListView(this);
 		
 		// preparing list data
 		prepareListData();
 		
+		currentImage = (ImageView) findViewById(R.id.imageView1);
 		
 		listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
 		
@@ -59,7 +74,10 @@ public class Floors extends ActionBarActivity {
 					"Group Clicked " + listDataHeader.get(groupPosition),
 					Toast.LENGTH_SHORT).show();
 				
-				DeficiencyParser.loadFloorPlan(currentImage, listDataHeader.get(groupPosition));
+				currentRoom = null;
+				currentImage = (ImageView) findViewById(R.id.imageView1);
+				DeficiencyParser.loadFloorPlan(currentImage,
+					listDataHeader.get(groupPosition));
 				
 				
 				
@@ -93,18 +111,40 @@ public class Floors extends ActionBarActivity {
 		// Listview on child click listener
 		expListView.setOnChildClickListener(new OnChildClickListener() {
 			
-			@Override public boolean onChildClick(ExpandableListView parent, View v,
-													int groupPosition, int childPosition, long id) {
+			public boolean onChildClick(ExpandableListView parent, View v,
+										int groupPosition, int childPosition,
+										long id) {
 			
 				
-				new Room(context, listDataChild.get(listDataHeader.get(groupPosition)).get(
-					childPosition), currentImage);
+				currentRoom = new Room(context,
+					listDataChild.get(listDataHeader.get(groupPosition)).
+						get(childPosition), currentImage);
+				
+//				currentRoom.placeDeficiencies();
+//				LayoutParams lp = v.getLayoutParams();
+				btn = new ImageButton(context);
+				btn.setImageResource(R.drawable.flag_red);
+				btn.setLayoutParams(params);
+				btn.setX(200);
+				btn.setY(200);
+				layout.addView(btn);
 				
 				
 				return false;
 			}
 		});
 	}
+	
+//	@Override public void onBackPressed() {
+//	
+//		
+//		if (currentRoom != null) {
+//			currentRoom = null;
+//			currentImage = null;
+//		} else
+//			super.onBackPressed();
+//			
+//	}
 	
 	/* Preparing the list data */
 	private void prepareListData() {
@@ -129,6 +169,4 @@ public class Floors extends ActionBarActivity {
 		listDataChild.put(listDataHeader.get(1), floor3);
 		listDataChild.put(listDataHeader.get(2), ph);
 	}
-	
-	
 }
