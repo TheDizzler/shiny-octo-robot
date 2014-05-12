@@ -10,12 +10,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class Floors extends Activity {
@@ -24,12 +28,47 @@ public class Floors extends Activity {
 	ExpandableListView expListView;
 	List<String> listDataHeader;
 	HashMap<String, List<String>> listDataChild;
-
+	  ArrayList<String> tradesList;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_floors);
-
+//		listView1
+//		http://www.learn-android-easily.com/2013/05/populating-listview-with-arraylist.html
+		   // Get the reference of ListViewAnimals
+        ListView trades=(ListView)findViewById(R.id.listView1);
+        
+         tradesList = new ArrayList<String>();
+         tradesList.add("DOG");
+         tradesList.add("CAT");
+         tradesList.add("HORSE");
+         tradesList.add("ELEPHANT");
+         tradesList.add("LION");
+         tradesList.add("COW");
+         tradesList.add("MONKEY");
+         tradesList.add("DEER");
+         tradesList.add("RABBIT");
+         tradesList.add("BEER");
+         tradesList.add("DONKEY");
+         tradesList.add("LAMB");
+         tradesList.add("GOAT");
+         
+         ArrayAdapter<String> arrayAdapter =      
+                 new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, tradesList);
+                 // Set The Adapter
+                 trades.setAdapter(arrayAdapter); 
+                 
+                 // register onClickListener to handle click events on each item
+                 trades.setOnItemClickListener(new OnItemClickListener()
+                    {
+                             // argument position gives the index of item which is clicked
+                            public void onItemClick(AdapterView<?> arg0, View v,int position, long arg3)
+                            {
+                                
+                                    String selectedAnimal=tradesList.get(position);
+                                    Toast.makeText(getApplicationContext(), "Animal Selected : "+selectedAnimal,   Toast.LENGTH_LONG).show();
+                                 }
+                    });
 		// get the listview
 		expListView = (ExpandableListView) findViewById(R.id.list);
 
@@ -50,18 +89,9 @@ public class Floors extends Activity {
 				// Toast.makeText(getApplicationContext(),
 				// "Group Clicked " + listDataHeader.get(groupPosition),
 				// Toast.LENGTH_SHORT).show();
-				if (listDataHeader.get(groupPosition).equals("Floor 2")) {
+			
 					ImageView img= (ImageView) findViewById(R.id.imageView1);
-				    DeficiencyParser.loadFloorPlan(img, "Floor 2");	
-				}
-				if (listDataHeader.get(groupPosition).equals("Floor 3")) {
-					ImageView img= (ImageView) findViewById(R.id.imageView1);
-				    DeficiencyParser.loadFloorPlan(img, "Floor 3");	
-				}
-				if (listDataHeader.get(groupPosition).equals("PH")) {
-					ImageView img= (ImageView) findViewById(R.id.imageView1);
-				    DeficiencyParser.loadFloorPlan(img, "PH");	
-				}
+				    DeficiencyParser.loadFloorPlan(img, listDataHeader.get(groupPosition));	
 			
 	
 				return false;
