@@ -54,6 +54,10 @@
             android:name="qdap.FloorFragment"
             android:label="@string/title_activity_floor_fragment" >
         </activity>
+        <activity
+            android:name="qdap.Deficiency"
+            android:label="@string/title_activity_deficiency" >
+        </activity>
     </application>
 
 </manifest>

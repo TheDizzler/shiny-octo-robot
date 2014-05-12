@@ -172,4 +172,9 @@ public class Floors extends Activity {
 		listDataChild.put(listDataHeader.get(1), floor3);
 		listDataChild.put(listDataHeader.get(2), ph);
 	}
+	
+	public void deficiency(View view) {
+	    Intent intent = new Intent(this, Deficiency.class);
+	    startActivity(intent);
+	}
 }

@@ -20,5 +20,6 @@
     <string name="title_activity_checklist">Checklist</string>
     <string name="title_activity_expandable_list_fragment">ExpandableListFragment</string>
     <string name="title_activity_floor_fragment">FloorFragment</string>
+    <string name="title_activity_deficiency">Deficiency</string>
 
 </resources>

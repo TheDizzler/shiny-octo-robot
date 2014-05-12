@@ -24,4 +24,15 @@
         android:layout_toRightOf="@+id/imageView1" >
     </ListView>
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView1"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="78dp"
+        android:layout_marginRight="103dp"
+        android:text="Button"
+        android:onClick="deficiency" />
+
 </RelativeLayout>
