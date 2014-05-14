@@ -38,30 +38,28 @@ public class Deficiency extends Activity {
 
         setContentView(R.layout.fragment_deficiency);
                 
-        final WheelView country = (WheelView) findViewById(R.id.country);
-        country.setVisibleItems(3);
-        country.setViewAdapter(new CountryAdapter(this));
+        final WheelView specificItem = (WheelView) findViewById(R.id.specificItem);
+        specificItem.setVisibleItems(3);
+        specificItem.setViewAdapter(new SpecificItemAdapter(this));
         
-        final WheelView deficiency = (WheelView) findViewById(R.id.deficiency);
-        deficiency.setVisibleItems(4);
-        deficiency.setViewAdapter(new DeficiencyAdapter(this));
+        final WheelView item = (WheelView) findViewById(R.id.item);
+        item.setVisibleItems(4);
+        item.setViewAdapter(new ItemAdapter(this));
         
-        final WheelView d = (WheelView) findViewById(R.id.D);
-        d.setVisibleItems(4);
-        d.setViewAdapter(new D(this));
+        final WheelView verb = (WheelView) findViewById(R.id.verb);
+        verb.setVisibleItems(4);
+        verb.setViewAdapter(new VerbAdapter(this));
         
+        final WheelView direction = (WheelView) findViewById(R.id.direction);
+        direction.setVisibleItems(4);
+        direction.setViewAdapter(new DirectionAdapter(this));
         
-//        final String cities[][] = new String[][] {
-//        		new String[] {"New York", "Washington", "Chicago", "Atlanta", "Orlando"},
-//        		new String[] {"Ottawa", "Vancouver", "Toronto", "Windsor", "Montreal"},
-//        		new String[] {"Kiev", "Dnipro", "Lviv", "Kharkiv"},
-//        		new String[] {"Paris", "Bordeaux"},
-//        		};
-//        
-//        final WheelView city = (WheelView) findViewById(R.id.city);
-//        city.setVisibleItems(5);
+        final WheelView location = (WheelView) findViewById(R.id.location);
+        location.setVisibleItems(4);
+        location.setViewAdapter(new LocationAdapter(this));
+        
 
-        country.addChangingListener(new OnWheelChangedListener() {
+        specificItem.addChangingListener(new OnWheelChangedListener() {
 			public void onChanged(WheelView wheel, int oldValue, int newValue) {
 //			    if (!scrolling) {
 //			        updateCities(city, cities, newValue);
@@ -69,139 +67,190 @@ public class Deficiency extends Activity {
 			}
 		});
         
-        country.addScrollingListener( new OnWheelScrollListener() {
+        specificItem.addScrollingListener( new OnWheelScrollListener() {
             public void onScrollingStarted(WheelView wheel) {
                 scrolling = true;
             }
             public void onScrollingFinished(WheelView wheel) {
                 scrolling = false;
-//                updateCities(city, cities, country.getCurrentItem());
             }
         });
 
-        country.setCurrentItem(1);
+        specificItem.setCurrentItem(1);
     }
     
-//    /**
-//     * Updates the city wheel
-//     */
-//    private void updateCities(WheelView city, String cities[][], int index) {
-//        ArrayWheelAdapter<String> adapter =
-//            new ArrayWheelAdapter<String>(this, cities[index]);
-//        adapter.setTextSize(18);
-//        city.setViewAdapter(adapter);
-//        city.setCurrentItem(cities[index].length / 2);        
-//    }
-    
     /**
-     * Adapter for countries
+     * Adapter for SpecificItem
      */
-    private class CountryAdapter extends AbstractWheelTextAdapter {
-        // Countries names
-        private String countries[] =
-            new String[] {"USA", "Canada", "Ukraine", "France"};
-        // Countries flags
+    private class SpecificItemAdapter extends AbstractWheelTextAdapter {
+
+        private String specificItem[] =
+            new String[] {"Drywall", "Tub/Showerbase", "Towel bar", "Glass Door", "Slider Door", "Pocket Door", "Shower Niche","Bench","Door", "Closet","Exterior Cladding", "Canopy", "Railing", "Shear-Wall", "Electrical Panel", "Communication Box","Vanity","Cabinet", "Desk Space" };
+
  
         /**
          * Constructor
          */
-        protected CountryAdapter(Context context) {
-            super(context, R.layout.country_layout, NO_RESOURCE);
+        protected SpecificItemAdapter(Context context) {
+            super(context, R.layout.specific_item_layout, NO_RESOURCE);
             
-            setItemTextResource(R.id.country_name);
+            setItemTextResource(R.id.specific_item_name);
         }
         
   
         @Override
         public View getItem(int index, View cachedView, ViewGroup parent) {
             View view = super.getItem(index, cachedView, parent);
-            ImageView img = (ImageView) view.findViewById(R.id.flag);
-       
+   
             return view;
         }
         
         @Override
         public int getItemsCount() {
-            return countries.length;
+            return specificItem.length;
         }
         
         @Override
         protected CharSequence getItemText(int index) {
-            return countries[index];
+            return specificItem[index];
         }
     }
     
     /**
-     * Adapter for countries
+     * Adapter for Item
      */
-    private class DeficiencyAdapter extends AbstractWheelTextAdapter {
-        // Countries names
-        private String deficiency[] =
-            new String[] {"asdf", "aa", "sdf", "ewr"};
+    private class ItemAdapter extends AbstractWheelTextAdapter {
+
+        private String item[] =
+            new String[] {"Backing", "Joist", "Plywood", "Wall", "Wing Wall", "Stud", "Plate", "Dimensions", "Rough-Opening","Poly-Liner", "Header", "Hold-Down", "Anchor", "Jamb", "Cripple" };
  
         /**
          * Constructor
          */
-        protected DeficiencyAdapter(Context context) {
-            super(context, R.layout.deficiency_layout, NO_RESOURCE);
+        protected ItemAdapter(Context context) {
+            super(context, R.layout.item_layout, NO_RESOURCE);
             
-            setItemTextResource(R.id.deficiency_name);
+            setItemTextResource(R.id.item_name);
         }
         
   
         @Override
         public View getItem(int index, View cachedView, ViewGroup parent) {
             View view = super.getItem(index, cachedView, parent);
-//            ImageView img = (ImageView) view.findViewById(R.id.flag);
-//            img.setImageResource(flags[index]);
             return view;
         }
         
         @Override
         public int getItemsCount() {
-            return deficiency.length;
+            return item.length;
         }
         
         @Override
         protected CharSequence getItemText(int index) {
-            return deficiency[index];
+            return item[index];
         }
     }
     
     /**
-     * Adapter for countries
+     * Adapter for Verb
      */
-    private class D extends AbstractWheelTextAdapter {
-        // Countries names
-        private String d[] =
-            new String[] {"aaaaaaa", "aaaaa", "saaaadf", "ewaaaar"};
+    private class VerbAdapter extends AbstractWheelTextAdapter {
+
+        private String verb[] =
+            new String[] {"Missing", "Crowned", "Bowed", "Split", "Incorrect","Not-Plumb","Not-Square","Not-Level","Not-Installed","Not-Aligned","Not-Secured","Off","Undersized","Oversized","Reduce","Enlarge","Box-Out","Replace","Proud","Extend","Relocate","Subtract","Add","Center","To Be"};
  
         /**
          * Constructor
          */
-        protected D(Context context) {
-            super(context, R.layout.d_layout, NO_RESOURCE);
+        protected VerbAdapter(Context context) {
+            super(context, R.layout.verb_layout, NO_RESOURCE);
             
-            setItemTextResource(R.id.d_name);
+            setItemTextResource(R.id.verb_name);
         }
         
   
         @Override
         public View getItem(int index, View cachedView, ViewGroup parent) {
             View view = super.getItem(index, cachedView, parent);
-//            ImageView img = (ImageView) view.findViewById(R.id.flag);
-//            img.setImageResource(flags[index]);
             return view;
         }
         
         @Override
         public int getItemsCount() {
-            return d.length;
+            return verb.length;
         }
         
         @Override
         protected CharSequence getItemText(int index) {
-            return d[index];
+            return verb[index];
+        }
+    }
+    /**
+     * Adapter for direction
+     */
+    private class DirectionAdapter extends AbstractWheelTextAdapter {
+
+        private String verb[] =
+            new String[] {"@", "Below", "Above", "Right of", "Left of","Behind","Infront","To","By"};
+ 
+        /**
+         * Constructor
+         */
+        protected DirectionAdapter(Context context) {
+            super(context, R.layout.verb_layout, NO_RESOURCE);
+            
+            setItemTextResource(R.id.verb_name);
+        }
+        
+  
+        @Override
+        public View getItem(int index, View cachedView, ViewGroup parent) {
+            View view = super.getItem(index, cachedView, parent);
+            return view;
+        }
+        
+        @Override
+        public int getItemsCount() {
+            return verb.length;
+        }
+        
+        @Override
+        protected CharSequence getItemText(int index) {
+            return verb[index];
+        }
+    }
+    /**
+     * Adapter for Location
+     */
+    private class LocationAdapter extends AbstractWheelTextAdapter {
+        // Countries names
+        private String verb[] =
+            new String[] {"Corner", "Floor", "Ceiling", "Kitchen", "Living","Dining","Bathroom","Entry","Laundry","Closet","Storage","Den","Opposite Side","TV Center","Window","Suite Entry"};
+ 
+        /**
+         * Constructor
+         */
+        protected LocationAdapter(Context context) {
+            super(context, R.layout.verb_layout, NO_RESOURCE);
+            
+            setItemTextResource(R.id.verb_name);
+        }
+        
+  
+        @Override
+        public View getItem(int index, View cachedView, ViewGroup parent) {
+            View view = super.getItem(index, cachedView, parent);
+            return view;
+        }
+        
+        @Override
+        public int getItemsCount() {
+            return verb.length;
+        }
+        
+        @Override
+        protected CharSequence getItemText(int index) {
+            return verb[index];
         }
     }
 }

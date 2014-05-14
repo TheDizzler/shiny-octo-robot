@@ -6,10 +6,14 @@ import java.util.List;
 
 import vdindustries.masterflow.R;
 import vdindustries.masterflow.content.DeficiencyParser;
+import vdindustries.masterflow.content.TradeContent.TradeItem;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnLongClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -37,21 +41,27 @@ public class Floors extends Activity {
 //		http://www.learn-android-easily.com/2013/05/populating-listview-with-arraylist.html
 		   // Get the reference of ListViewAnimals
         ListView trades=(ListView)findViewById(R.id.listView1);
-        
+        View roughins = getLayoutInflater().inflate(R.layout.roughins, null);
+        trades.addHeaderView(roughins);
          tradesList = new ArrayList<String>();
-         tradesList.add("DOG");
-         tradesList.add("CAT");
-         tradesList.add("HORSE");
-         tradesList.add("ELEPHANT");
-         tradesList.add("LION");
-         tradesList.add("COW");
-         tradesList.add("MONKEY");
-         tradesList.add("DEER");
-         tradesList.add("RABBIT");
-         tradesList.add("BEER");
-         tradesList.add("DONKEY");
-         tradesList.add("LAMB");
-         tradesList.add("GOAT");
+         tradesList.add("Framing");
+         tradesList.add("Mechanical");
+         tradesList.add("Electrical");
+         tradesList.add("Security");
+         tradesList.add("HVAC");
+         tradesList.add("Insulation");
+         
+//         View finishes = getLayoutInflater().inflate(R.layout.finishes, null);
+         tradesList.add("FINISHES");    
+         tradesList.add("Drywall");   
+         tradesList.add("Paint");
+         tradesList.add("Mechanical");
+         tradesList.add("Electrical");
+         tradesList.add("Flooring");
+         tradesList.add("Cabinets");
+         tradesList.add("Countertops");
+         tradesList.add("Finish Carp.");
+  
          
          ArrayAdapter<String> arrayAdapter =      
                  new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, tradesList);
@@ -146,6 +156,27 @@ public class Floors extends Activity {
 				return false;
 			}
 		});
+//		ImageView imageView= (ImageView) findViewById(R.id.imageView1);
+//		imageView.setOnTouchListener(new OnTouchListener()
+//	      {
+//			
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				// TODO Auto-generated method stub
+//			     float x = event.getX(); 
+//		           float y = event.getY();
+//				return false;
+//			}
+//	      });
+//	    imageView.setOnLongClickListener(new OnLongClickListener() {
+//
+//	        @Override
+//	        public boolean onLongClick(View v) {
+//	
+//	            return true;
+//	        }
+//	    });
+	    
 	}
 
 	/*

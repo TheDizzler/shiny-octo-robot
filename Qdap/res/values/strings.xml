@@ -13,9 +13,11 @@
     <string name="checklists">Checklists</string>
     <string name="reports">Reports</string>
     <string name="photo">Photo Gallery</string>
+    <string name="deficiency">Select a Deficiency</string>
+    <string name="roughins">Rough-Ins</string>
+    <string name="finishes">Finishes</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_categories">Categories</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_floors">Floors</string>
     <string name="title_activity_checklist">Checklist</string>
     <string name="title_activity_expandable_list_fragment">ExpandableListFragment</string>
