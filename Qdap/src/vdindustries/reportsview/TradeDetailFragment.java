@@ -1,7 +1,5 @@
 package vdindustries.reportsview;
 
-import org.w3c.dom.Element;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import vdindustries.masterflow.R;
-import vdindustries.masterflow.content.DeficiencyParser;
 import vdindustries.masterflow.content.TradeContent;
-import vdindustries.masterflow.content.TradeContent.TradeItem;
 
 /** A fragment representing a single Trade detail screen.
  * This fragment is either contained in a {@link TradeListActivity} in two-pane

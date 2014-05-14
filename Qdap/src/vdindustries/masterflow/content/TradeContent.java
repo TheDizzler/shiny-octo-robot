@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 
 public class TradeContent {
 	

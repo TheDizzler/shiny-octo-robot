@@ -6,14 +6,10 @@ import java.util.List;
 
 import vdindustries.masterflow.R;
 import vdindustries.masterflow.content.DeficiencyParser;
-import vdindustries.masterflow.content.TradeContent.TradeItem;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnLongClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -172,8 +168,8 @@ public class Floors extends Activity {
 //
 //	        @Override
 //	        public boolean onLongClick(View v) {
-//	
-//	            return true;
+//
+//	            return false;
 //	        }
 //	    });
 	    

@@ -1,36 +1,20 @@
 package qdap;
 
 import vdindustries.masterflow.R;
-import vdindustries.masterflow.R.id;
-import vdindustries.masterflow.R.layout;
-import vdindustries.masterflow.R.menu;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
-
-import vdindustries.masterflow.R;
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
-import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.content.res.Resources;
 
 public class Deficiency extends Activity {
     // Scrolling flag
-    private boolean scrolling = false;
+    private boolean scrolling;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,23 +24,37 @@ public class Deficiency extends Activity {
                 
         final WheelView specificItem = (WheelView) findViewById(R.id.specificItem);
         specificItem.setVisibleItems(3);
-        specificItem.setViewAdapter(new SpecificItemAdapter(this));
+        SpecificItemAdapter specItemAdapter = new SpecificItemAdapter(this);
+        specificItem.setViewAdapter(specItemAdapter);
+        //gets the current item of the wheel for specific item
+        specItemAdapter.getCurrentItem(specificItem.getCurrentItem());
         
         final WheelView item = (WheelView) findViewById(R.id.item);
         item.setVisibleItems(4);
-        item.setViewAdapter(new ItemAdapter(this));
+        ItemAdapter itemAdapter = new ItemAdapter(this);
+        item.setViewAdapter(itemAdapter);
+        //gets the current item of the wheel for  item
+        itemAdapter.getCurrentItem(item.getCurrentItem());
         
         final WheelView verb = (WheelView) findViewById(R.id.verb);
         verb.setVisibleItems(4);
-        verb.setViewAdapter(new VerbAdapter(this));
+        VerbAdapter verbAdapter = new VerbAdapter(this);
+        verb.setViewAdapter(verbAdapter);
+        //gets the current item of the wheel for  verb
+        verbAdapter.getCurrentItem(verb.getCurrentItem());
+        
         
         final WheelView direction = (WheelView) findViewById(R.id.direction);
         direction.setVisibleItems(4);
-        direction.setViewAdapter(new DirectionAdapter(this));
+        DirectionAdapter dirAdapter = new DirectionAdapter(this);
+        direction.setViewAdapter(dirAdapter);
+        dirAdapter.getCurrentItem(direction.getCurrentItem());
         
         final WheelView location = (WheelView) findViewById(R.id.location);
         location.setVisibleItems(4);
-        location.setViewAdapter(new LocationAdapter(this));
+        LocationAdapter locationAdapter = new LocationAdapter(this);
+        location.setViewAdapter(locationAdapter);
+        locationAdapter.getCurrentItem(location.getCurrentItem());
         
 
         specificItem.addChangingListener(new OnWheelChangedListener() {
@@ -79,6 +77,8 @@ public class Deficiency extends Activity {
         specificItem.setCurrentItem(1);
     }
     
+    
+    
     /**
      * Adapter for SpecificItem
      */
@@ -87,17 +87,20 @@ public class Deficiency extends Activity {
         private String specificItem[] =
             new String[] {"Drywall", "Tub/Showerbase", "Towel bar", "Glass Door", "Slider Door", "Pocket Door", "Shower Niche","Bench","Door", "Closet","Exterior Cladding", "Canopy", "Railing", "Shear-Wall", "Electrical Panel", "Communication Box","Vanity","Cabinet", "Desk Space" };
 
- 
+        
         /**
          * Constructor
          */
         protected SpecificItemAdapter(Context context) {
             super(context, R.layout.specific_item_layout, NO_RESOURCE);
-            
             setItemTextResource(R.id.specific_item_name);
         }
         
-  
+        public String getCurrentItem(int number) {
+        	String strselected_txt=specificItem[number];
+            return strselected_txt;
+        }
+        
         @Override
         public View getItem(int index, View cachedView, ViewGroup parent) {
             View view = super.getItem(index, cachedView, parent);
@@ -133,7 +136,10 @@ public class Deficiency extends Activity {
             setItemTextResource(R.id.item_name);
         }
         
-  
+        public String getCurrentItem(int number) {
+        	String strselected_txt=item[number];
+            return strselected_txt;
+        }
         @Override
         public View getItem(int index, View cachedView, ViewGroup parent) {
             View view = super.getItem(index, cachedView, parent);
@@ -168,7 +174,10 @@ public class Deficiency extends Activity {
             setItemTextResource(R.id.verb_name);
         }
         
-  
+        public String getCurrentItem(int number) {
+        	String strselected_txt=verb[number];
+            return strselected_txt;
+        }
         @Override
         public View getItem(int index, View cachedView, ViewGroup parent) {
             View view = super.getItem(index, cachedView, parent);
@@ -190,19 +199,22 @@ public class Deficiency extends Activity {
      */
     private class DirectionAdapter extends AbstractWheelTextAdapter {
 
-        private String verb[] =
+        private String direction[] =
             new String[] {"@", "Below", "Above", "Right of", "Left of","Behind","Infront","To","By"};
  
         /**
          * Constructor
          */
         protected DirectionAdapter(Context context) {
-            super(context, R.layout.verb_layout, NO_RESOURCE);
+            super(context, R.layout.direction_layout, NO_RESOURCE);
             
-            setItemTextResource(R.id.verb_name);
+            setItemTextResource(R.id.direction_name);
         }
         
-  
+        public String getCurrentItem(int number) {
+        	String strselected_txt=direction[number];
+            return strselected_txt;
+        }
         @Override
         public View getItem(int index, View cachedView, ViewGroup parent) {
             View view = super.getItem(index, cachedView, parent);
@@ -211,12 +223,12 @@ public class Deficiency extends Activity {
         
         @Override
         public int getItemsCount() {
-            return verb.length;
+            return direction.length;
         }
         
         @Override
         protected CharSequence getItemText(int index) {
-            return verb[index];
+            return direction[index];
         }
     }
     /**
@@ -224,19 +236,22 @@ public class Deficiency extends Activity {
      */
     private class LocationAdapter extends AbstractWheelTextAdapter {
         // Countries names
-        private String verb[] =
+        private String location[] =
             new String[] {"Corner", "Floor", "Ceiling", "Kitchen", "Living","Dining","Bathroom","Entry","Laundry","Closet","Storage","Den","Opposite Side","TV Center","Window","Suite Entry"};
  
         /**
          * Constructor
          */
         protected LocationAdapter(Context context) {
-            super(context, R.layout.verb_layout, NO_RESOURCE);
+            super(context, R.layout.location_layout, NO_RESOURCE);
             
-            setItemTextResource(R.id.verb_name);
+            setItemTextResource(R.id.location_name);
         }
         
-  
+        public String getCurrentItem(int number) {
+        	String strselected_txt=location[number];
+            return strselected_txt;
+        }
         @Override
         public View getItem(int index, View cachedView, ViewGroup parent) {
             View view = super.getItem(index, cachedView, parent);
@@ -245,12 +260,12 @@ public class Deficiency extends Activity {
         
         @Override
         public int getItemsCount() {
-            return verb.length;
+            return location.length;
         }
         
         @Override
         protected CharSequence getItemText(int index) {
-            return verb[index];
+            return location[index];
         }
     }
 }
