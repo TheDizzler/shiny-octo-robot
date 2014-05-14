@@ -1,18 +1,13 @@
 package vdindustries.reportsview;
 
-import org.w3c.dom.Element;
-
+import vdindustries.content.TradeContent;
+import vdindustries.masterflow.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
-import vdindustries.content.DeficiencyParser;
-import vdindustries.content.TradeContent;
-import vdindustries.content.TradeContent.TradeItem;
-import vdindustries.masterflow.R;
 
 /**
  * A fragment representing a single Trade detail screen. This fragment is either
@@ -31,6 +26,7 @@ public class TradeDetailFragment extends Fragment {
 
 	ReportItem reportListItem[];
 	private ListView reportListView;
+	static ReportItemAdapter adapter;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -67,19 +63,13 @@ public class TradeDetailFragment extends Fragment {
 		if (tradeItem != null) {
 			reportListItem = new ReportItem[tradeItem.deficiencies.size()];
 			for (int i = 0; i < tradeItem.deficiencies.size(); ++i) {
-				reportListItem[i] = new ReportItem(tradeItem.deficiencies
-						.get(i).getCompleted(), tradeItem.deficiencies.get(i)
-						.toString(), " test: " + i);
+				reportListItem[i] = new ReportItem(
+						tradeItem.deficiencies.get(i));
+
 			}
-			ReportItemAdapter adapter = new ReportItemAdapter(getActivity(),
-					R.layout.report_item_layout, reportListItem);
-			/*
-			 * StringBuilder stringDef = new StringBuilder(); for (int i = 0; i
-			 * < tradeItem.deficiencies.size(); ++i) {
-			 * stringDef.append(tradeItem.deficiencies.get(i).toString() +
-			 * "\n"); } ((TextView) rootView.findViewById(R.id.trade_detail))
-			 * .setText(tradeItem.deficiencies.size() + "\n" + stringDef);
-			 */
+			/* ReportItemAdapter */adapter = new ReportItemAdapter(
+					getActivity(), R.layout.report_item_layout, reportListItem);
+			
 			reportListView = (ListView) rootView
 					.findViewById(R.id.trade_detail);
 			reportListView.setAdapter(adapter);
@@ -88,5 +78,9 @@ public class TradeDetailFragment extends Fragment {
 
 		return rootView;
 	}
-
+ 
+	public static void setChecked() {
+		
+	//	adapter.notifyDataSetChanged();
+	}
 }

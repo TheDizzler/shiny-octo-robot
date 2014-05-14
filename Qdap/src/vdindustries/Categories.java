@@ -21,13 +21,17 @@ public class Categories extends ActionBarActivity {
 	
 	public static DeficiencyParser	parser;
 	
-	
+	public static void defParse(){
+		parser = new DeficiencyParser();
+	}
 	@Override protected void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_categories);
 		
-		parser = new DeficiencyParser(getAssets());
+		//parser = new DeficiencyParser(getAssets());
+		//parser = new DeficiencyParser();
+defParse();		
 		
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()

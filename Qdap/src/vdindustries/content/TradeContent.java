@@ -8,6 +8,8 @@ import java.util.Map;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import vdindustries.Categories;
+
 
 public class TradeContent {
 	

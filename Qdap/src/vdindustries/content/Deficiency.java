@@ -61,6 +61,7 @@ public class Deficiency {
 		this.verb = verb;
 		this.direction = direction;
 		this.location = location;
+
 	}
 	
 	
@@ -70,9 +71,9 @@ public class Deficiency {
 				">> " + object + " " + item + " " + verb + " " +
 				direction + " " + location;
 	}
-	
+/*	
 	public boolean getCompleted(){
 		return completed;
 	}
-	
+	*/
 }
