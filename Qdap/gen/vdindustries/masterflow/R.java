@@ -1001,7 +1001,7 @@ containing a value of this type.
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
-        public static final int button1=0x7f05004e;
+        public static final int button1=0x7f05004c;
         public static final int checkbox=0x7f05002d;
         public static final int checklists=0x7f050044;
         public static final int collapseActionView=0x7f05000d;
@@ -1029,9 +1029,9 @@ containing a value of this type.
         public static final int item_name=0x7f050057;
         public static final int lblListHeader=0x7f050056;
         public static final int lblListItem=0x7f050059;
-        public static final int list=0x7f05004c;
+        public static final int list=0x7f05004d;
         public static final int listMode=0x7f050001;
-        public static final int listView1=0x7f05004d;
+        public static final int listView1=0x7f05004e;
         public static final int list_item=0x7f050029;
         public static final int location=0x7f05004b;
         public static final int location_name=0x7f050058;
@@ -1221,7 +1221,7 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
-        public static final int action_settings=0x7f0a001c;
+        public static final int action_settings=0x7f0a001d;
         public static final int app_name=0x7f0a000d;
         public static final int checklists=0x7f0a0016;
         public static final int deficiency=0x7f0a0019;
@@ -1233,13 +1233,14 @@ containing a value of this type.
         public static final int project=0x7f0a0013;
         public static final int reports=0x7f0a0017;
         public static final int roughins=0x7f0a001a;
+        public static final int save=0x7f0a001c;
         public static final int title=0x7f0a0010;
-        public static final int title_activity_categories=0x7f0a001d;
-        public static final int title_activity_checklist=0x7f0a001f;
-        public static final int title_activity_deficiency=0x7f0a0022;
-        public static final int title_activity_expandable_list_fragment=0x7f0a0020;
-        public static final int title_activity_floor_fragment=0x7f0a0021;
-        public static final int title_activity_floors=0x7f0a001e;
+        public static final int title_activity_categories=0x7f0a001e;
+        public static final int title_activity_checklist=0x7f0a0020;
+        public static final int title_activity_deficiency=0x7f0a0023;
+        public static final int title_activity_expandable_list_fragment=0x7f0a0021;
+        public static final int title_activity_floor_fragment=0x7f0a0022;
+        public static final int title_activity_floors=0x7f0a001f;
         public static final int title_activity_login=0x7f0a000f;
         public static final int title_trade_detail=0x7f0a000e;
         public static final int username=0x7f0a0011;

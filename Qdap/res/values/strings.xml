@@ -16,6 +16,7 @@
     <string name="deficiency">Select a Deficiency</string>
     <string name="roughins">Rough-Ins</string>
     <string name="finishes">Finishes</string>
+    <string name="save">Save</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_categories">Categories</string>
     <string name="title_activity_floors">Floors</string>

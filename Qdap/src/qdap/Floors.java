@@ -9,7 +9,10 @@ import vdindustries.masterflow.content.DeficiencyParser;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnLongClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -20,7 +23,6 @@ import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class Floors extends Activity {
 
@@ -29,6 +31,8 @@ public class Floors extends Activity {
 	List<String> listDataHeader;
 	HashMap<String, List<String>> listDataChild;
 	  ArrayList<String> tradesList;
+	protected float x;
+	protected float y;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,8 +75,7 @@ public class Floors extends Activity {
                             public void onItemClick(AdapterView<?> arg0, View v,int position, long arg3)
                             {
                                 
-                                    String selectedAnimal=tradesList.get(position);
-                                    Toast.makeText(getApplicationContext(), "Animal Selected : "+selectedAnimal,   Toast.LENGTH_LONG).show();
+                                   
                                  }
                     });
 		// get the listview
@@ -109,9 +112,7 @@ public class Floors extends Activity {
 
 			@Override
 			public void onGroupExpand(int groupPosition) {
-				Toast.makeText(getApplicationContext(),
-						listDataHeader.get(groupPosition) + " Expanded",
-						Toast.LENGTH_SHORT).show();
+		
 			}
 		});
 
@@ -120,10 +121,7 @@ public class Floors extends Activity {
 
 			@Override
 			public void onGroupCollapse(int groupPosition) {
-				Toast.makeText(getApplicationContext(),
-						listDataHeader.get(groupPosition) + " Collapsed",
-						Toast.LENGTH_SHORT).show();
-
+	
 			}
 		});
 
@@ -134,14 +132,7 @@ public class Floors extends Activity {
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
 				// TODO Auto-generated method stub
-				Toast.makeText(
-						getApplicationContext(),
-						listDataHeader.get(groupPosition)
-								+ " : "
-								+ listDataChild.get(
-										listDataHeader.get(groupPosition)).get(
-										childPosition), Toast.LENGTH_SHORT)
-						.show();
+				
 				
 				if (listDataChild.get(
 						listDataHeader.get(groupPosition)).get(
@@ -152,26 +143,30 @@ public class Floors extends Activity {
 				return false;
 			}
 		});
-//		ImageView imageView= (ImageView) findViewById(R.id.imageView1);
-//		imageView.setOnTouchListener(new OnTouchListener()
-//	      {
-//			
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				// TODO Auto-generated method stub
-//			     float x = event.getX(); 
-//		           float y = event.getY();
-//				return false;
-//			}
-//	      });
-//	    imageView.setOnLongClickListener(new OnLongClickListener() {
-//
-//	        @Override
-//	        public boolean onLongClick(View v) {
-//
-//	            return false;
-//	        }
-//	    });
+		ImageView imageView= (ImageView) findViewById(R.id.imageView1);
+		
+		
+		imageView.setOnTouchListener(new OnTouchListener()
+	      {
+
+			@Override
+			public boolean onTouch(View arg, MotionEvent event) {
+				// TODO Auto-generated method stub
+			     x = event.getX(); 
+			     y = event.getY();
+				return false;
+			}
+			
+	
+	      });
+	    imageView.setOnLongClickListener(new OnLongClickListener() {
+
+	        @Override
+	        public boolean onLongClick(View v) {
+	   
+	            return false;
+	        }
+	    });
 	    
 	}
 

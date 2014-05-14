@@ -26,34 +26,39 @@ public class Deficiency extends Activity {
         specificItem.setVisibleItems(3);
         SpecificItemAdapter specItemAdapter = new SpecificItemAdapter(this);
         specificItem.setViewAdapter(specItemAdapter);
-        //gets the current item of the wheel for specific item
-        specItemAdapter.getCurrentItem(specificItem.getCurrentItem());
+
         
         final WheelView item = (WheelView) findViewById(R.id.item);
         item.setVisibleItems(4);
         ItemAdapter itemAdapter = new ItemAdapter(this);
         item.setViewAdapter(itemAdapter);
-        //gets the current item of the wheel for  item
-        itemAdapter.getCurrentItem(item.getCurrentItem());
+
         
         final WheelView verb = (WheelView) findViewById(R.id.verb);
         verb.setVisibleItems(4);
         VerbAdapter verbAdapter = new VerbAdapter(this);
         verb.setViewAdapter(verbAdapter);
-        //gets the current item of the wheel for  verb
-        verbAdapter.getCurrentItem(verb.getCurrentItem());
+
         
         
         final WheelView direction = (WheelView) findViewById(R.id.direction);
         direction.setVisibleItems(4);
         DirectionAdapter dirAdapter = new DirectionAdapter(this);
         direction.setViewAdapter(dirAdapter);
-        dirAdapter.getCurrentItem(direction.getCurrentItem());
+
         
         final WheelView location = (WheelView) findViewById(R.id.location);
         location.setVisibleItems(4);
         LocationAdapter locationAdapter = new LocationAdapter(this);
         location.setViewAdapter(locationAdapter);
+        
+        //gets the current item of the wheel for specific item
+        specItemAdapter.getCurrentItem(specificItem.getCurrentItem());
+        //gets the current item of the wheel for  item
+        itemAdapter.getCurrentItem(item.getCurrentItem());
+        //gets the current item of the wheel for  verb
+        verbAdapter.getCurrentItem(verb.getCurrentItem());
+        dirAdapter.getCurrentItem(direction.getCurrentItem());
         locationAdapter.getCurrentItem(location.getCurrentItem());
         
 

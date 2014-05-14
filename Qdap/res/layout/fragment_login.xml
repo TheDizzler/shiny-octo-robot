@@ -67,6 +67,4 @@
         android:onClick="login"
         android:text="@string/login" />
 
-
-
 </TableLayout>
