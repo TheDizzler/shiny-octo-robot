@@ -1,6 +1,6 @@
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/trade_list"
+    android:id="@+id/trade_list_fragment"
     android:name="vdindustries.reportsview.TradeListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"

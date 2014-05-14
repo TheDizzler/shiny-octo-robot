@@ -1,0 +1,66 @@
+package vdindustries.checklists;
+
+import vdindustries.Qdap.R;
+import vdindustries.planview.TouchImageView;
+import vdindustries.reportsview.TradeListFragment;
+import android.content.Context;
+import android.os.Bundle;
+import android.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+public class CheckListsActivity extends ActionBarActivity implements ExpandableListFragment.OnItemSelectedListener {
+	
+	
+	Room	currentRoom;
+	
+	Context	context;
+	
+	
+	@Override protected void onCreate(Bundle savedInstanceState) {
+	
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_checklists);
+		context = this;
+		
+//		((ExpandableListFragment) getSupportFragmentManager().
+//				findFragmentById(R.id.expand_list_fragment)).setActivateOnItemClick(true);
+		
+	}
+	
+	
+	
+	protected void loadRoom(String roomNo) {
+	
+		ImageView currentImage = (ImageView) findViewById(R.id.imageView1);
+//		DeficiencyParser.loadRoomPlan(currentImage, roomNo);
+		
+		
+		currentRoom = new Room(context, roomNo, currentImage);
+		((TouchImageView) currentImage).resetZoom();
+		
+	}
+	
+	
+	
+	@Override public void onItemSelected(String link) {
+	
+		// Y DA FUQ DOESNT THIS WORK
+		PlanFragment fragment = (PlanFragment) getFragmentManager().findFragmentById(
+			R.id.plan_fragment);
+		
+		Toast.makeText(getApplicationContext(),
+			link,
+			Toast.LENGTH_SHORT).show();
+		
+		if (fragment != null && fragment.isInLayout()) {
+			getSupportFragmentManager().beginTransaction()
+			.replace(R.id.checklist_container, fragment)
+			.commit();
+		}
+	}
+	
+	
+	
+}

@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/checklist_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#b4d6eb"
+    android:baselineAligned="false"
+    tools:context="vdindustries.checklists.CheckListsActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <fragment
+        android:id="@+id/expand_list_fragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        class="vdindustries.checklists.ExpandableListFragment" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/plan_fragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        class="vdindustries.checklists.PlanFragment" >
+
+        <!-- Preview: layout=@layout/details -->
+    </fragment>
+
+</LinearLayout>

@@ -1,0 +1,26 @@
+package vdindustries.planview;
+
+import vdindustries.Categories.PlaceholderFragment;
+import vdindustries.Qdap.R;
+import vdindustries.content.DeficiencyParser;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+
+
+public class PDFActivity extends ActionBarActivity {
+	
+	
+	@Override protected void onCreate(Bundle savedInstanceState) {
+		
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_categories);
+		
+		parser = new DeficiencyParser(getAssets());
+		
+		if (savedInstanceState == null) {
+			getSupportFragmentManager().beginTransaction()
+				.add(R.id.container, new PlaceholderFragment()).commit();
+		}
+	}
+	
+}

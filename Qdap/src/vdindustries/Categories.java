@@ -1,12 +1,13 @@
 package vdindustries;
 
+import vdindustries.Qdap.R;
+import vdindustries.checklists.CheckListsActivity;
 import vdindustries.content.DeficiencyParser;
-import vdindustries.masterflow.R;
 import vdindustries.networking.ConnectActivity;
-import vdindustries.planview.PlanViewActivity;
+import vdindustries.planview.NewPlans;
+import vdindustries.planview.PDFActivity;
 import vdindustries.reportsview.TradeListActivity;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -80,7 +81,7 @@ public class Categories extends ActionBarActivity {
 	
 	public void checklists(View view) {
 	
-		Intent intent = new Intent(this, Floors.class);
+		Intent intent = new Intent(this, CheckListsActivity.class);
 		startActivity(intent);
 	}
 	
@@ -94,7 +95,7 @@ public class Categories extends ActionBarActivity {
 	/** Temp for testing image parsing*/
 	public void notes(View view) {
 	
-		Intent intent = new Intent(this, PlanViewActivity.class);
+		Intent intent = new Intent(this, PDFActivity.class);
 		startActivity(intent);
 	}
 	

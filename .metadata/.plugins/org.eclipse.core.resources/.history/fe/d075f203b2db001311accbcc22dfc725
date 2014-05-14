@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="vdindustries.Qdap"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="19" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="vdindustries.Login"
+            android:label="@string/title_activity_login" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="vdindustries.reportsview.TradeListActivity"
+            android:label="@string/reports" >
+        </activity>
+        <activity
+            android:name="vdindustries.reportsview.TradeDetailActivity"
+            android:label="@string/title_trade_detail"
+            android:parentActivityName="vdindustries.reportsview.TradeListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="vdindustries.reportsview.TradeListActivity" />
+        </activity>
+        <activity
+            android:name="vdindustries.planview.PlanViewActivity"
+            android:label="A test Plan View" >
+        </activity>
+        <activity
+            android:name="vdindustries.Categories"
+            android:label="@string/title_activity_categories" >
+        </activity>
+        <activity
+            android:name="vdindustries.checklists.CheckListsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_floors"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="vdindustries.checklists.Checklist"
+            android:label="@string/title_activity_checklist" >
+        </activity>
+        <activity
+            android:name="vdindustries.networking.ConnectActivity"
+            android:label="Test networking activity" >
+        </activity>
+        <activity
+            android:name="vdindustries.planview.NewPlans"
+            android:label="Test Plan" >
+        </activity>
+        <activity
+            android:name="vdindustries.planview.PDFView"
+            android:label="PDF Test" >
+        </activity>
+    </application>
+
+</manifest>

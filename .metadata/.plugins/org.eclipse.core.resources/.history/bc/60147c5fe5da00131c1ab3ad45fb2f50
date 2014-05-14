@@ -1,0 +1,84 @@
+package vdindustries.checklists;
+
+
+import org.w3c.dom.Element;
+
+import vdindustries.Qdap.R;
+import vdindustries.content.Deficiency;
+import vdindustries.content.DeficiencyParser;
+import vdindustries.planview.TouchImageView;
+import android.os.Bundle;
+import android.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+/** Fragment lifecycle:
+ * onAttach()
+ * onCreate()
+ * onCreateView()
+ * onActivityCreated() - Activity and fragment instance
+ * 		have been created as well as thier view hierarchy. At this
+ * 		point, view can be accessed with the findViewById() method.
+ * onResume()
+ * onPause()
+ * onStop()
+ * @author T-Dawg */
+public class PlanFragment extends Fragment {
+	
+	Room			currentRoom;
+	RelativeLayout	layout;
+	
+//	private LayoutParams	planLayoutParams;
+	
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+								Bundle savedInstanceState) {
+	
+		
+		return inflater.inflate(R.layout.fragment_checklists_plan, container, false);
+	}
+	
+	
+	@Override public void onActivityCreated(Bundle savedInstanceState) {
+	
+		super.onActivityCreated(savedInstanceState);
+		
+		layout = (RelativeLayout) getActivity().findViewById(R.id.plan_fragment);
+		
+		/* Load the first floor of building as default. This is neccessary
+		 * or else floorplans will not load before a roomplan is loaded. */
+		loadFloorPlan(((Element) DeficiencyParser.listFloorNodes.item(0)).getAttribute(Deficiency.FLOORID));
+	}
+	
+	
+	public void loadFloorPlan(String floorID) {
+	
+		if (currentRoom != null)
+			currentRoom.removeViews();
+		currentRoom = null;
+		ImageView currentImage = (ImageView) getActivity().findViewById(R.id.plan_image);
+		DeficiencyParser.loadFloorPlan(currentImage, floorID);
+		
+		((TouchImageView) currentImage).resetZoom();
+	}
+	
+	
+	public void loadRoomPlan(String roomNo) {
+	
+		ImageView currentImage = (ImageView) getActivity().findViewById(R.id.plan_image);
+		Toast.makeText(getActivity(), "bitmap.getWidth() = " + DeficiencyParser.getImageWidth(roomNo)
+			+ ", bitmap.getHeight() = " + DeficiencyParser.getImageHeight(roomNo) +
+			"\nimageview.getDrawable().getWidth()" + currentImage.getDrawable().getIntrinsicWidth() +
+			"\nimageview.getDrawable().getHeight()" + currentImage.getDrawable().getIntrinsicHeight()", Toast.LENGTH_LONG).show();
+		
+		if (currentRoom != null)
+			currentRoom.removeViews();
+			
+		currentRoom = new Room(getActivity(), roomNo, currentImage, layout);
+//		((TouchImageView) currentImage).resetZoom();
+	}
+}

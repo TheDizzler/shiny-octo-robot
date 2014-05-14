@@ -17,6 +17,7 @@ import org.xml.sax.SAXException;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
@@ -44,9 +45,10 @@ public class DeficiencyParser {
 				newDocumentBuilder().parse(projectXML);
 			root = xmlDoc.getDocumentElement();
 			root.normalize();
-			listFloorNodes = root.getElementsByTagName("floor");
+			
 			listTrades = root.getElementsByTagName("trade");
 			listRoomNodes = root.getElementsByTagName("room");
+			listFloorNodes = root.getElementsByTagName("floor");
 			
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			e.printStackTrace();
@@ -87,7 +89,7 @@ public class DeficiencyParser {
 				getAttribute(Deficiency.REPORTID).
 				equalsIgnoreCase(reportID)) {
 				
-				return parseDeficiency(defList.item(i));
+				return createDeficiency(defList.item(i));
 			}
 		}
 		return null;
@@ -109,7 +111,7 @@ public class DeficiencyParser {
 				NodeList nodes = ((Element) listTrades.item(i)).getElementsByTagName("deficiency");
 				
 				for (int j = 0; j < nodes.getLength(); ++j)
-					defList.add(parseDeficiency(nodes.item(j)));
+					defList.add(createDeficiency(nodes.item(j)));
 				
 				break;
 			}
@@ -131,7 +133,7 @@ public class DeficiencyParser {
 				NodeList nodes = roomElem.getElementsByTagName("deficiency");
 				
 				for (int j = 0; j < nodes.getLength(); ++j)
-					defList.add(parseDeficiency(nodes.item(j)));
+					defList.add(createDeficiency(nodes.item(j)));
 				
 				break;
 			}
@@ -187,7 +189,7 @@ public class DeficiencyParser {
 	}
 	
 	/** Builds a deficiency object from a XML node. */
-	private static Deficiency parseDeficiency(Node node) {
+	private static Deficiency createDeficiency(Node node) {
 	
 		Deficiency def = new Deficiency();
 		Element defElem = (Element) node;
@@ -220,14 +222,14 @@ public class DeficiencyParser {
 		
 		List<String> rooms = new ArrayList<String>();
 		
-		for ( int i = 0; i < listFloorNodes.getLength(); ++i) {
+		for (int i = 0; i < listFloorNodes.getLength(); ++i) {
 			
 			Element current = (Element) listFloorNodes.item(i);
 			if (current.getAttribute(Deficiency.FLOORID).equalsIgnoreCase(floorID)) {
 				
 				NodeList roomNodes = current.getElementsByTagName(Deficiency.ROOM);
 				for (int j = 0; j < roomNodes.getLength(); ++j) {
-				
+					
 					Element node = (Element) roomNodes.item(j);
 					rooms.add(node.getAttribute(Deficiency.ROOMNO));
 				}
@@ -258,11 +260,7 @@ public class DeficiencyParser {
 	public static void loadRoomPlan(ImageView image, String roomNo) {
 	
 		String file = getRoomImageFile(roomNo);
-		try {
-			image.setImageBitmap(loadBitmapFromAsset(file));
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+		loadBitmapFromAsset(image, file);
 	}
 	
 	
@@ -270,20 +268,38 @@ public class DeficiencyParser {
 	public static void loadFloorPlan(ImageView image, String floorID) {
 	
 		String file = getFloorImageFile(floorID);
-		try {
-			image.setImageDrawable(loadImageFromAsset(file)); //CHANGE THIS LINE
-//			image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+		loadBitmapFromAsset(image, file);
 	}
 	
 	
 	
-	public static Bitmap loadBitmapFromAsset(String file) throws IOException {
+	private static void loadBitmapFromAsset(ImageView image, String file) {
 	
-		InputStream is = assMan.open(file);
-		return BitmapFactory.decodeStream(is);
+		try {
+			InputStream is = assMan.open(file);
+			Bitmap bmap = BitmapFactory.decodeStream(is);
+//			Matrix matrix = new Matrix();
+//			float scale = ((float) 400) / bmap.getWidth();
+//			matrix.setScale(1, 1);
+//
+//			
+			image.setImageBitmap(bmap); //CHANGE THIS LINE
+//			image.setImageMatrix(matrix);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		
+	}
+	
+	/** Loads an image from the assets directory. */
+	private static void loadImageFromAsset(ImageView image, String file) {
+	
+		try {
+			InputStream is = assMan.open(file);
+			image.setImageDrawable(Drawable.createFromStream(is, null));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	
@@ -310,10 +326,33 @@ public class DeficiencyParser {
 	}
 	
 	
-	/** Loads an image from the assets directory. */
-	protected static Drawable loadImageFromAsset(String file) throws IOException {
+	public static int getImageWidth(String roomNo) {
 	
-		InputStream is = assMan.open(file);
-		return Drawable.createFromStream(is, null);
+		String file = getRoomImageFile(roomNo);
+		Bitmap bmap = null;
+		try {
+			InputStream is = assMan.open(file);
+			bmap = BitmapFactory.decodeStream(is);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		
+		return bmap.getWidth();
 	}
+	
+	
+	public static int getImageHeight(String roomNo) {
+	
+		String file = getRoomImageFile(roomNo);
+		Bitmap bmap = null;
+		try {
+			InputStream is = assMan.open(file);
+			bmap = BitmapFactory.decodeStream(is);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		
+		return bmap.getHeight();
+	}
+	
 }

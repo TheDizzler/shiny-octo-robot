@@ -1,0 +1,89 @@
+package vdindustries.planview;
+
+import java.util.ArrayList;
+
+import vdindustries.content.Deficiency;
+import vdindustries.content.DeficiencyParser;
+import vdindustries.masterflow.R;
+import android.graphics.Canvas;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
+
+public class NewPlans extends ActionBarActivity {
+	
+	
+	private NewPlans				context;
+	private ImageView				plan;
+	
+	private ImageButton				test;
+	private ImageButton				test2;
+	Canvas							canvas;
+	private RelativeLayout			layout;
+	LayoutParams					params;
+	LayoutParams					buttonLayout;
+	private LayoutParams			planLayout;
+	private ArrayList<Deficiency>	defs;
+	private ArrayList<ImageButton>	defBtns;
+	
+	@Override protected void onCreate(Bundle savedInstanceState) {
+	
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_newplanview);
+		
+		context = this;
+		
+		layout = (RelativeLayout) findViewById(R.id.rl);
+		buttonLayout = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		planLayout = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		
+//		plan = (ImageView) findViewById(R.id.new_plan);
+//		test = (ImageButton) findViewById(R.id.flag_button_blue);
+		
+		showRoom("201");
+		
+		showDeficiencies();
+//		test = new ImageButton(this);
+//		
+//		test.setImageDrawable(getResources().getDrawable(R.drawable.flag_blue));
+//		test.setLayoutParams(buttonLayout);
+//		test.setId(13);
+//		test.setX(150);
+//		test.setY(150);
+//		layout.addView(test);
+		
+	}
+	
+	
+	private void showDeficiencies() {
+	
+		defs = new ArrayList<Deficiency>();
+		defBtns = new ArrayList<ImageButton>();
+		ImageButton def = new ImageButton(this);
+		
+		def.setImageDrawable(getResources().getDrawable(R.drawable.flag_blue));
+		def.setLayoutParams(buttonLayout);
+		def.setId(13);
+		def.setX(150);
+		def.setY(150);
+		layout.addView(def);
+		defBtns.add(def);
+		
+	}
+	
+	
+	private void showRoom(String roomNo) {
+	
+		plan = new TouchImageView(this);
+		plan.setLayoutParams(planLayout);
+		DeficiencyParser.loadRoomPlan(plan, roomNo);
+		layout.addView(plan);
+		
+	}
+	
+}

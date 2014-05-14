@@ -2,7 +2,7 @@
 <section name="Workbench">
 	<item value="filter_imports;" key="filters_last_used"/>
 	<item value="738" key="org.eclipse.jdt.uicleanup_pagemodify_dialog.preferred_height"/>
-	<item value="3" key="org.eclipse.jdt.uicleanup_pagemodify_dialog.last_focus"/>
+	<item value="4" key="org.eclipse.jdt.uicleanup_pagemodify_dialog.last_focus"/>
 	<item value="55" key="org.eclipse.jdt.uiformatter_page.white_space.java_view.inner"/>
 	<item value="false" key="org.eclipse.jdt.ui.formatter_page.show_invisible_characters"/>
 	<item value="738" key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_height"/>
@@ -10,7 +10,7 @@
 	<item value="0" key="org.eclipse.jdt.uicleanup_pagemodify_dialog.preferred_y"/>
 	<item value="0" key="org.eclipse.jdt.uiformatter_page.white_space_tab_page.node"/>
 	<item value="117" key="org.eclipse.jdt.uiformatter_page.white_space.java_view.option"/>
-	<item value="9" key="org.eclipse.jdt.uiformatter_page.modify_dialog_tab_page.last_focus_index"/>
+	<item value="8" key="org.eclipse.jdt.uiformatter_page.modify_dialog_tab_page.last_focus_index"/>
 	<item value="C:\Users\T-Dawg\Dropbox\CST\JavaWorkSpace" key="org.eclipse.jdt.ui.codeformatter.savepath"/>
 	<item value="C:\Users\T-Dawg\Dropbox\CST\JavaWorkSpace" key="org.eclipse.jdt.ui.cleanup.loadpath"/>
 	<item value="887" key="org.eclipse.jdt.uicleanup_pagemodify_dialog.preferred_width"/>
@@ -18,7 +18,7 @@
 	<item value="128" key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_x"/>
 	<item value="0" key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_y"/>
 	<item value="1005" key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_width"/>
-	<item value="6" key="org.eclipse.jdt.uiformatter_pagemodify_dialog.last_focus"/>
+	<item value="7" key="org.eclipse.jdt.uiformatter_pagemodify_dialog.last_focus"/>
 	<item value="22" key="org.eclipse.jdt.uiformatter_page.line_wrapping_tab_page.last_category_index"/>
 	<section name="OptionalMessageDialog.hide.">
 		<item value="true" key="org.eclipse.jdt.ui.typecomment.deprecated"/>
@@ -120,5 +120,11 @@
 	</section>
 	<section name="NewPackageWizardPage">
 		<item value="false" key="create_package_info_java"/>
+	</section>
+	<section name="org.eclipse.jdt.internal.ui.typehierarchy.QuickHierarchy">
+		<item value="350" key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_WIDTH"/>
+		<item value="false" key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_USE_PERSISTED_LOCATION"/>
+		<item value="306" key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_HEIGHT"/>
+		<item value="true" key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_USE_PERSISTED_SIZE"/>
 	</section>
 </section>

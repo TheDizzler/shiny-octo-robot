@@ -1,6 +1,6 @@
 package vdindustries.reportsview;
 
-import vdindustries.masterflow.R;
+import vdindustries.Qdap.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;

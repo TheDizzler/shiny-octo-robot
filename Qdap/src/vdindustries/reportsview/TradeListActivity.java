@@ -1,6 +1,6 @@
 package vdindustries.reportsview;
 
-import vdindustries.masterflow.R;
+import vdindustries.Qdap.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -43,7 +43,7 @@ public class TradeListActivity extends ActionBarActivity implements TradeListFra
 			// In two-pane mode, list items should be given the
 			// 'activated' state when touched.
 			((TradeListFragment) getSupportFragmentManager().
-				findFragmentById(R.id.trade_list)).setActivateOnItemClick(true);
+				findFragmentById(R.id.trade_list_fragment)).setActivateOnItemClick(true);
 		}
 	}
 	
