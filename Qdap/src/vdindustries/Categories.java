@@ -1,5 +1,6 @@
 package vdindustries;
 
+import vdindustries.content.Deficiency;
 import vdindustries.content.DeficiencyParser;
 import vdindustries.masterflow.R;
 import vdindustries.networking.ConnectActivity;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class Categories extends ActionBarActivity {
 	
@@ -91,8 +93,21 @@ defParse();
 	/** temp for testing connection */
 	public void photo(View view) {
 	
-		Intent intent = new Intent(this, ConnectActivity.class);
-		startActivity(intent);
+		//Intent intent = new Intent(this, ConnectActivity.class);
+		//startActivity(intent);
+		Deficiency test = new Deficiency(DeficiencyParser.generateReportId(), 123, 456, "object", "item", "verb", "direction", "location");
+		test.floor="Floor 2";
+		test.roomNo = "202";
+		test.priority = false;
+		test.trade = "Framing";
+		DeficiencyParser.addNewDeficiency(test);
+		int blah = 5;
+	}
+	
+	public void yay(View view){
+		TextView text = (TextView) findViewById(R.id.textViewFraming);
+		text.setText(Integer.toString(DeficiencyParser.totalDeficiencies("Framing")));
+
 	}
 	
 	/** Temp for testing image parsing*/
