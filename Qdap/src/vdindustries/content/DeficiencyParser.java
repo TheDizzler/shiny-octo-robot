@@ -49,13 +49,21 @@ public class DeficiencyParser {
 	private static Document xmlDoc;
 	private static File fileXML;
 	private static OutputStream writeXml;
+	
+	
+	
+	private static InputStream projectXML2;
+	private static Element root2;
+	public static NodeList listFloorNodes2;
+	private static NodeList listRoomNodes2;
+
+	private static NodeList listTrades2;
 
 	// private String filePath = ".//mnt//shared//geny//testproject.xml";
 	private static AssetManager assMan;
 
 	/** Implementation: DeficiencyParser(getAssets()) */
 	public DeficiencyParser() {
-
 		try {
 			fileXML = new File(Environment.getExternalStorageDirectory() + "/Download/" + "testproject.xml");
 			projectXML = null;
@@ -68,6 +76,26 @@ public class DeficiencyParser {
 			listRoomNodes = root.getElementsByTagName("room");
 			listDeficiencyNodes = root.getElementsByTagName("deficiency");
 
+		} catch (SAXException | IOException | ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public DeficiencyParser(AssetManager am) {
+		
+		assMan = am;
+		try {
+			projectXML2 = assMan.open("testproject.xml");
+			
+			Document xmlDoc2 = DocumentBuilderFactory.newInstance().
+				newDocumentBuilder().parse(projectXML2);
+			root2 = xmlDoc2.getDocumentElement();
+			root2.normalize();
+			
+			listTrades2 = root2.getElementsByTagName("trade");
+			listRoomNodes2 = root2.getElementsByTagName("room");
+			listFloorNodes2 = root2.getElementsByTagName("floor");
+			
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			e.printStackTrace();
 		}
@@ -215,9 +243,9 @@ public class DeficiencyParser {
 	/** Retrieves room plan image file location from it's room number. */
 	public static String getRoomImageFile(String roomNo) {
 
-		for (int i = 0; i < listRoomNodes.getLength(); ++i) {
+		for (int i = 0; i < listRoomNodes2.getLength(); ++i) {
 
-			Element current = (Element) listRoomNodes.item(i);
+			Element current = (Element) listRoomNodes2.item(i);
 			if (current.getAttribute(Deficiency.ROOMNO).equals(roomNo)) {
 
 				return ((Element) current.getElementsByTagName(Deficiency.ROOMPLAN).item(0))
@@ -230,9 +258,9 @@ public class DeficiencyParser {
 	/** Retrieves floor plan image file location from it's ID. */
 	private static String getFloorImageFile(String floorID) {
 
-		for (int i = 0; i < listFloorNodes.getLength(); ++i) {
+		for (int i = 0; i < listFloorNodes2.getLength(); ++i) {
 
-			Element current = (Element) listFloorNodes.item(i);
+			Element current = (Element) listFloorNodes2.item(i);
 			if (current.getAttribute(Deficiency.FLOORID).equals(floorID)) {
 
 				return ((Element) current.getElementsByTagName(Deficiency.FLOORPLAN).item(0))
@@ -310,36 +338,42 @@ public class DeficiencyParser {
 	public static void loadRoomPlan(ImageView image, String roomNo) {
 
 		String file = getRoomImageFile(roomNo);
-		try {
-			image.setImageBitmap(loadBitmapFromAsset(file));
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	/** Loads an image from the assets directory. */
-	protected static Drawable loadImageFromAsset(String file) throws IOException {
-
-		InputStream is = assMan.open(file);
-		return Drawable.createFromStream(is, null);
+		loadBitmapFromAsset(image, file);
 	}
 
 	public static void loadFloorPlan(ImageView image, String floorID) {
 
 		String file = getFloorImageFile(floorID);
+		loadBitmapFromAsset(image, file);
+	}
+
+	private static void loadBitmapFromAsset(ImageView image, String file) {
+
 		try {
-			image.setImageDrawable(loadImageFromAsset(file)); // CHANGE THIS
-																// LINE
-			// image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+			InputStream is = assMan.open(file);
+			Bitmap bmap = BitmapFactory.decodeStream(is);
+			// Matrix matrix = new Matrix();
+			// float scale = ((float) 400) / bmap.getWidth();
+			// matrix.setScale(1, 1);
+			//
+			//
+			image.setImageBitmap(bmap); // CHANGE THIS LINE
+			// image.setImageMatrix(matrix);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+
 	}
 
-	public static Bitmap loadBitmapFromAsset(String file) throws IOException {
+	/** Loads an image from the assets directory. */
+	private static void loadImageFromAsset(ImageView image, String file) {
 
-		InputStream is = assMan.open(file);
-		return BitmapFactory.decodeStream(is);
+		try {
+			InputStream is = assMan.open(file);
+			image.setImageDrawable(Drawable.createFromStream(is, null));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	/**
@@ -364,11 +398,39 @@ public class DeficiencyParser {
 		return null;
 	}
 
-	// returns the project name
-	public static String getProjectName() {
-		return root.getAttribute("name");
+	public static int getImageWidth(String roomNo) {
+
+		String file = getRoomImageFile(roomNo);
+		Bitmap bmap = null;
+		try {
+			InputStream is = assMan.open(file);
+			bmap = BitmapFactory.decodeStream(is);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		return bmap.getWidth();
 	}
 
+	public static int getImageHeight(String roomNo) {
+
+		String file = getRoomImageFile(roomNo);
+		Bitmap bmap = null;
+		try {
+			InputStream is = assMan.open(file);
+			bmap = BitmapFactory.decodeStream(is);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		return bmap.getHeight();
+	}
+
+	// returns the project name
+public static String getProjectName() {
+return root.getAttribute("name");
+}
+	
 	// generates a new reportID by taking the project code and adding one to the
 	// total count of deficiencies
 	public static String generateReportId() {
