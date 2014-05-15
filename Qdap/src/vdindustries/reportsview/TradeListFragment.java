@@ -38,6 +38,9 @@ public class TradeListFragment extends ListFragment {
 	/** The current activated item position. Only used on tablets. */
 	private int mActivatedPosition = ListView.INVALID_POSITION;
 
+	private static int position;
+	private long id;
+
 	/**
 	 * A callback interface that all activities containing this fragment must
 	 * implement. This mechanism allows activities to be notified of item
@@ -123,13 +126,23 @@ public class TradeListFragment extends ListFragment {
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
 
+		this.id = id;
+		TradeListFragment.position = position;
+
+		mCallbacks.onItemSelected(TradeContent.ITEMS.get(position).id);
+	}
+
+	// method to be called from ReportItemAdapter. This will update the objects
+	// created in the Categories activity so that the state changed by other
+	// activities will be persistent through the application. The calls from the
+	// DeficiencyParser still need to be made in order to write any changes to
+	// the XML data file
+	public static void setDefic() {
 		TradeItem modify = TradeContent.ITEMS.get(position);
 
 		modify.deficiencies = null;
 		modify.deficiencies = DeficiencyParser.getDefsByTrade(modify.trade);
 		TradeContent.ITEMS.set(position, modify);
-
-		mCallbacks.onItemSelected(TradeContent.ITEMS.get(position).id);
 	}
 
 	@Override
@@ -165,4 +178,5 @@ public class TradeListFragment extends ListFragment {
 
 		mActivatedPosition = position;
 	}
+
 }

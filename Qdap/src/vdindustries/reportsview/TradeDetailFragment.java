@@ -25,8 +25,8 @@ public class TradeDetailFragment extends Fragment {
 	private TradeContent.TradeItem tradeItem;
 
 	ReportItem reportListItem[];
-	private ListView reportListView;
-	static ReportItemAdapter adapter;
+	private static ListView reportListView;
+ //static ReportItemAdapter adapter;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -57,17 +57,16 @@ public class TradeDetailFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_trade_detail,
 				container, false);
 
-		// Show the content as text in a TextView.
-		// This is where the new Adapter goes...I think
-
+		// Show the content in a ListView using a custom adapter 
 		if (tradeItem != null) {
 			reportListItem = new ReportItem[tradeItem.deficiencies.size()];
 			for (int i = 0; i < tradeItem.deficiencies.size(); ++i) {
 				reportListItem[i] = new ReportItem(
 						tradeItem.deficiencies.get(i));
+				reportListItem[i].position=i;
 
 			}
-			/* ReportItemAdapter */adapter = new ReportItemAdapter(
+			 ReportItemAdapter adapter = new ReportItemAdapter(
 					getActivity(), R.layout.report_item_layout, reportListItem);
 			
 			reportListView = (ListView) rootView
@@ -78,9 +77,5 @@ public class TradeDetailFragment extends Fragment {
 
 		return rootView;
 	}
- 
-	public static void setChecked() {
-		
-	//	adapter.notifyDataSetChanged();
-	}
+	
 }

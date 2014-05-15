@@ -7,7 +7,10 @@
     <CheckBox android:id="@+id/reportCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
-         android:gravity="center_vertical"/>
+         android:gravity="center_vertical"
+         android:focusable="false"
+         android:focusableInTouchMode="false"
+         />
 
     <TextView
         android:id="@+id/reportText"

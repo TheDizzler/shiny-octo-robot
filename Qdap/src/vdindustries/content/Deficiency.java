@@ -67,8 +67,8 @@ public class Deficiency {
 	
 	public String toString() {
 	
-		return "reportID: " + reportID + " roomNo: " + roomNo +
-				">> " + object + " " + item + " " + verb + " " +
+		return "reportID: " + reportID + "\troomNo: " + roomNo +
+				"\n" + object + " " + item + " " + verb + " " +
 				direction + " " + location;
 	}
 /*	

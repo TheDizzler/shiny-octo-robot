@@ -51,6 +51,7 @@ public class Floors extends ActionBarActivity {
 				// Toast.makeText(getApplicationContext(),
 				// "Group Clicked " + listDataHeader.get(groupPosition),
 				// Toast.LENGTH_SHORT).show();
+			
 				if (listDataHeader.get(groupPosition).equals("Floor 2")) {
 					ImageView img = (ImageView) findViewById(R.id.imageView1);
 					DeficiencyParser.loadFloorPlan(img, "Floor 2");

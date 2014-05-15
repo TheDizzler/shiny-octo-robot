@@ -9,6 +9,7 @@ public class ReportItem {
 	public boolean checked;
 	public String reportID;
 	public Deficiency def;
+	public Integer position;
 	
 
 	public ReportItem() {
@@ -21,6 +22,7 @@ public class ReportItem {
 		this.text = text;
 		this.reportID = reportID;
 		this.def = null;
+		this.position= null;
 		
 	}
 	
@@ -30,6 +32,14 @@ public class ReportItem {
 		this.text = defic.toString();
 		this.reportID = defic.reportID;
 		this.def = defic;
+		this.position= null;
+
 		
+	}
+	public void setChecked(boolean check){
+		this.checked=check;
+	}
+	public boolean getChecked(){
+		return this.checked;
 	}
 }
