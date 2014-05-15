@@ -1,7 +1,6 @@
 package vdindustries.planview;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -12,9 +11,9 @@ import java.util.List;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import vdindustries.masterflow.R;
 import vdindustries.content.Deficiency;
 import vdindustries.content.DeficiencyParser;
-import vdindustries.masterflow.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -69,11 +68,11 @@ public class PlanViewActivity extends ActionBarActivity {
 		
 		Bitmap immutable = null;
 		String file = DeficiencyParser.getRoomImageFile(room);
-		try {
-			immutable = DeficiencyParser.loadBitmapFromAsset(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			immutable = DeficiencyParser.loadBitmapFromAsset(file);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 		plan = convertToMutable(this, immutable);
 		canvas = new Canvas(plan);
@@ -133,7 +132,6 @@ public class PlanViewActivity extends ActionBarActivity {
 		});
 		
 		flagBtns.add(btn);
-		
 	}
 	
 	

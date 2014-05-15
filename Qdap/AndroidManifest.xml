@@ -12,7 +12,7 @@
     
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="16"
         android:targetSdkVersion="19" />
 
     <application
@@ -49,6 +49,13 @@
             android:name="vdindustries.Categories"
             android:label="@string/title_activity_categories" >
         </activity>
+		   <activity
+            android:name="vdindustries.checklists.CheckListsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_floors"
+            android:screenOrientation="landscape" >
+        </activity>
+
         <activity
             android:name="vdindustries.Floors"
             android:label="@string/title_activity_floors" >
@@ -69,6 +76,15 @@
             android:name="qdap.FloorFragment"
             android:label="@string/title_activity_floor_fragment" >
         </activity>
+		<activity
+            android:name="vdindustries.planview.NewPlans"
+            android:label="Test Plan" >
+        </activity>
+        <activity
+            android:name="vdindustries.planview.PDFActivity"
+            android:label="PDF Test" >
+        </activity>
+
     </application>
 
 </manifest>

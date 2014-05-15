@@ -6,8 +6,6 @@
 		<floorplan floorsrc="images/levels/floor_2_v1.jpg" />
 		
 		<room no="201">
-		    
-		    <touchButton x="45" y="35" width="123" height="91"/>
 			<roomplan roomsrc="images/floor_2/201_d1.jpg" />
 			
 			<trade type="Framing">

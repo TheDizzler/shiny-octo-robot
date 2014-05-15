@@ -22,6 +22,8 @@ public class Categories extends ActionBarActivity {
 	
 	
 	public static DeficiencyParser	parser;
+	public static DeficiencyParser	parser2;
+
 	
 	public static void defParse(){
 		parser = new DeficiencyParser();
@@ -31,7 +33,7 @@ public class Categories extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_categories);
 		
-		//parser = new DeficiencyParser(getAssets());
+		parser2 = new DeficiencyParser(getAssets());
 		//parser = new DeficiencyParser();
 defParse();		
 		
@@ -101,6 +103,7 @@ defParse();
 		test.priority = false;
 		test.trade = "Framing";
 		DeficiencyParser.addNewDeficiency(test);
+		test.
 		int blah = 5;
 	}
 	
@@ -108,6 +111,11 @@ defParse();
 		TextView text = (TextView) findViewById(R.id.textViewFraming);
 		text.setText(Integer.toString(DeficiencyParser.totalDeficiencies("Framing")));
 
+	}
+	
+	public void yeah(View view){
+	TextView text = (TextView) findViewById(R.id.textViewHVAC);
+		text.setText(Integer.toString(DeficiencyParser.outstandingDeficiencies("Framing")));
 	}
 	
 	/** Temp for testing image parsing*/

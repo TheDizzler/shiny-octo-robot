@@ -26,7 +26,6 @@ public class TradeDetailFragment extends Fragment {
 
 	ReportItem reportListItem[];
 	private static ListView reportListView;
- //static ReportItemAdapter adapter;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the

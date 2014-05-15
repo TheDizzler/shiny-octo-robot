@@ -18,6 +18,7 @@ import org.apache.http.message.BasicNameValuePair;
 import vdindustries.masterflow.R;
 import android.content.Context;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,7 +29,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Login extends ActionBarActivity {
 	
@@ -41,9 +44,9 @@ public class Login extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-		user = (EditText) findViewById(R.id.editUser);
-		password = (EditText) findViewById(R.id.editPassword);
-		project = (EditText) findViewById(R.id.editProject);
+//		user = (EditText) findViewById(R.id.editUser);
+//		password = (EditText) findViewById(R.id.editPassword);
+//		project = (EditText) findViewById(R.id.editProject);
 		
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
@@ -91,10 +94,26 @@ public class Login extends ActionBarActivity {
 	//Login to Categories
 	public void login(View view) {
 	
-//		new DownloadFromServer(this, user.getText().toString(), password.getText().toString(), project.getText().toString()).execute("http://qdap.ca/process_android_login.php");
+		user = (EditText) findViewById(R.id.editUser);
+		password = (EditText) findViewById(R.id.editPassword);
+		project = (EditText) findViewById(R.id.editProject);
 		
-			Intent intent = new Intent(this, Categories.class);
-			startActivity(intent);
+//		String result = user.getText().toString() + "\n" + password.getText().toString() + "\n" + project.getText().toString();
+//		Toast.makeText(this,
+//			"Oh HI " + result, Toast.LENGTH_SHORT).show();
+		new DownloadFromServer(this, user.getText().toString(),
+			password.getText().toString(), project.getText().toString())
+			.execute("http://qdap.ca/android_check.php");
+		
+//		Intent intent = new Intent(this, Categories.class);
+//		startActivity(intent);
+	}
+	
+	public void sync(View view) {
+	
+		Intent intent = new Intent(this, Categories.class);
+		this.startActivity(intent);
+		
 	}
 	
 }
@@ -105,12 +124,12 @@ class DownloadFromServer extends AsyncTask<String, Integer, String> {
 	private String				user, password, project;
 	private List<NameValuePair>	nvp;
 	private InputStream			is;
-	private Context	context;
+	private Login				context;
 	
 	private static final String	loginSuccessful	= "Login successful";
 	
 	
-	public DownloadFromServer(Context login, String user, String pw, String proj) {
+	public DownloadFromServer(Login login, String user, String pw, String proj) {
 	
 		this.user = user;
 		this.password = pw;
@@ -138,6 +157,7 @@ class DownloadFromServer extends AsyncTask<String, Integer, String> {
 			HttpEntity entity = response.getEntity();
 			is = entity.getContent();
 			Log.d("<<<-http_log_tag->>>", "Succes in Http Connection");
+			
 			
 		} catch (Exception e) {
 			Log.e("<<<-http_log_tag->>>", "Error in Http Connection" + e.toString());
@@ -171,14 +191,20 @@ class DownloadFromServer extends AsyncTask<String, Integer, String> {
 	
 	protected void onPostExecute(String result) {
 	
-		if (result.equalsIgnoreCase(loginSuccessful)) {
+		Button button = (Button) context.findViewById(R.id.sync_button);
+		button.setVisibility(Button.VISIBLE);
+		
+		if (result.equals("Success")) {
 			Login.loggedIn = true;
-			Intent intent = new Intent(context, Categories.class);
-			context.startActivity(intent);
+			
+//			Button button = (Button) context.findViewById(R.id.sync_button);
+//			button.setVisibility(Button.VISIBLE);
+			
+		} else {
+			
+			Toast.makeText(context,
+				"Login unsuccessful. Try again" , Toast.LENGTH_LONG).show();
 		}
 		
 	}
-	
-	
-	
 }

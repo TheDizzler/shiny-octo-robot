@@ -22,7 +22,7 @@
     -->
 
     <fragment
-        android:id="@+id/trade_list"
+        android:id="@+id/trade_list_fragment"
         android:name="vdindustries.reportsview.TradeListFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"

@@ -60,5 +60,12 @@
         android:background="@drawable/custom_button"
         android:onClick="login"
         android:text="@string/login" />
+    
+    <Button
+        android:id="@+id/sync_button"
+        android:background="@drawable/custom_button"
+        android:onClick="sync"
+        android:text="Sync"
+        android:visibility="invisible" />
 
 </TableLayout>
