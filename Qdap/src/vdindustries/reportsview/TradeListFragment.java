@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import vdindustries.content.DeficiencyParser;
 import vdindustries.content.TradeContent;
+import vdindustries.content.TradeContent.TradeItem;
 
 /** A list fragment representing a list of Trades. This fragment
  * also supports tablet devices by allowing list items to be given an
@@ -21,14 +22,17 @@ public class TradeListFragment extends ListFragment {
 	
 	/** The serialization (saved instance state) Bundle key representing the
 	 * activated item position. Only used on tablets. */
-	private static final String		STATE_ACTIVATED_POSITION	= "activated_position";
+	private static final String	STATE_ACTIVATED_POSITION	= "activated_position";
 	
 	/** The fragment's current callback object, which is notified of list item
 	 * clicks. */
-	private Callbacks				mCallbacks					= sDummyCallbacks;
+	private Callbacks			mCallbacks					= sDummyCallbacks;
 	
 	/** The current activated item position. Only used on tablets. */
-	private int						mActivatedPosition			= ListView.INVALID_POSITION;
+	private int					mActivatedPosition			= ListView.INVALID_POSITION;
+	
+	private static int			position;
+	private long				id;
 	
 	
 	
@@ -108,9 +112,27 @@ public class TradeListFragment extends ListFragment {
 		
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
+		
+		this.id = id;
+		TradeListFragment.position = position;
+		
 		mCallbacks.onItemSelected(TradeContent.ITEMS.get(position).id);
 	}
 	
+	
+	/**method to be called from ReportItemAdapter. This will update the objects
+	// created in the Categories activity so that the state changed by other
+	// activities will be persistent through the application. The calls from the
+	// DeficiencyParser still need to be made in order to write any changes to
+	// the XML data file */
+	public static void setDefic() {
+	
+		TradeItem modify = TradeContent.ITEMS.get(position);
+		
+		modify.deficiencies = null;
+		modify.deficiencies = DeficiencyParser.getDefsByTrade(modify.trade);
+		TradeContent.ITEMS.set(position, modify);
+	}
 	
 	@Override public void onSaveInstanceState(Bundle outState) {
 	

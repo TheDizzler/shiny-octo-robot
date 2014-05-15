@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 /** A fragment representing a single Trade detail screen.
@@ -20,6 +21,9 @@ public class TradeDetailFragment extends Fragment {
 	
 	private TradeContent.TradeItem	tradeItem;
 	
+	ReportItem						reportListItem[];
+	private static ListView			reportListView;
+	
 	/** Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes). */
 	public TradeDetailFragment() {
@@ -32,9 +36,6 @@ public class TradeDetailFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		
 		if (getArguments().containsKey(ARG_ITEM_ID)) {
-			// Load the dummy content specified by the fragment
-			// arguments. In a real-world scenario, use a Loader
-			// to load content from a content provider.
 			tradeItem = TradeContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
 		}
 	}
@@ -45,18 +46,23 @@ public class TradeDetailFragment extends Fragment {
 	
 		View rootView = inflater.inflate(R.layout.fragment_trade_detail, container, false);
 		
-		// Show the content as text in a TextView.
+		// Show the content in a ListView using a custom adapter
 		if (tradeItem != null) {
-			
-			StringBuilder stringDef = new StringBuilder();
+			reportListItem = new ReportItem[tradeItem.deficiencies.size()];
 			for (int i = 0; i < tradeItem.deficiencies.size(); ++i) {
-				stringDef.append(tradeItem.deficiencies.get(i).toString() + "\n");
+				reportListItem[i] = new ReportItem(
+					tradeItem.deficiencies.get(i));
+				reportListItem[i].position = i;
+				
 			}
-			((TextView) rootView.findViewById(R.id.trade_detail))
-				.setText(tradeItem.deficiencies.size() + "\n" + stringDef);
+			ReportItemAdapter adapter = new ReportItemAdapter(
+				getActivity(), R.layout.report_item_layout, reportListItem);
+			
+			reportListView = (ListView) rootView
+				.findViewById(R.id.trade_detail);
+			reportListView.setAdapter(adapter);
+			
 		}
-		
 		return rootView;
 	}
-	
 }

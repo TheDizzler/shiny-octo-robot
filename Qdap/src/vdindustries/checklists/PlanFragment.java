@@ -6,7 +6,7 @@ import org.w3c.dom.Element;
 import vdindustries.Qdap.R;
 import vdindustries.content.Deficiency;
 import vdindustries.content.DeficiencyParser;
-import vdindustries.planview.TouchImageView;
+import vdindustries.content.TouchImageView;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;

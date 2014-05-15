@@ -22,6 +22,11 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName" />
+        
+        <Button android:id="@+id/testproject_button" 
+            android:layout_width="wrap_content"
+            android:onClick="testProjectSetup"
+            android:text="Test Project"/>
     </TableRow>
 
     <TableRow>
@@ -56,16 +61,23 @@
             android:inputType="text" />
     </TableRow>
 
-    <Button
-        android:background="@drawable/custom_button"
-        android:onClick="login"
-        android:text="@string/login" />
-    
-    <Button
-        android:id="@+id/sync_button"
-        android:background="@drawable/custom_button"
-        android:onClick="sync"
-        android:text="Sync"
-        android:visibility="invisible" />
+    <TableRow>
+
+        <Button
+            android:background="@drawable/custom_button"
+            android:onClick="login"
+            android:text="@string/login" />
+    </TableRow>
+
+    <TableRow>
+
+        <Button
+            android:id="@+id/sync_button"
+            android:background="@drawable/custom_button"
+            android:onClick="sync"
+            android:text="Sync"
+            android:visibility="invisible" />
+    </TableRow>
+
 
 </TableLayout>

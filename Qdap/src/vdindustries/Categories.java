@@ -1,11 +1,21 @@
 package vdindustries;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
 import vdindustries.Qdap.R;
 import vdindustries.checklists.CheckListsActivity;
 import vdindustries.content.DeficiencyParser;
 import vdindustries.networking.ConnectActivity;
-import vdindustries.planview.NewPlans;
-import vdindustries.planview.PDFActivity;
 import vdindustries.reportsview.TradeListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,11 +26,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class Categories extends ActionBarActivity {
 	
 	
 	public static DeficiencyParser	parser;
+	public static InputStream		projectXML;
 	
 	
 	@Override protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +41,37 @@ public class Categories extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_categories);
 		
-		parser = new DeficiencyParser(getAssets());
+		
+		try {
+			Intent intent = getIntent();
+			
+			String xml = intent.getStringExtra("xmlFile");
+			String projname = intent.getStringExtra("projname");
+//			Toast.makeText(this, xml, Toast.LENGTH_LONG).show();
+			
+			DocumentBuilder db = DocumentBuilderFactory.newInstance()
+				.newDocumentBuilder();
+			
+			InputSource is = new InputSource();
+			is.setCharacterStream(new StringReader(xml));
+			Document xmlDoc = db.parse(is);
+			
+			parser = new DeficiencyParser(xmlDoc, projname);
+			
+		} catch (ParserConfigurationException | SAXException | IOException | NullPointerException e) {
+			
+			Toast.makeText(this, e.toString() + "\n\nLoading default Test Project", Toast.LENGTH_LONG).show();
+			parser = new DeficiencyParser(getAssets());
+		}
+		
 		
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 				.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
 	}
+	
 	
 	
 	@Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,6 +106,10 @@ public class Categories extends ActionBarActivity {
 		
 			View rootView = inflater.inflate(R.layout.fragment_categories,
 				container, false);
+			
+			TextView projName = (TextView) rootView.findViewById(R.id.project_name_textview);
+			projName.setText(DeficiencyParser.projectName);
+			
 			return rootView;
 		}
 	}
@@ -88,15 +129,19 @@ public class Categories extends ActionBarActivity {
 	/** temp for testing connection */
 	public void photo(View view) {
 	
-		Intent intent = new Intent(this, ConnectActivity.class);
-		startActivity(intent);
+		Toast.makeText(this, "This feature is not yet implemented", Toast.LENGTH_SHORT);
 	}
 	
 	/** Temp for testing image parsing*/
 	public void notes(View view) {
 	
-		Intent intent = new Intent(this, PDFActivity.class);
-		startActivity(intent);
+		Toast.makeText(this, "This feature is not yet implemented", Toast.LENGTH_SHORT);
+	}
+	
+	
+	public static void defParse() {
+	
+		parser = new DeficiencyParser();
 	}
 	
 }

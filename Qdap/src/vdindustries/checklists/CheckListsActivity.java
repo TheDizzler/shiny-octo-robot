@@ -1,7 +1,7 @@
 package vdindustries.checklists;
 
 import vdindustries.Qdap.R;
-import vdindustries.planview.TouchImageView;
+import vdindustries.content.TouchImageView;
 import vdindustries.reportsview.TradeListFragment;
 import android.content.Context;
 import android.os.Bundle;

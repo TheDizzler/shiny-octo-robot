@@ -1,5 +1,8 @@
 package vdindustries.content;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -7,6 +10,11 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -14,24 +22,54 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import vdindustries.Categories;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.widget.ImageView;
 
 
 
 public class DeficiencyParser {
 	
+	public static String		projectName;
+	
 	public static InputStream	projectXML;
 	public static Element		root;
 	public static NodeList		listFloorNodes;
 	public static NodeList		listRoomNodes;
+	public static NodeList		listDeficiencyNodes;
 	
 	public static NodeList		listTrades;
 	private static AssetManager	assMan;
+	
+	private static Document		xmlDoc;
+	private static File			fileXML;
+	
+	
+	public DeficiencyParser() {
+	
+		try {
+			fileXML = new File(Environment.getExternalStorageDirectory() + "/Download/" + "testproject.xml");
+			projectXML = null;
+			projectXML = new FileInputStream(fileXML);
+			xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+				projectXML);
+			setup();
+//			root = xmlDoc.getDocumentElement();
+//			root.normalize();
+//			listFloorNodes = root.getElementsByTagName("floor");
+//			listTrades = root.getElementsByTagName("trade");
+//			listRoomNodes = root.getElementsByTagName("room");
+//			listDeficiencyNodes = root.getElementsByTagName("deficiency");
+			
+		} catch (SAXException | IOException | ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	
 	/** Implementation: DeficiencyParser(getAssets()) */
@@ -41,23 +79,63 @@ public class DeficiencyParser {
 		try {
 			projectXML = assMan.open("testproject.xml");
 			
-			Document xmlDoc = DocumentBuilderFactory.newInstance().
+			xmlDoc = DocumentBuilderFactory.newInstance().
 				newDocumentBuilder().parse(projectXML);
-			root = xmlDoc.getDocumentElement();
-			root.normalize();
+			setup();
+//			root = xmlDoc.getDocumentElement();
+//			root.normalize();
+//			
+//			listTrades = root.getElementsByTagName("trade");
+//			listRoomNodes = root.getElementsByTagName("room");
+//			listFloorNodes = root.getElementsByTagName("floor");
 			
-			listTrades = root.getElementsByTagName("trade");
-			listRoomNodes = root.getElementsByTagName("room");
-			listFloorNodes = root.getElementsByTagName("floor");
 			
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			e.printStackTrace();
 		}
+		
+		projectName = root.getAttribute("name");
 	}
 	
 	
+	public DeficiencyParser(Document doc, String projname) {
+	
+		fileXML = new File(Environment.getExternalStorageDirectory() + "/Download/" + projname);
+		if (!fileXML.exists()) {
+			try {
+				fileXML.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		try {
+			projectXML = new FileInputStream(fileXML);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		xmlDoc = doc;
+		
+		setup();
+	}
+	
+	
+	private void setup() {
+	
+		root = xmlDoc.getDocumentElement();
+		root.normalize();
+		
+		projectName = root.getAttribute("name");
+		
+		listTrades = root.getElementsByTagName("trade");
+		listRoomNodes = root.getElementsByTagName("room");
+		listFloorNodes = root.getElementsByTagName("floor");
+		listDeficiencyNodes = root.getElementsByTagName("deficiency");
+	}
+	
 	/** Retrieves number of deficiencies in a room, completed & uncompleted */
-	public static int totalDefByUnit(String unit) {
+	public static int totalDefsByUnit(String unit) {
 	
 		for (int i = 0; i < listRoomNodes.getLength(); ++i) {
 			
@@ -71,8 +149,39 @@ public class DeficiencyParser {
 		return 0;
 	}
 	
+	public static int totalDefsByTrade(String trade) {
+	
+		int total = 0;
+		for (int i = 0; i < listTrades.getLength(); ++i) {
+			if (((Element) listTrades.item(i)).getAttribute("type").equals(trade)) {
+				NodeList myTradesList = ((Element) listTrades.item(i)).getElementsByTagName("deficiency");
+				total += myTradesList.getLength();
+			}
+		}
+		return total;
+	}
+	
+	public static int outstandingDefsByTrade(String trade) {
+	
+		int outstanding = 0;
+		for (int i = 0; i < listTrades.getLength(); ++i) {
+			if (((Element) listTrades.item(i)).getAttribute("type").equals(trade)) {
+				NodeList outstandingTradesList = ((Element) listTrades.item(i)).getElementsByTagName("deficiency");
+				for (int j = 0; j < outstandingTradesList.getLength(); ++j) {
+					NodeList outstandingTradeDeficiencyList = ((Element) outstandingTradesList.item(j))
+						.getElementsByTagName("completed");
+					if (((Element) outstandingTradeDeficiencyList.item(0)).getTextContent().equals(
+						"false")) {
+						outstanding++;
+					}
+				}
+			}
+		}
+		return outstanding;
+	}
+	
 	/** NOT IMPLEMENTED. */
-	public static int outstandingDefByUnit(String unit) {
+	public static int outstandingDefsByUnit(String unit) {
 	
 		
 		return 5;
@@ -278,13 +387,7 @@ public class DeficiencyParser {
 		try {
 			InputStream is = assMan.open(file);
 			Bitmap bmap = BitmapFactory.decodeStream(is);
-//			Matrix matrix = new Matrix();
-//			float scale = ((float) 400) / bmap.getWidth();
-//			matrix.setScale(1, 1);
-//
-//			
-			image.setImageBitmap(bmap); //CHANGE THIS LINE
-//			image.setImageMatrix(matrix);
+			image.setImageBitmap(bmap);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -353,6 +456,168 @@ public class DeficiencyParser {
 		}
 		
 		return bmap.getHeight();
+	}
+	
+	
+	/** generates a new reportID by taking the project code and adding one to the
+	 * total count of deficiencies */
+	public static String generateReportId() {
+	
+		String reportId = projectName;
+		int number = listDeficiencyNodes.getLength() + 1;
+		String num = Integer.toString(number);
+		for (int i = 0; i < 6 - num.length(); ++i) {
+			reportId = reportId.concat("0");
+		}
+		return reportId.concat(num);
+	}
+	
+	public static void setCompletionStatus(String unit, String trade, String reportID, boolean complete) {
+	
+		// find the room by no
+		for (int i = 0; i < listRoomNodes.getLength(); ++i) {
+			if (((Element) listRoomNodes.item(i)).getAttribute("no").equals(unit)) {
+				Element room = ((Element) listRoomNodes.item(i));
+				// find the trade by type
+				NodeList roomTrades = room.getElementsByTagName("trade");
+				for (int j = 0; j < roomTrades.getLength(); ++j) {
+					if (((Element) roomTrades.item(j)).getAttribute("type").equals(trade)) {
+						Element curTrade = ((Element) roomTrades.item(j));
+						
+						// find the deficiency by reportID
+						NodeList reportsList = curTrade.getElementsByTagName("deficiency");
+						for (int k = 0; k < reportsList.getLength(); ++k) {
+							if (((Element) reportsList.item(k)).getAttribute("reportID").equals(
+								reportID)) {
+								
+								// get the node completed
+								Element curReport = (Element) reportsList.item(k);
+								// set the completed node value
+								NodeList attributes = curReport.getElementsByTagName("completed");
+								Node complet = attributes.item(0);
+								complet.setTextContent((complete) ? "true" : "false");
+								
+								writeXml();
+								
+								return;
+								
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	
+	public static void addNewDeficiency(Deficiency newDefic) {
+	
+		NodeList floorsList = listFloorNodes;
+		for (int h = 0; h < listFloorNodes.getLength(); ++h) {
+			if (((Element) floorsList.item(h)).getAttribute("floorID").equals(newDefic.floor)) {
+				NodeList roomsList = ((Element) floorsList.item(h)).getElementsByTagName("room");
+				for (int i = 0; i < roomsList.getLength(); ++i) {
+					if (((Element) roomsList.item(i)).getAttribute("no").equals(newDefic.roomNo)) {
+						NodeList tradesList = ((Element) roomsList.item(i)).getElementsByTagName("trade");
+						for (int j = 0; j < tradesList.getLength(); ++j) {
+							if (((Element) tradesList.item(j)).getAttribute("type").equals(
+								newDefic.trade)) {
+								setNewDefic(newDefic, (Element) tradesList.item(j));
+								
+								writeXml();
+								Categories.defParse();
+								return;
+							}
+						}
+						Element newTradeNode = xmlDoc.createElement("trade");
+						newTradeNode.setAttribute("type", newDefic.trade);
+						((Element) roomsList.item(i)).appendChild(newTradeNode);
+						setNewDefic(newDefic, newTradeNode);
+						
+						writeXml();
+						Categories.defParse();
+						return;
+						
+					}
+				}
+			}
+		}
+	}
+	
+	
+	private static void setNewDefic(Deficiency defic, Element tradeNode) {
+	
+		// create the new deficiency Node and append to the tradeNode Element
+		Element deficiencyNode = xmlDoc.createElement("deficiency");
+		deficiencyNode.setAttribute("reportID", defic.reportID);
+		tradeNode.appendChild(deficiencyNode);
+		
+		// create and append the deficiency Node child elements
+		
+		Element completedNode = xmlDoc.createElement("completed");
+		completedNode.setTextContent("false");
+		deficiencyNode.appendChild(completedNode);
+		
+		Element priorityNode = xmlDoc.createElement("priority");
+		priorityNode.setTextContent((defic.priority) ? "true" : "false");
+		deficiencyNode.appendChild(priorityNode);
+		
+		Element coordinateNode = xmlDoc.createElement("coordinates");
+		coordinateNode.setAttribute("y", Integer.toString(defic.Y));
+		coordinateNode.setAttribute("x", Integer.toString(defic.X));
+		deficiencyNode.appendChild(coordinateNode);
+		
+		Element descriptionNode = xmlDoc.createElement("description");
+		deficiencyNode.appendChild(descriptionNode);
+		
+		// create and append the description Node child elements
+		
+		Element objectNode = xmlDoc.createElement("object");
+		objectNode.setTextContent(defic.object);
+		descriptionNode.appendChild(objectNode);
+		
+		Element itemNode = xmlDoc.createElement("item");
+		itemNode.setTextContent(defic.item);
+		descriptionNode.appendChild(itemNode);
+		
+		Element verbNode = xmlDoc.createElement("verb");
+		verbNode.setTextContent(defic.verb);
+		descriptionNode.appendChild(verbNode);
+		
+		Element directionNode = xmlDoc.createElement("direction");
+		directionNode.setTextContent(defic.direction);
+		descriptionNode.appendChild(directionNode);
+		
+		Element locationNode = xmlDoc.createElement("location");
+		locationNode.setTextContent(defic.location);
+		descriptionNode.appendChild(locationNode);
+		
+	}
+	
+	// writes the current DOM doc back to the xml file specified in the
+	// beginning of the class
+	private static void writeXml() {
+	
+		if (fileXML == null) {
+			String error = "Cannot edit: xml from assets loaded";
+			// some kind of error message here
+		} else {
+			try {
+				try {
+					projectXML.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(xmlDoc);
+				StreamResult result = new StreamResult(fileXML);
+				transformer.transform(source, result);
+				
+			} catch (TransformerException tfe) {
+				tfe.printStackTrace();
+			}
+		}
 	}
 	
 }

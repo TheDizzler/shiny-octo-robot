@@ -39,6 +39,9 @@ public class Login extends ActionBarActivity {
 	
 	public static Boolean	loggedIn	= false;
 	
+	public String			xmlFile;
+	
+	
 	@Override protected void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
@@ -98,18 +101,24 @@ public class Login extends ActionBarActivity {
 		password = (EditText) findViewById(R.id.editPassword);
 		project = (EditText) findViewById(R.id.editProject);
 		
-//		String result = user.getText().toString() + "\n" + password.getText().toString() + "\n" + project.getText().toString();
-//		Toast.makeText(this,
-//			"Oh HI " + result, Toast.LENGTH_SHORT).show();
 		new DownloadFromServer(this, user.getText().toString(),
 			password.getText().toString(), project.getText().toString())
 			.execute("http://qdap.ca/android_check.php");
-		
-//		Intent intent = new Intent(this, Categories.class);
-//		startActivity(intent);
 	}
 	
 	public void sync(View view) {
+	
+		project = (EditText) findViewById(R.id.editProject);
+		
+		Intent intent = new Intent(this, Categories.class);
+		intent.putExtra("xmlFile", xmlFile);
+		intent.putExtra("projname", project.getText().toString());
+		this.startActivity(intent);
+		
+	}
+	
+	
+	public void testProjectSetup(View view) {
 	
 		Intent intent = new Intent(this, Categories.class);
 		this.startActivity(intent);
@@ -126,7 +135,6 @@ class DownloadFromServer extends AsyncTask<String, Integer, String> {
 	private InputStream			is;
 	private Login				context;
 	
-	private static final String	loginSuccessful	= "Login successful";
 	
 	
 	public DownloadFromServer(Login login, String user, String pw, String proj) {
@@ -135,6 +143,8 @@ class DownloadFromServer extends AsyncTask<String, Integer, String> {
 		this.password = pw;
 		this.project = proj;
 		this.context = login;
+		if (project.length() == 0)
+			project = "ERROR";
 	}
 	
 	
@@ -143,8 +153,9 @@ class DownloadFromServer extends AsyncTask<String, Integer, String> {
 		nvp = new ArrayList<NameValuePair>();
 		//Pass user message with Index Value "UserMessage"
 //		nvp.add(new BasicNameValuePair("UserMessage", "Is that you server? It's me, Android"));
-		nvp.add(new BasicNameValuePair(user, password));
-		
+		nvp.add(new BasicNameValuePair("username", user));
+		nvp.add(new BasicNameValuePair("password", password));
+		nvp.add(new BasicNameValuePair("project", project));
 		try {
 			HttpClient httpClient = new DefaultHttpClient();
 			
@@ -171,7 +182,7 @@ class DownloadFromServer extends AsyncTask<String, Integer, String> {
 			StringBuilder sb = new StringBuilder();
 			String line = null;
 			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
+				sb.append(line);
 			}
 			is.close();
 			
@@ -189,22 +200,31 @@ class DownloadFromServer extends AsyncTask<String, Integer, String> {
 //        setProgressPercent(progress[0]);
 	}
 	
+	
 	protected void onPostExecute(String result) {
 	
 		Button button = (Button) context.findViewById(R.id.sync_button);
-		button.setVisibility(Button.VISIBLE);
 		
-		if (result.equals("Success")) {
-			Login.loggedIn = true;
+//		Toast.makeText(context,
+//			result, Toast.LENGTH_LONG).show();
+		if (result.equalsIgnoreCase("Nonexistent")) {
 			
-//			Button button = (Button) context.findViewById(R.id.sync_button);
-//			button.setVisibility(Button.VISIBLE);
+			Toast.makeText(context, "Project " + project + " doesn't exist", Toast.LENGTH_LONG).show();
+			
+			button.setVisibility(Button.INVISIBLE);
+			
+		} else if (!result.equalsIgnoreCase("failure")) {
+			context.loggedIn = true;
+			Toast.makeText(context,
+				"Project " + project + " loading....", Toast.LENGTH_LONG).show();
+			context.xmlFile = result;
+			button.setVisibility(Button.VISIBLE);
 			
 		} else {
 			
 			Toast.makeText(context,
-				"Login unsuccessful. Try again" , Toast.LENGTH_LONG).show();
+				"Login unsuccessful. Try again", Toast.LENGTH_LONG).show();
+			button.setVisibility(Button.INVISIBLE);
 		}
-		
 	}
 }
