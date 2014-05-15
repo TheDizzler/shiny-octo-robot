@@ -1,0 +1,88 @@
+package vdindustries.checklists;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import vdindustries.Qdap.R;
+import vdindustries.content.DeficiencyParser;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.ExpandableListView.OnGroupCollapseListener;
+import android.widget.ExpandableListView.OnGroupExpandListener;
+import android.widget.ImageView;
+import android.widget.ListView;
+
+public class CheckListsActivity extends ActionBarActivity implements ExpandableListFragment.OnItemSelectedListener {
+	
+	
+	Room							currentRoom;
+	
+	Context							context;
+	ExpandableListAdapter			listAdapter;
+	ExpandableListView				expListView;
+	List<String>					listDataHeader;
+	HashMap<String, List<String>>	listDataChild;
+	ArrayList<String>				tradesList;
+	
+	
+	@Override protected void onCreate(Bundle savedInstanceState) {
+	
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_checklists);
+		context = this;
+		
+//		ListView trades = (ListView) findViewById(R.id.listView1);
+//		View roughins = getLayoutInflater().inflate(R.layout.roughins, null);
+//		trades.addHeaderView(roughins);
+//		tradesList = new ArrayList<String>();
+//		tradesList.add("Framing");
+//		tradesList.add("Mechanical");
+//		tradesList.add("Electrical");
+//		tradesList.add("Security");
+//		tradesList.add("HVAC");
+//		tradesList.add("Insulation");
+//		
+//		// View finishes = getLayoutInflater().inflate(R.layout.finishes, null);
+//		tradesList.add("FINISHES");
+//		tradesList.add("Drywall");
+//		tradesList.add("Paint");
+//		tradesList.add("Mechanical");
+//		tradesList.add("Electrical");
+//		tradesList.add("Flooring");
+//		tradesList.add("Cabinets");
+//		tradesList.add("Countertops");
+//		tradesList.add("Finish Carp.");
+	}
+	
+	
+	@Override public void onFloorSelected(String floorID) {
+	
+		PlanFragment fragment = (PlanFragment) getFragmentManager().findFragmentById(
+			R.id.plan_fragment);
+		
+		fragment.loadFloorPlan(floorID);
+	}
+	
+	
+	@Override public void onRoomSelected(String roomNo) {
+	
+		
+		PlanFragment fragment = (PlanFragment) getFragmentManager().findFragmentById(
+			R.id.plan_fragment);
+		
+		fragment.loadRoomPlan(roomNo);
+		
+	}
+	
+	
+	
+}

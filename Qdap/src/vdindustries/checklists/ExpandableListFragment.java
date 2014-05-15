@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import vdindustries.Qdap.R;
+import vdindustries.content.Deficiency;
 import vdindustries.content.DeficiencyParser;
 import android.app.Activity;
-import android.content.Context;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +23,6 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 
 public class ExpandableListFragment extends Fragment {
@@ -29,9 +32,11 @@ public class ExpandableListFragment extends Fragment {
 	List<String>					listDataHeader;
 	HashMap<String, List<String>>	listDataChild;
 	
+	private Context					context;
+	
 	/** Used to communicate with activity. */
 	private OnItemSelectedListener	listener;
-	private Context					context;
+	
 	
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,16 +61,8 @@ public class ExpandableListFragment extends Fragment {
 			
 			public boolean onGroupClick(ExpandableListView parent, View v,
 										int groupPosition, long id) {
-			
-//						Toast.makeText(view.getContext(),
-//							"Group Clicked " + listDataHeader.get(groupPosition),
-//							Toast.LENGTH_SHORT).show();
 				
-//						ImageView currentImage = (ImageView) findViewById(R.id.plan_image);
-//						
 				String floor = listDataHeader.get(groupPosition);
-//						DeficiencyParser.loadFloorPlan(currentImage, floor);
-//						((TouchImageView) currentImage).resetZoom();
 				
 				((CheckListsActivity) getActivity()).onFloorSelected(floor);
 				
@@ -78,10 +75,6 @@ public class ExpandableListFragment extends Fragment {
 			
 			@Override public void onGroupExpand(int groupPosition) {
 			
-//						Toast.makeText(getApplicationContext(),
-//							listDataHeader.get(groupPosition) + " Expanded",
-//							Toast.LENGTH_SHORT).show();
-				
 				
 			}
 		});
@@ -91,9 +84,6 @@ public class ExpandableListFragment extends Fragment {
 			
 			@Override public void onGroupCollapse(int groupPosition) {
 			
-//						Toast.makeText(getApplicationContext(),
-//							listDataHeader.get(groupPosition) + " Collapsed",
-//							Toast.LENGTH_SHORT).show();
 				
 			}
 		});
@@ -137,6 +127,7 @@ public class ExpandableListFragment extends Fragment {
 											+ " must implemenet ExpandableListFragment"
 											+ ".OnItemSelectedListener");
 		}
+		
 	}
 	
 	@Override public void onDetach() {
@@ -157,18 +148,18 @@ public class ExpandableListFragment extends Fragment {
 		listDataHeader.addAll(DeficiencyParser.getFloorIDs());
 		
 		// Adding child data
-		List<String> floor2 = new ArrayList<String>();
-		floor2.addAll(DeficiencyParser.getRoomIDs("Floor 2"));
+		NodeList floors = DeficiencyParser.listFloorNodes;
 		
-		List<String> floor3 = new ArrayList<String>();
-		floor3.addAll(DeficiencyParser.getRoomIDs("Floor 3"));
-		
-		List<String> ph = new ArrayList<String>();
-		ph.addAll(DeficiencyParser.getRoomIDs("PH"));
-		
-		listDataChild.put(listDataHeader.get(0), floor2); // Header, Child data
-		listDataChild.put(listDataHeader.get(1), floor3);
-		listDataChild.put(listDataHeader.get(2), ph);
+		for (int i = 0; i < floors.getLength(); ++i) {
+			
+			String floorID = ((Element) floors.item(i))
+				.getAttribute(Deficiency.FLOORID);
+			
+			List<String> roomList = new ArrayList<String>();
+			roomList.addAll(DeficiencyParser.getRoomIDs(floorID));
+			
+			listDataChild.put(listDataHeader.get(i), roomList); // Header, Child data
+		}
 	}
 	
 	

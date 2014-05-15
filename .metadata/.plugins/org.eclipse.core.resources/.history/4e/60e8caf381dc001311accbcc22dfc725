@@ -1,0 +1,43 @@
+package vdindustries.checklists;
+
+import java.util.ArrayList;
+
+import vdindustries.Qdap.R;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.View;
+import android.widget.ListView;
+
+
+public class TradesChoiceFragment extends Fragment {
+	
+	
+	@Override public void onCreate(Bundle savedInstanceState) {
+	
+		super.onCreate(savedInstanceState);
+		
+		ListView trades = (ListView) findViewById(R.id.listView1);
+		View roughins = getLayoutInflater().inflate(R.layout.roughins, null);
+		trades.addHeaderView(roughins);
+		tradesList = new ArrayList<String>();
+		tradesList.add("Framing");
+		tradesList.add("Mechanical");
+		tradesList.add("Electrical");
+		tradesList.add("Security");
+		tradesList.add("HVAC");
+		tradesList.add("Insulation");
+		
+		// View finishes = getLayoutInflater().inflate(R.layout.finishes, null);
+		tradesList.add("FINISHES");
+		tradesList.add("Drywall");
+		tradesList.add("Paint");
+		tradesList.add("Mechanical");
+		tradesList.add("Electrical");
+		tradesList.add("Flooring");
+		tradesList.add("Cabinets");
+		tradesList.add("Countertops");
+		tradesList.add("Finish Carp.");
+	}
+	
+	
+}

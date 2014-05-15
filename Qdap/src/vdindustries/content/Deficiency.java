@@ -66,10 +66,8 @@ public class Deficiency {
 	
 	public String toString() {
 	
-		return "reportID: " + reportID + " roomNo: " + roomNo +
-				">> " + object + " " + item + " " + verb + " " +
-				direction + " " + location + " << " +
-				" at (" + X + ", " + Y + ")";
+		return "reportID: " + reportID + "\t" + object
+				+ " " + item + " " + verb + " " + direction + " " + location;
 	}
 	
 }

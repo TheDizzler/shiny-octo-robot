@@ -83,7 +83,7 @@ public class Room extends ImageView {
 		plan.setLongClickable(true);
 		plan.setOnTouchListener(new LocationGetter(this));
 		plan.setOnLongClickListener(new LongListener(this));
-		showDeficiencies(roomNo, "Framing");
+//		showDeficiencies(roomNo, "Framing");
 	}
 	
 	/** Display room deficiencise by trade. */
@@ -224,9 +224,9 @@ class LongListener implements OnLongClickListener {
 	@Override public boolean onLongClick(View v) {
 	
 		room.vibrator.vibrate(500);
-		Toast.makeText(v.getContext(),
-			"Oh HI " + room.roomNo + "\nYou touched me at " +
-					room.lastClickX + ", " + room.lastClickY, Toast.LENGTH_SHORT).show();
+//		Toast.makeText(v.getContext(),
+//			"Oh HI " + room.roomNo + "\nYou touched me at " +
+//					room.lastClickX + ", " + room.lastClickY, Toast.LENGTH_SHORT).show();
 		return false;
 	}
 	

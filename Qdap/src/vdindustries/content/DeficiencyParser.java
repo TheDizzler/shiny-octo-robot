@@ -109,12 +109,12 @@ public class DeficiencyParser {
 			}
 		}
 		
-		try {
-			projectXML = new FileInputStream(fileXML);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			projectXML = new FileInputStream(fileXML);
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		xmlDoc = doc;
 		
 		setup();
@@ -604,7 +604,8 @@ public class DeficiencyParser {
 		} else {
 			try {
 				try {
-					projectXML.close();
+					if (projectXML != null)
+						projectXML.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

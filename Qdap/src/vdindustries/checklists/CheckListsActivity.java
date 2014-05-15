@@ -1,22 +1,35 @@
 package vdindustries.checklists;
 
-import vdindustries.Qdap.R;
-import vdindustries.content.TouchImageView;
-import vdindustries.reportsview.TradeListFragment;
-import android.content.Context;
-import android.os.Bundle;
-import android.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class CheckListsActivity extends ActionBarActivity implements ExpandableListFragment.OnItemSelectedListener {
+import vdindustries.Qdap.R;
+import vdindustries.content.DeficiencyParser;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.ExpandableListView.OnGroupCollapseListener;
+import android.widget.ExpandableListView.OnGroupExpandListener;
+import android.widget.ImageView;
+import android.widget.ListView;
+
+public class CheckListsActivity extends ActionBarActivity implements ExpandableListFragment.OnItemSelectedListener,
+															TradesChoiceFragment.OnTradeSelectedListener {
 	
 	
 	Room	currentRoom;
 	
 	Context	context;
+	
 	
 	
 	@Override protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +38,8 @@ public class CheckListsActivity extends ActionBarActivity implements ExpandableL
 		setContentView(R.layout.activity_checklists);
 		context = this;
 		
-//		((ExpandableListFragment) getSupportFragmentManager().
-//				findFragmentById(R.id.expand_list_fragment)).setActivateOnItemClick(true);
 		
 	}
-	
-	
 	
 	
 	@Override public void onFloorSelected(String floorID) {
@@ -40,10 +49,10 @@ public class CheckListsActivity extends ActionBarActivity implements ExpandableL
 		
 		fragment.loadFloorPlan(floorID);
 	}
-
-
+	
+	
 	@Override public void onRoomSelected(String roomNo) {
-		
+	
 		
 		PlanFragment fragment = (PlanFragment) getFragmentManager().findFragmentById(
 			R.id.plan_fragment);
@@ -53,5 +62,20 @@ public class CheckListsActivity extends ActionBarActivity implements ExpandableL
 	}
 	
 	
+	@Override public void onTradeSelected(String tradeSelected) {
 	
+		PlanFragment fragment = (PlanFragment) getFragmentManager().findFragmentById(
+			R.id.plan_fragment);
+		
+		fragment.loadDeficiencies(tradeSelected);
+		
+	}
+	
+	
+	
+	public void deficiencyWheel(View view) {
+	
+		Intent intent = new Intent(context, DeficiencyWheel.class);
+		startActivity(intent);
+	}
 }

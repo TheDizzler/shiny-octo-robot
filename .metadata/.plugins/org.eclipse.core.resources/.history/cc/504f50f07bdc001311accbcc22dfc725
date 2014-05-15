@@ -1,0 +1,60 @@
+package vdindustries.checklists;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import vdindustries.Qdap.R;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.widget.ExpandableListView;
+
+public class CheckListsActivity extends ActionBarActivity implements ExpandableListFragment.OnItemSelectedListener {
+	
+	
+	Room							currentRoom;
+	
+	Context							context;
+	ExpandableListAdapter			listAdapter;
+	ExpandableListView				expListView;
+	List<String>					listDataHeader;
+	HashMap<String, List<String>>	listDataChild;
+	ArrayList<String>				tradesList;
+	
+	
+	@Override protected void onCreate(Bundle savedInstanceState) {
+	
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_checklists);
+		context = this;
+		
+//		((ExpandableListFragment) getSupportFragmentManager().
+//				findFragmentById(R.id.expand_list_fragment)).setActivateOnItemClick(true);
+		
+	}
+	
+	
+	
+	@Override public void onFloorSelected(String floorID) {
+	
+		PlanFragment fragment = (PlanFragment) getFragmentManager().findFragmentById(
+			R.id.plan_fragment);
+		
+		fragment.loadFloorPlan(floorID);
+	}
+	
+	
+	@Override public void onRoomSelected(String roomNo) {
+	
+		
+		PlanFragment fragment = (PlanFragment) getFragmentManager().findFragmentById(
+			R.id.plan_fragment);
+		
+		fragment.loadRoomPlan(roomNo);
+		
+	}
+	
+	
+	
+}

@@ -94,4 +94,18 @@ public class PlanFragment extends Fragment {
 //					"\nimageview.getHeight()" + currentImage.getHeight(), Toast.LENGTH_LONG).show();
 //		((TouchImageView) currentImage).resetZoom();
 	}
+
+
+	public void loadDeficiencies(String tradeSelected) {
+	
+//		ImageView currentImage = (ImageView) getActivity().findViewById(R.id.plan_image);
+		
+		if (currentRoom != null) {
+			currentRoom.removeViews();
+			
+			currentRoom.showDeficiencies(currentRoom.roomNo, tradeSelected);
+		}
+		
+		
+	}
 }
