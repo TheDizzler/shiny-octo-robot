@@ -103,7 +103,6 @@ defParse();
 		test.priority = false;
 		test.trade = "Framing";
 		DeficiencyParser.addNewDeficiency(test);
-		test.
 		int blah = 5;
 	}
 	
