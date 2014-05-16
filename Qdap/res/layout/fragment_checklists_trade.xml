@@ -10,7 +10,9 @@
         android:id="@+id/listview_trade_checklists"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textIsSelectable="true" >
+        android:choiceMode="singleChoice"
+        android:textIsSelectable="true"
+        android:listSelector="@android:color/darker_gray"  >
     </ListView>
 
 </FrameLayout>

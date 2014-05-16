@@ -7,6 +7,7 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import vdindustries.Qdap.R;
 import vdindustries.content.DeficiencyParser;
 import vdindustries.content.TradeContent;
 import vdindustries.content.TradeContent.TradeItem;
@@ -64,7 +65,7 @@ public class TradeListFragment extends ListFragment {
 	@Override public void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
-		
+	
 		setListAdapter(new ArrayAdapter<TradeContent.TradeItem>(getActivity(),
 			android.R.layout.simple_list_item_activated_1,
 			android.R.id.text1,
