@@ -26,7 +26,7 @@ public class TradesChoiceFragment extends Fragment {
 	
 	
 	private static int				position;
-	protected static long	id;
+	protected static long			id;
 	ExpandableListAdapter			listAdapter;
 	ExpandableListView				expListView;
 	List<String>					listDataHeader;
@@ -37,6 +37,7 @@ public class TradesChoiceFragment extends Fragment {
 	/** Used to communicate with activity. */
 	private OnTradeSelectedListener	listener;
 	
+	private static String			tradeSelected;
 	
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
 										Bundle savedInstanceState) {
@@ -84,15 +85,18 @@ public class TradesChoiceFragment extends Fragment {
 				TradesChoiceFragment.id = id;
 				TradesChoiceFragment.position = position;
 				
-				String trade = tradesList.get(position - 1);
-				Toast.makeText(context, trade, Toast.LENGTH_SHORT).show();
-				((CheckListsActivity) getActivity()).onTradeSelected(trade);
+				
+				if (position > 0) {
+					tradeSelected = tradesList.get(position - 1);
+					
+//				Toast.makeText(context, trade, Toast.LENGTH_SHORT).show();
+					((CheckListsActivity) getActivity()).onTradeSelected(tradeSelected);
+				}
 			}
 		});
 		
 		return view;
 	}
-	
 	
 	public void onAttach(Activity activity) {
 	

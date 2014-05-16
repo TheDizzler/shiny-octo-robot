@@ -80,9 +80,9 @@ public class Room extends ImageView {
 		plan.setX(getResources().getDimension(R.dimen.plan_horizontal_margin));
 		plan.setY(+getResources().getDimension(R.dimen.plan_vertical_margin));
 		
-		plan.setLongClickable(true);
-		plan.setOnTouchListener(new LocationGetter(this));
-		plan.setOnLongClickListener(new LongListener(this));
+//		plan.setLongClickable(true);
+//		plan.setOnTouchListener(new LocationGetter(this));
+//		plan.setOnLongClickListener(new LongListener(this));
 //		showDeficiencies(roomNo, "Framing");
 	}
 	
@@ -126,6 +126,13 @@ public class Room extends ImageView {
 		if (defBtns != null)
 			for (ImageButton btn : defBtns)
 				((ViewManager) btn.getParent()).removeView(btn);
+	}
+	
+	
+	/** Used to communicate with activity. */
+	public interface OnEditDeficiency {
+		
+		public void onFlagClick(Deficiency def);
 	}
 	
 	
@@ -179,56 +186,7 @@ class FlagListener implements OnClickListener {
 	@Override public void onClick(View v) {
 	
 		vibrator.vibrate(500);
-		Toast.makeText(v.getContext(), def.toString(), Toast.LENGTH_SHORT).show();
-		
+//		Toast.makeText(v.getContext(), def.toString(), Toast.LENGTH_SHORT).show();
+		((CheckListsActivity)v.getContext()).onFlagClick(def);
 	}
-}
-
-
-
-class LocationGetter implements OnTouchListener {
-	
-	Room	room;
-	
-	
-	public LocationGetter(Room rm) {
-	
-		this.room = rm;
-	}
-	
-	
-	@Override public boolean onTouch(View v, MotionEvent event) {
-	
-		final int action = event.getAction();
-		switch (action & MotionEvent.ACTION_MASK) {
-			case MotionEvent.ACTION_DOWN: {
-				room.lastClickX = (int) event.getX();
-				room.lastClickY = (int) event.getY();
-				break;
-			}
-		}
-		return false;
-	}
-}
-
-
-class LongListener implements OnLongClickListener {
-	
-	Room	room;
-	
-	public LongListener(Room rm) {
-	
-		this.room = rm;
-	}
-	
-	@Override public boolean onLongClick(View v) {
-	
-		room.vibrator.vibrate(500);
-//		Toast.makeText(v.getContext(),
-//			"Oh HI " + room.roomNo + "\nYou touched me at " +
-//					room.lastClickX + ", " + room.lastClickY, Toast.LENGTH_SHORT).show();
-		return false;
-	}
-	
-	
 }

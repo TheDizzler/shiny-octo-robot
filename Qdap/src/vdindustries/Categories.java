@@ -129,13 +129,13 @@ public class Categories extends ActionBarActivity {
 	/** temp for testing connection */
 	public void photo(View view) {
 	
-		Toast.makeText(this, "This feature is not yet implemented", Toast.LENGTH_SHORT);
+		Toast.makeText(this, "This feature is not yet implemented", Toast.LENGTH_SHORT).show();
 	}
 	
 	/** Temp for testing image parsing*/
 	public void notes(View view) {
 	
-		Toast.makeText(this, "This feature is not yet implemented", Toast.LENGTH_SHORT);
+		Toast.makeText(this, "This feature is not yet implemented", Toast.LENGTH_SHORT).show();
 	}
 	
 	

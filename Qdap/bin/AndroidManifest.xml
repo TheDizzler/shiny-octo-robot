@@ -66,8 +66,8 @@
             android:label="Test Plan" >
         </activity>
         <activity
-            android:name="vdindustries.planview.PDFActivity"
-            android:label="PDF Test" >
+            android:name="vdindustries.checklists.DeficiencyWheel"
+            android:label="Deficiency Wheel" >
         </activity>
     </application>
 

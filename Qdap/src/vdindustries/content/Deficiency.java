@@ -1,7 +1,10 @@
 package vdindustries.content;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Deficiency {
+
+public class Deficiency implements Parcelable{
 	
 	
 	/* Attribute tags */
@@ -41,13 +44,21 @@ public class Deficiency {
 	public String				roomNo;
 	public String				floor;
 	
+	private int	mData;
 	
 	
 	public Deficiency() {
+		
+		
+	}
 	
+	public Deficiency(Parcel in) {
+	
+		mData = in.readInt();
 	}
 	
 	
+	/** Probably shouldn't use this. */
 	public Deficiency(String reportID, int x, int y,
 						String object, String item,
 						String verb, String direction,
@@ -61,13 +72,37 @@ public class Deficiency {
 		this.verb = verb;
 		this.direction = direction;
 		this.location = location;
+		
 	}
 	
-	
+	public static final Parcelable.Creator<Deficiency> CREATOR = new Parcelable.Creator<Deficiency>() {  
+	    
+        public Deficiency createFromParcel(Parcel in) {  
+            return new Deficiency(in);  
+        }  
+   
+        public Deficiency[] newArray(int size) {  
+            return new Deficiency[size];  
+        }  
+          
+    };
+    
 	public String toString() {
 	
 		return "reportID: " + reportID + "\t" + object
 				+ " " + item + " " + verb + " " + direction + " " + location;
+	}
+
+
+	@Override public int describeContents() {
+	
+		return 0;
+	}
+
+
+	@Override public void writeToParcel(Parcel out, int flags) {
+	
+		out.writeInt(mData);
 	}
 	
 }
