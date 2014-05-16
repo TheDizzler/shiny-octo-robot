@@ -51,6 +51,7 @@ public class TradesChoiceFragment extends Fragment {
 		
 		View roughins = inflater.inflate(R.layout.roughins, null);
 		trades.addHeaderView(roughins);
+		
 		tradesList = new ArrayList<String>();
 		tradesList.add("Framing");
 		tradesList.add("Mechanical");
