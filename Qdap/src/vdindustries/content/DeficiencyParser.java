@@ -30,76 +30,67 @@ import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.widget.ImageView;
 
-
-
 public class DeficiencyParser {
-	
-	public static String		projectName;
-	
-	public static InputStream	projectXML;
-	public static Element		root;
-	public static NodeList		listFloorNodes;
-	public static NodeList		listRoomNodes;
-	public static NodeList		listDeficiencyNodes;
-	
-	public static NodeList		listTrades;
-	private static AssetManager	assMan;
-	
-	private static Document		xmlDoc;
-	private static File			fileXML;
-	
-	
+
+	public static String projectName;
+
+	public static InputStream projectXML;
+	public static Element root;
+	public static NodeList listFloorNodes;
+	public static NodeList listRoomNodes;
+	public static NodeList listDeficiencyNodes;
+
+	public static NodeList listTrades;
+	private static AssetManager assMan;
+
+	private static Document xmlDoc;
+	private static File fileXML;
+
 	public DeficiencyParser() {
-	
+
 		try {
 			fileXML = new File(Environment.getExternalStorageDirectory() + "/Download/" + "testproject.xml");
 			projectXML = null;
 			projectXML = new FileInputStream(fileXML);
-			xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-				projectXML);
+			xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(projectXML);
 			setup();
-//			root = xmlDoc.getDocumentElement();
-//			root.normalize();
-//			listFloorNodes = root.getElementsByTagName("floor");
-//			listTrades = root.getElementsByTagName("trade");
-//			listRoomNodes = root.getElementsByTagName("room");
-//			listDeficiencyNodes = root.getElementsByTagName("deficiency");
-			
+			// root = xmlDoc.getDocumentElement();
+			// root.normalize();
+			// listFloorNodes = root.getElementsByTagName("floor");
+			// listTrades = root.getElementsByTagName("trade");
+			// listRoomNodes = root.getElementsByTagName("room");
+			// listDeficiencyNodes = root.getElementsByTagName("deficiency");
+
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
 	/** Implementation: DeficiencyParser(getAssets()) */
 	public DeficiencyParser(AssetManager am) {
-	
+
 		assMan = am;
 		try {
 			projectXML = assMan.open("testproject.xml");
-			
-			xmlDoc = DocumentBuilderFactory.newInstance().
-				newDocumentBuilder().parse(projectXML);
+
+			xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(projectXML);
 			setup();
-//			root = xmlDoc.getDocumentElement();
-//			root.normalize();
-//			
-//			listTrades = root.getElementsByTagName("trade");
-//			listRoomNodes = root.getElementsByTagName("room");
-//			listFloorNodes = root.getElementsByTagName("floor");
-			
-			
+			// root = xmlDoc.getDocumentElement();
+			// root.normalize();
+			//
+			// listTrades = root.getElementsByTagName("trade");
+			// listRoomNodes = root.getElementsByTagName("room");
+			// listFloorNodes = root.getElementsByTagName("floor");
+
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			e.printStackTrace();
 		}
-		
+
 		projectName = root.getAttribute("name");
 	}
-	
-	
+
 	public DeficiencyParser(Document doc, String projname) {
-	
+
 		fileXML = new File(Environment.getExternalStorageDirectory() + "/Download/" + projname);
 		if (!fileXML.exists()) {
 			try {
@@ -108,49 +99,48 @@ public class DeficiencyParser {
 				e.printStackTrace();
 			}
 		}
-		
-//		try {
-//			projectXML = new FileInputStream(fileXML);
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
+		// try {
+		// projectXML = new FileInputStream(fileXML);
+		// } catch (FileNotFoundException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 		xmlDoc = doc;
-		
+
 		setup();
 	}
-	
-	
+
 	private void setup() {
-	
+
 		root = xmlDoc.getDocumentElement();
 		root.normalize();
-		
+
 		projectName = root.getAttribute("name");
-		
+
 		listTrades = root.getElementsByTagName("trade");
 		listRoomNodes = root.getElementsByTagName("room");
 		listFloorNodes = root.getElementsByTagName("floor");
 		listDeficiencyNodes = root.getElementsByTagName("deficiency");
 	}
-	
+
 	/** Retrieves number of deficiencies in a room, completed & uncompleted */
 	public static int totalDefsByUnit(String unit) {
-	
+
 		for (int i = 0; i < listRoomNodes.getLength(); ++i) {
-			
+
 			Element room = ((Element) listRoomNodes.item(i));
 			if (room.getAttribute(Deficiency.FLOORID).equalsIgnoreCase(unit)) {
-				
+
 				return room.getElementsByTagName("deficiency").getLength();
 			}
 		}
-		
+
 		return 0;
 	}
-	
+
 	public static int totalDefsByTrade(String trade) {
-	
+
 		int total = 0;
 		for (int i = 0; i < listTrades.getLength(); ++i) {
 			if (((Element) listTrades.item(i)).getAttribute("type").equals(trade)) {
@@ -160,18 +150,17 @@ public class DeficiencyParser {
 		}
 		return total;
 	}
-	
+
 	public static int outstandingDefsByTrade(String trade) {
-	
+
 		int outstanding = 0;
 		for (int i = 0; i < listTrades.getLength(); ++i) {
 			if (((Element) listTrades.item(i)).getAttribute("type").equals(trade)) {
 				NodeList outstandingTradesList = ((Element) listTrades.item(i)).getElementsByTagName("deficiency");
 				for (int j = 0; j < outstandingTradesList.getLength(); ++j) {
 					NodeList outstandingTradeDeficiencyList = ((Element) outstandingTradesList.item(j))
-						.getElementsByTagName("completed");
-					if (((Element) outstandingTradeDeficiencyList.item(0)).getTextContent().equals(
-						"false")) {
+							.getElementsByTagName("completed");
+					if (((Element) outstandingTradeDeficiencyList.item(0)).getTextContent().equals("false")) {
 						outstanding++;
 					}
 				}
@@ -179,84 +168,80 @@ public class DeficiencyParser {
 		}
 		return outstanding;
 	}
-	
+
 	/** NOT IMPLEMENTED. */
 	public static int outstandingDefsByUnit(String unit) {
-	
-		
+
 		return 5;
 	}
-	
-	/** Retrieves a deficiency object from its reportID.
-	 * Note: this is likely very inefficient in the case of large buildings. */
+
+	/**
+	 * Retrieves a deficiency object from its reportID. Note: this is likely
+	 * very inefficient in the case of large buildings.
+	 */
 	public static Deficiency getDefByID(String reportID) {
-	
+
 		NodeList defList = root.getElementsByTagName("deficiency");
 		for (int i = 0; i < defList.getLength(); ++i) {
-			
-			if (((Element) defList.item(i)).
-				getAttribute(Deficiency.REPORTID).
-				equalsIgnoreCase(reportID)) {
-				
+
+			if (((Element) defList.item(i)).getAttribute(Deficiency.REPORTID).equalsIgnoreCase(reportID)) {
+
 				return createDeficiency(defList.item(i));
 			}
 		}
 		return null;
 	}
-	
-	
+
 	/** Builds a list of deficiencies by trade. */
 	public static List<Deficiency> getDefsByTrade(String tradeSelected) {
-	
+
 		List<Deficiency> defList = new ArrayList<Deficiency>();
-		
+
 		// for each <trade> element
 		for (int i = 0; i < listTrades.getLength(); ++i) {
-			
+
 			// if <trade type = tradeSelected>
 			if (((Element) listTrades.item(i)).getAttribute("type").equalsIgnoreCase(tradeSelected)) {
-				
+
 				// get a list of all child deficiency elements
 				NodeList nodes = ((Element) listTrades.item(i)).getElementsByTagName("deficiency");
-				
+
 				for (int j = 0; j < nodes.getLength(); ++j)
 					defList.add(createDeficiency(nodes.item(j)));
-				
+
 				break;
 			}
 		}
-		
+
 		return defList;
 	}
-	
-	
+
 	public static List<Deficiency> getDefsByRoom(String roomNo) {
-	
+
 		List<Deficiency> defList = new ArrayList<Deficiency>();
-		
+
 		for (int i = 0; i < listRoomNodes.getLength(); ++i) {
-			
+
 			Element roomElem = ((Element) listRoomNodes.item(i));
 			if (roomElem.getAttribute(Deficiency.ROOMNO).equalsIgnoreCase(roomNo)) {
-				
+
 				NodeList nodes = roomElem.getElementsByTagName("deficiency");
-				
+
 				for (int j = 0; j < nodes.getLength(); ++j)
 					defList.add(createDeficiency(nodes.item(j)));
-				
+
 				break;
 			}
 		}
-		
+
 		return defList;
 	}
-	
-	
+
 	/** Retrieves a list of rooms on a specific floor. */
 	public static NodeList getRoomsByFloor(String floorID) {
-	
+
 		for (int i = 0; i < listFloorNodes.getLength(); ++i) {
-			
+
 			Element current = (Element) listFloorNodes.item(i);
 			if (current.getAttribute(Deficiency.FLOORID).equals(floorID)) {
 				return current.getElementsByTagName(Deficiency.ROOM);
@@ -264,81 +249,76 @@ public class DeficiencyParser {
 		}
 		return null;
 	}
-	
+
 	/** Retrieves room plan image file location from it's room number. */
 	public static String getRoomImageFile(String roomNo) {
-	
+
 		for (int i = 0; i < listRoomNodes.getLength(); ++i) {
-			
+
 			Element current = (Element) listRoomNodes.item(i);
 			if (current.getAttribute(Deficiency.ROOMNO).equals(roomNo)) {
-				
-				return ((Element) current.
-					getElementsByTagName(Deficiency.ROOMPLAN).item(0)).
-					getAttribute(Deficiency.ROOMIMAGE);
+
+				return ((Element) current.getElementsByTagName(Deficiency.ROOMPLAN).item(0))
+						.getAttribute(Deficiency.ROOMIMAGE);
 			}
 		}
 		return null;
 	}
-	
+
 	/** Retrieves floor plan image file location from it's ID. */
 	private static String getFloorImageFile(String floorID) {
-	
+
 		for (int i = 0; i < listFloorNodes.getLength(); ++i) {
-			
+
 			Element current = (Element) listFloorNodes.item(i);
 			if (current.getAttribute(Deficiency.FLOORID).equals(floorID)) {
-				
-				return ((Element) current.
-					getElementsByTagName(Deficiency.FLOORPLAN).item(0)).
-					getAttribute(Deficiency.FLOORIMAGE);
+
+				return ((Element) current.getElementsByTagName(Deficiency.FLOORPLAN).item(0))
+						.getAttribute(Deficiency.FLOORIMAGE);
 			}
 		}
 		return null;
 	}
-	
+
 	/** Builds a deficiency object from a XML node. */
 	private static Deficiency createDeficiency(Node node) {
-	
+
 		Deficiency def = new Deficiency();
 		Element defElem = (Element) node;
-		
+
 		def.reportID = defElem.getAttribute(Deficiency.REPORTID);
-		
-		def.completed = Boolean.parseBoolean(defElem.getElementsByTagName(Deficiency.COMPLETED).item(
-			0).getTextContent());
-		def.priority = Boolean.parseBoolean(defElem.getElementsByTagName(Deficiency.PRIORITY).item(
-			0).getTextContent());
+
+		def.completed = Boolean.parseBoolean(defElem.getElementsByTagName(Deficiency.COMPLETED).item(0)
+				.getTextContent());
+		def.priority = Boolean.parseBoolean(defElem.getElementsByTagName(Deficiency.PRIORITY).item(0).getTextContent());
 		Element coor = ((Element) defElem.getElementsByTagName("coordinates").item(0));
 		def.X = Integer.parseInt(coor.getAttribute(Deficiency.XCOORD));
 		def.Y = Integer.parseInt(coor.getAttribute(Deficiency.YCOORD));
-		
+
 		def.object = defElem.getElementsByTagName(Deficiency.OBJECT).item(0).getTextContent();
 		def.item = defElem.getElementsByTagName(Deficiency.ITEM).item(0).getTextContent();
 		def.verb = defElem.getElementsByTagName(Deficiency.VERB).item(0).getTextContent();
 		def.direction = defElem.getElementsByTagName(Deficiency.DIRECTION).item(0).getTextContent();
 		def.location = defElem.getElementsByTagName(Deficiency.LOCATION).item(0).getTextContent();
-		
+
 		def.trade = ((Element) defElem.getParentNode()).getAttribute(Deficiency.TRADE);
 		def.roomNo = ((Element) defElem.getParentNode().getParentNode()).getAttribute(Deficiency.ROOMNO);
 		return def;
 	}
-	
-	
+
 	/** Retrieve a list of room IDs by floorID. */
 	public static List<String> getRoomIDs(String floorID) {
-	
-		
+
 		List<String> rooms = new ArrayList<String>();
-		
+
 		for (int i = 0; i < listFloorNodes.getLength(); ++i) {
-			
+
 			Element current = (Element) listFloorNodes.item(i);
 			if (current.getAttribute(Deficiency.FLOORID).equalsIgnoreCase(floorID)) {
-				
+
 				NodeList roomNodes = current.getElementsByTagName(Deficiency.ROOM);
 				for (int j = 0; j < roomNodes.getLength(); ++j) {
-					
+
 					Element node = (Element) roomNodes.item(j);
 					rooms.add(node.getAttribute(Deficiency.ROOMNO));
 				}
@@ -347,43 +327,35 @@ public class DeficiencyParser {
 		}
 		return rooms;
 	}
-	
-	
+
 	/** Retrieve a list of floor IDs. */
 	public static List<String> getFloorIDs() {
-	
-		
+
 		List<String> floors = new ArrayList<String>();
-		
+
 		for (int i = 0; i < listFloorNodes.getLength(); ++i) {
-			
-			String floor = ((Element) listFloorNodes.item(i))
-				.getAttribute(Deficiency.FLOORID);
-			
+
+			String floor = ((Element) listFloorNodes.item(i)).getAttribute(Deficiency.FLOORID);
+
 			floors.add(floor);
 		}
 		return floors;
 	}
-	
-	
+
 	public static void loadRoomPlan(ImageView image, String roomNo) {
-	
+
 		String file = getRoomImageFile(roomNo);
 		loadBitmapFromAsset(image, file);
 	}
-	
-	
-	
+
 	public static void loadFloorPlan(ImageView image, String floorID) {
-	
+
 		String file = getFloorImageFile(floorID);
 		loadBitmapFromAsset(image, file);
 	}
-	
-	
-	
+
 	private static void loadBitmapFromAsset(ImageView image, String file) {
-	
+
 		try {
 			InputStream is = assMan.open(file);
 			Bitmap bmap = BitmapFactory.decodeStream(is);
@@ -391,12 +363,12 @@ public class DeficiencyParser {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-		
+
 	}
-	
+
 	/** Loads an image from the assets directory. */
 	private static void loadImageFromAsset(ImageView image, String file) {
-	
+
 		try {
 			InputStream is = assMan.open(file);
 			image.setImageDrawable(Drawable.createFromStream(is, null));
@@ -404,33 +376,31 @@ public class DeficiencyParser {
 			ex.printStackTrace();
 		}
 	}
-	
-	
-	/** Load an image from a directory on device.
-	 * NOT YET IMPLEMENTED */
+
+	/**
+	 * Load an image from a directory on device. NOT YET IMPLEMENTED
+	 */
 	private static Drawable loadImageFromDirectory(String file) {
-	
-		
-//				try {
-//				Bitmap bmap = BitmapFactory.decodeFile();
-//				} catch (IOException ex) {
-//					throw ex;
-//				}
+
+		// try {
+		// Bitmap bmap = BitmapFactory.decodeFile();
+		// } catch (IOException ex) {
+		// throw ex;
+		// }
 		return null;
-		
+
 	}
-	
-	/** Load an image from a URI.
-	 * NOT YET IMPLEMENTED */
+
+	/**
+	 * Load an image from a URI. NOT YET IMPLEMENTED
+	 */
 	private static Drawable loadImageFromUri(String uri) {
-	
-		
+
 		return null;
 	}
-	
-	
+
 	public static int getImageWidth(String roomNo) {
-	
+
 		String file = getRoomImageFile(roomNo);
 		Bitmap bmap = null;
 		try {
@@ -439,13 +409,12 @@ public class DeficiencyParser {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-		
+
 		return bmap.getWidth();
 	}
-	
-	
+
 	public static int getImageHeight(String roomNo) {
-	
+
 		String file = getRoomImageFile(roomNo);
 		Bitmap bmap = null;
 		try {
@@ -454,15 +423,16 @@ public class DeficiencyParser {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-		
+
 		return bmap.getHeight();
 	}
-	
-	
-	/** generates a new reportID by taking the project code and adding one to the
-	 * total count of deficiencies */
+
+	/**
+	 * generates a new reportID by taking the project code and adding one to the
+	 * total count of deficiencies
+	 */
 	public static String generateReportId() {
-	
+
 		String reportId = projectName;
 		int number = listDeficiencyNodes.getLength() + 1;
 		String num = Integer.toString(number);
@@ -471,9 +441,9 @@ public class DeficiencyParser {
 		}
 		return reportId.concat(num);
 	}
-	
+
 	public static void setCompletionStatus(String unit, String trade, String reportID, boolean complete) {
-	
+
 		// find the room by no
 		for (int i = 0; i < listRoomNodes.getLength(); ++i) {
 			if (((Element) listRoomNodes.item(i)).getAttribute("no").equals(unit)) {
@@ -483,24 +453,23 @@ public class DeficiencyParser {
 				for (int j = 0; j < roomTrades.getLength(); ++j) {
 					if (((Element) roomTrades.item(j)).getAttribute("type").equals(trade)) {
 						Element curTrade = ((Element) roomTrades.item(j));
-						
+
 						// find the deficiency by reportID
 						NodeList reportsList = curTrade.getElementsByTagName("deficiency");
 						for (int k = 0; k < reportsList.getLength(); ++k) {
-							if (((Element) reportsList.item(k)).getAttribute("reportID").equals(
-								reportID)) {
-								
+							if (((Element) reportsList.item(k)).getAttribute("reportID").equals(reportID)) {
+
 								// get the node completed
 								Element curReport = (Element) reportsList.item(k);
 								// set the completed node value
 								NodeList attributes = curReport.getElementsByTagName("completed");
 								Node complet = attributes.item(0);
 								complet.setTextContent((complete) ? "true" : "false");
-								
+
 								writeXml();
-								
+
 								return;
-								
+
 							}
 						}
 					}
@@ -508,10 +477,20 @@ public class DeficiencyParser {
 			}
 		}
 	}
-	
-	
+
 	public static void addNewDeficiency(Deficiency newDefic) {
-	
+		NodeList reportsList = listDeficiencyNodes;
+		for (int g = 0; g < listDeficiencyNodes.getLength(); ++g) {
+			// if the report id contained in the deficiency object exists, edit
+			// that entry rather than adding a new one
+			if (((Element) reportsList.item(g)).getAttribute("reportID").equals(newDefic.reportID)) {
+				editDefic(newDefic, (Element) reportsList.item(g));
+				writeXml();
+				Categories.defParse();
+				return;
+			}
+		}
+
 		NodeList floorsList = listFloorNodes;
 		for (int h = 0; h < listFloorNodes.getLength(); ++h) {
 			if (((Element) floorsList.item(h)).getAttribute("floorID").equals(newDefic.floor)) {
@@ -520,10 +499,9 @@ public class DeficiencyParser {
 					if (((Element) roomsList.item(i)).getAttribute("no").equals(newDefic.roomNo)) {
 						NodeList tradesList = ((Element) roomsList.item(i)).getElementsByTagName("trade");
 						for (int j = 0; j < tradesList.getLength(); ++j) {
-							if (((Element) tradesList.item(j)).getAttribute("type").equals(
-								newDefic.trade)) {
+							if (((Element) tradesList.item(j)).getAttribute("type").equals(newDefic.trade)) {
 								setNewDefic(newDefic, (Element) tradesList.item(j));
-								
+
 								writeXml();
 								Categories.defParse();
 								return;
@@ -533,71 +511,88 @@ public class DeficiencyParser {
 						newTradeNode.setAttribute("type", newDefic.trade);
 						((Element) roomsList.item(i)).appendChild(newTradeNode);
 						setNewDefic(newDefic, newTradeNode);
-						
+
 						writeXml();
 						Categories.defParse();
 						return;
-						
+
 					}
 				}
 			}
 		}
 	}
-	
-	
+
+	private static void editDefic(Deficiency defic, Element reportNode) {
+		((Element) reportNode.getElementsByTagName("completed").item(0)).setTextContent((defic.completed) ? "true"
+				: "false");
+		((Element) reportNode.getElementsByTagName("priority").item(0)).setTextContent((defic.priority) ? "true"
+				: "false");
+		((Element) reportNode.getElementsByTagName("coordinates").item(0)).setAttribute("x", Integer.toString(defic.X));
+		((Element) reportNode.getElementsByTagName("coordinates").item(0)).setAttribute("y", Integer.toString(defic.Y));
+		Element descrip = ((Element) reportNode.getElementsByTagName("description").item(0));
+		((Element) descrip.getElementsByTagName("item").item(0)).setTextContent(defic.item);
+		((Element) descrip.getElementsByTagName("verb").item(0)).setTextContent(defic.verb);
+		((Element) descrip.getElementsByTagName("direction").item(0)).setTextContent(defic.direction);
+		((Element) descrip.getElementsByTagName("location").item(0)).setTextContent(defic.location);
+
+		writeXml();
+		Categories.defParse();
+		return;
+	}
+
 	private static void setNewDefic(Deficiency defic, Element tradeNode) {
-	
+
 		// create the new deficiency Node and append to the tradeNode Element
 		Element deficiencyNode = xmlDoc.createElement("deficiency");
 		deficiencyNode.setAttribute("reportID", defic.reportID);
 		tradeNode.appendChild(deficiencyNode);
-		
+
 		// create and append the deficiency Node child elements
-		
+
 		Element completedNode = xmlDoc.createElement("completed");
 		completedNode.setTextContent("false");
 		deficiencyNode.appendChild(completedNode);
-		
+
 		Element priorityNode = xmlDoc.createElement("priority");
 		priorityNode.setTextContent((defic.priority) ? "true" : "false");
 		deficiencyNode.appendChild(priorityNode);
-		
+
 		Element coordinateNode = xmlDoc.createElement("coordinates");
 		coordinateNode.setAttribute("y", Integer.toString(defic.Y));
 		coordinateNode.setAttribute("x", Integer.toString(defic.X));
 		deficiencyNode.appendChild(coordinateNode);
-		
+
 		Element descriptionNode = xmlDoc.createElement("description");
 		deficiencyNode.appendChild(descriptionNode);
-		
+
 		// create and append the description Node child elements
-		
+
 		Element objectNode = xmlDoc.createElement("object");
 		objectNode.setTextContent(defic.object);
 		descriptionNode.appendChild(objectNode);
-		
+
 		Element itemNode = xmlDoc.createElement("item");
 		itemNode.setTextContent(defic.item);
 		descriptionNode.appendChild(itemNode);
-		
+
 		Element verbNode = xmlDoc.createElement("verb");
 		verbNode.setTextContent(defic.verb);
 		descriptionNode.appendChild(verbNode);
-		
+
 		Element directionNode = xmlDoc.createElement("direction");
 		directionNode.setTextContent(defic.direction);
 		descriptionNode.appendChild(directionNode);
-		
+
 		Element locationNode = xmlDoc.createElement("location");
 		locationNode.setTextContent(defic.location);
 		descriptionNode.appendChild(locationNode);
-		
+
 	}
-	
+
 	// writes the current DOM doc back to the xml file specified in the
 	// beginning of the class
 	private static void writeXml() {
-	
+
 		if (fileXML == null) {
 			String error = "Cannot edit: xml from assets loaded";
 			// some kind of error message here
@@ -614,11 +609,11 @@ public class DeficiencyParser {
 				DOMSource source = new DOMSource(xmlDoc);
 				StreamResult result = new StreamResult(fileXML);
 				transformer.transform(source, result);
-				
+
 			} catch (TransformerException tfe) {
 				tfe.printStackTrace();
 			}
 		}
 	}
-	
+
 }
