@@ -38,24 +38,24 @@ import android.widget.ImageView;
 
 public class DeficiencyParser {
 	
-	public static String					projectName;
+	public static String		projectName;
 	
-	public static InputStream				projectXML;
-	public static Element					root;
-	public static NodeList					listFloorNodes;
-	public static NodeList					listRoomNodes;
-	public static NodeList					listDeficiencyNodes;
-	public static NodeList					listTrades;
+	public static InputStream	projectXML;
+	public static Element		root;
+	public static NodeList		listFloorNodes;
+	public static NodeList		listRoomNodes;
+	public static NodeList		listDeficiencyNodes;
+	public static NodeList		listTrades;
 	
-	public static Map<String, InputStream>	floorImages;
-	public static Map<String, InputStream>	roomImages;
+	public static Map<String, InputStream> floorImages;
+	public static Map<String, InputStream> roomImages;
 	
-	private static AssetManager				assMan;
+	private static AssetManager	assMan;
 	
-	private static Document					xmlDoc;
-	private static File						fileXML;
+	private static Document		xmlDoc;
+	private static File			fileXML;
 	
-	private static boolean					fromAssets;
+	private static boolean		fromAssets;
 	
 	
 	/** Internal true: Create using the DEFAULT project stored on internal storage. 
@@ -638,26 +638,6 @@ public class DeficiencyParser {
 		}
 	}
 	
-	private static void editDefic(Deficiency defic, Element reportNode) {
-	
-		((Element) reportNode.getElementsByTagName("completed").item(0)).setTextContent((defic.completed) ? "true"
-																											: "false");
-		((Element) reportNode.getElementsByTagName("priority").item(0)).setTextContent((defic.priority) ? "true"
-																										: "false");
-		((Element) reportNode.getElementsByTagName("coordinates").item(0)).setAttribute("x",
-			Integer.toString(defic.X));
-		((Element) reportNode.getElementsByTagName("coordinates").item(0)).setAttribute("y",
-			Integer.toString(defic.Y));
-		Element descrip = ((Element) reportNode.getElementsByTagName("description").item(0));
-		((Element) descrip.getElementsByTagName("item").item(0)).setTextContent(defic.item);
-		((Element) descrip.getElementsByTagName("verb").item(0)).setTextContent(defic.verb);
-		((Element) descrip.getElementsByTagName("direction").item(0)).setTextContent(defic.direction);
-		((Element) descrip.getElementsByTagName("location").item(0)).setTextContent(defic.location);
-		
-		writeXml();
-		Categories.defParse();
-		return;
-	}
 	
 	private static void setNewDefic(Deficiency defic, Element tradeNode) {
 	
