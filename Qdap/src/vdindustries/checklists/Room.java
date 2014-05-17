@@ -15,18 +15,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.os.Vibrator;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 
 public class Room extends ImageView {
@@ -35,7 +32,7 @@ public class Room extends ImageView {
 	private int						FLAGHEIGHT;
 	
 	private ImageView				plan;
-	
+	private Bitmap					planBMP;
 	
 	private RelativeLayout			layout;
 	LayoutParams					params;
@@ -54,6 +51,10 @@ public class Room extends ImageView {
 	
 	int								lastClickX, lastClickY;
 	
+	private Canvas					canvas;
+	
+	
+	/** Constructor for Checklists view implementation. */
 	public Room(Context context, String roomNo, ImageView img, RelativeLayout rl) {
 	
 		super(context);
@@ -73,6 +74,21 @@ public class Room extends ImageView {
 	}
 	
 	
+	/** Constructor for Reports view implementation. */
+	public Room(Context context, String roomNo, ImageView img) {
+	
+		super(context);
+		
+		this.context = context;
+		this.plan = img;
+		this.roomNo = roomNo;
+		
+		vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+		FLAGHEIGHT = getResources().getDrawable(R.drawable.flag_blue).getIntrinsicHeight();
+		
+		showRoomReports(roomNo);
+	}
+	
 	
 	private void showRoom(final String roomNo) {
 	
@@ -85,6 +101,40 @@ public class Room extends ImageView {
 //		plan.setOnLongClickListener(new LongListener(this));
 //		showDeficiencies(roomNo, "Framing");
 	}
+	
+	
+	private void showRoomReports(String roomNo) {
+	
+		DeficiencyParser.loadRoomPlanBMP(planBMP, roomNo);
+//		planBMP.setX(getResources().getDimension(R.dimen.plan_horizontal_margin));
+//		planBMP.setY(getResources().getDimension(R.dimen.plan_vertical_margin));
+		
+		Bitmap immutable = null;
+		planBMP = convertToMutable(context, immutable);
+		canvas = new Canvas(planBMP);
+//		showDeficiency();
+		plan.setImageBitmap(planBMP);
+	}
+	
+	
+	public void showDeficiency(Deficiency def) {
+	
+		Bitmap flag;
+		if (def.completed)
+			flag = BitmapFactory.decodeResource(getResources(),
+				R.drawable.flag_grey);
+		else if (def.priority)
+			flag = BitmapFactory.decodeResource(getResources(),
+				R.drawable.flag_red);
+		else
+			flag = BitmapFactory.decodeResource(getResources(),
+				R.drawable.flag_blue);
+		
+		int x = def.X; // other transform equations may be needed
+		int y = def.Y - flag.getHeight();
+		canvas.drawBitmap(flag, x, y, null);
+	}
+	
 	
 	/** Display room deficiencise by trade. */
 	public void showDeficiencies(String roomNo, String tradeToShow) {
@@ -187,6 +237,6 @@ class FlagListener implements OnClickListener {
 	
 		vibrator.vibrate(500);
 //		Toast.makeText(v.getContext(), def.toString(), Toast.LENGTH_SHORT).show();
-		((CheckListsActivity)v.getContext()).onFlagClick(def);
+		((CheckListsActivity) v.getContext()).onFlagClick(def);
 	}
 }

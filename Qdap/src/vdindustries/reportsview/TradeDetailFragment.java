@@ -1,14 +1,15 @@
 package vdindustries.reportsview;
 
 import vdindustries.Qdap.R;
+import vdindustries.checklists.Room;
 import vdindustries.content.TradeContent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 /** A fragment representing a single Trade detail screen.
  * This fragment is either contained in a {@link TradeListActivity} in two-pane
@@ -49,12 +50,14 @@ public class TradeDetailFragment extends Fragment {
 		// Show the content in a ListView using a custom adapter
 		if (tradeItem != null) {
 			reportListItem = new ReportItem[tradeItem.deficiencies.size()];
+			
 			for (int i = 0; i < tradeItem.deficiencies.size(); ++i) {
 				reportListItem[i] = new ReportItem(
 					tradeItem.deficiencies.get(i));
 				reportListItem[i].position = i;
 				
 			}
+			
 			ReportItemAdapter adapter = new ReportItemAdapter(
 				getActivity(), R.layout.report_item_layout, reportListItem);
 			
@@ -62,6 +65,8 @@ public class TradeDetailFragment extends Fragment {
 				.findViewById(R.id.trade_detail);
 			reportListView.setAdapter(adapter);
 			
+//			ImageView plan = (ImageView) getActivity().findViewById(R.id.reportFloorplan);
+//			plan = new Room(getActivity(), roomNo, plan);
 		}
 		return rootView;
 	}

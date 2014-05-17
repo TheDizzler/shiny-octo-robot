@@ -1,8 +1,0 @@
-package vdindustries.checklists;
-
-import android.support.v4.app.Fragment;
-
-
-public class TradesChoiceFragment extends Fragment {
-	
-}

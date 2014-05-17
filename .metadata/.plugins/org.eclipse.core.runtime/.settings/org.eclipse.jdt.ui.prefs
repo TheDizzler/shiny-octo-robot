@@ -57,7 +57,7 @@ closeStrings=false
 content_assist_autoinsert=false
 content_assist_favorite_static_members=
 content_assist_fill_method_arguments=false
-content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.lang.CharSequence"><rhs name\="java.lang.String"/></lhs><lhs name\="java.lang.Enum"><rhs name\="android.widget.ImageView$ScaleType"/></lhs></history>
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.lang.CharSequence"><rhs name\="java.lang.String"/></lhs><lhs name\="java.lang.Enum"><rhs name\="android.widget.ImageView$ScaleType"/></lhs><lhs name\="org.apache.http.NameValuePair"><rhs name\="org.apache.http.message.BasicNameValuePair"/></lhs></history>
 content_assist_number_of_computers=12
 content_assist_proposals_background=255,255,255
 content_assist_proposals_foreground=0,0,0

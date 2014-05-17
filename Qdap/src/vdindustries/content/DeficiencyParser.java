@@ -6,7 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,6 +26,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import vdindustries.Categories;
+import vdindustries.networking.DownloadImages;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -41,38 +45,60 @@ public class DeficiencyParser {
 	public static NodeList		listFloorNodes;
 	public static NodeList		listRoomNodes;
 	public static NodeList		listDeficiencyNodes;
-	
 	public static NodeList		listTrades;
+	
+	public static Map<String, InputStream> floorImages;
+	public static Map<String, InputStream> roomImages;
+	
 	private static AssetManager	assMan;
 	
 	private static Document		xmlDoc;
 	private static File			fileXML;
 	
+	private static boolean		fromAssets;
 	
-	public DeficiencyParser() {
 	
-		try {
-			fileXML = new File(Environment.getExternalStorageDirectory() + "/Download/" + "testproject.xml");
-			projectXML = null;
-			projectXML = new FileInputStream(fileXML);
-			xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-				projectXML);
-			setup();
-//			root = xmlDoc.getDocumentElement();
-//			root.normalize();
-//			listFloorNodes = root.getElementsByTagName("floor");
-//			listTrades = root.getElementsByTagName("trade");
-//			listRoomNodes = root.getElementsByTagName("room");
-//			listDeficiencyNodes = root.getElementsByTagName("deficiency");
+	/** Internal true: Create using the DEFAULT project stored on internal storage. 
+	 * 	Internal false: Creates using the DEFAULT project stored in assets.
+	 * 			Implementation: DeficiencyParser(getAssets()) */
+	public DeficiencyParser(AssetManager am, Boolean internal) {
+	
+		assMan = am;
+		if (internal) {
+			try {
+				fileXML = new File(Environment.getExternalStorageDirectory() + "/Download/" + "testproject.xml");
+				projectXML = null;
+				projectXML = new FileInputStream(fileXML);
+				xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+					projectXML);
+				setup();
+				
+			} catch (SAXException | IOException | ParserConfigurationException e) {
+				e.printStackTrace();
+			}
 			
-		} catch (SAXException | IOException | ParserConfigurationException e) {
-			e.printStackTrace();
+			fromAssets = false;
+		} else {
+			
+			try {
+				projectXML = assMan.open("testproject.xml");
+				
+				xmlDoc = DocumentBuilderFactory.newInstance().
+					newDocumentBuilder().parse(projectXML);
+				setup();
+				
+			} catch (SAXException | IOException | ParserConfigurationException e) {
+				e.printStackTrace();
+			}
+			fromAssets = true;
+			projectName = root.getAttribute("name");
 		}
 	}
 	
 	
 	
-	/** Implementation: DeficiencyParser(getAssets()) */
+	/** Creates using the DEFAULT project stored in assets.
+	 * Implementation: DeficiencyParser(getAssets()) */
 	public DeficiencyParser(AssetManager am) {
 	
 		assMan = am;
@@ -82,24 +108,19 @@ public class DeficiencyParser {
 			xmlDoc = DocumentBuilderFactory.newInstance().
 				newDocumentBuilder().parse(projectXML);
 			setup();
-//			root = xmlDoc.getDocumentElement();
-//			root.normalize();
-//			
-//			listTrades = root.getElementsByTagName("trade");
-//			listRoomNodes = root.getElementsByTagName("room");
-//			listFloorNodes = root.getElementsByTagName("floor");
-			
 			
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			e.printStackTrace();
 		}
-		
+		fromAssets = true;
 		projectName = root.getAttribute("name");
 	}
 	
+	/** Create using a project stored in internal storage. */
+	public DeficiencyParser(Document doc, String projname, AssetManager am) {
 	
-	public DeficiencyParser(Document doc, String projname) {
-	
+		assMan = am;
+		
 		fileXML = new File(Environment.getExternalStorageDirectory() + "/Download/" + projname);
 		if (!fileXML.exists()) {
 			try {
@@ -109,12 +130,7 @@ public class DeficiencyParser {
 			}
 		}
 		
-//		try {
-//			projectXML = new FileInputStream(fileXML);
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		fromAssets = false;
 		xmlDoc = doc;
 		
 		setup();
@@ -132,6 +148,35 @@ public class DeficiencyParser {
 		listRoomNodes = root.getElementsByTagName("room");
 		listFloorNodes = root.getElementsByTagName("floor");
 		listDeficiencyNodes = root.getElementsByTagName("deficiency");
+		
+		getImagesFromUri();
+	}
+	
+	
+	private void getImagesFromUri() {
+	
+		floorImages = new HashMap<String, InputStream>();
+		roomImages = new HashMap<String, InputStream>();
+		
+		// Parse address of images
+		/* Map<floorID, uri> */
+		Map<String, String> floorUris = new HashMap<String, String>();
+		/* Map<roomNo, uri> */
+		Map<String, String> roomUris = new HashMap<String, String>();
+		
+		for (int i = 0; i < listFloorNodes.getLength(); ++i) {
+			Element floor = ((Element) listFloorNodes.item(i));
+			floorUris.put(floor.getAttribute(Deficiency.FLOORID),
+				floor.getAttribute(Deficiency.FLOORIMAGE));
+		}
+		for (int i = 0; i < listRoomNodes.getLength(); ++i) {
+			Element room = ((Element) listRoomNodes.item(i));
+			roomUris.put(room.getAttribute(Deficiency.ROOMNO),
+				room.getAttribute(Deficiency.ROOMIMAGE));
+		}
+		
+		// Download Images
+		new DownloadImages(floorImages, roomImages).execute(floorUris, roomUris);
 	}
 	
 	/** Retrieves number of deficiencies in a room, completed & uncompleted */
@@ -184,7 +229,7 @@ public class DeficiencyParser {
 	public static int outstandingDefsByUnit(String unit) {
 	
 		
-		return 5;
+		return -1;
 	}
 	
 	/** Retrieves a deficiency object from its reportID.
@@ -369,15 +414,20 @@ public class DeficiencyParser {
 	public static void loadRoomPlan(ImageView image, String roomNo) {
 	
 		String file = getRoomImageFile(roomNo);
-		loadBitmapFromAsset(image, file);
+		if (fromAssets)
+			loadBitmapFromAsset(image, file);
+		else
+			loadImageFromStorage(image, file);
 	}
-	
 	
 	
 	public static void loadFloorPlan(ImageView image, String floorID) {
 	
 		String file = getFloorImageFile(floorID);
-		loadBitmapFromAsset(image, file);
+		if (fromAssets)
+			loadBitmapFromAsset(image, file);
+		else
+			loadImageFromStorage(image, file);
 	}
 	
 	
@@ -390,6 +440,38 @@ public class DeficiencyParser {
 			image.setImageBitmap(bmap);
 		} catch (IOException ex) {
 			ex.printStackTrace();
+			try {
+				image.setImageBitmap(BitmapFactory.decodeStream(assMan.open("images/nopic.jpg")));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	
+	
+	public static void loadRoomPlanBMP(Bitmap image, String roomNo) {
+	
+		String file = DeficiencyParser.getRoomImageFile(roomNo);
+		loadBitmapFromAsset(image, file);
+		
+	}
+	
+	
+	private static void loadBitmapFromAsset(Bitmap image, String file) {
+	
+		try {
+			InputStream is = assMan.open(file);
+			image = BitmapFactory.decodeStream(is);
+//			image.setImageBitmap(bmap);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			try {
+				image = BitmapFactory.decodeStream(assMan.open("images/nopic.jpg"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}
@@ -401,23 +483,31 @@ public class DeficiencyParser {
 			InputStream is = assMan.open(file);
 			image.setImageDrawable(Drawable.createFromStream(is, null));
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			try {
+				InputStream is = assMan.open("images/nopic.jpg");
+				image.setImageBitmap(BitmapFactory.decodeStream(is));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	
 	/** Load an image from a directory on device.
 	 * NOT YET IMPLEMENTED */
-	private static Drawable loadImageFromDirectory(String file) {
+	private static void loadImageFromStorage(ImageView image, String filepath) {
 	
 		
-//				try {
-//				Bitmap bmap = BitmapFactory.decodeFile();
-//				} catch (IOException ex) {
-//					throw ex;
-//				}
-		return null;
-		
+		Bitmap bitmap = BitmapFactory.decodeFile(filepath);
+		if (bitmap == null)
+			try {
+				InputStream is = assMan.open("images/nopic.jpg");
+				image.setImageBitmap(BitmapFactory.decodeStream(is));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		else
+			image.setImageBitmap(bitmap);
 	}
 	
 	/** Load an image from a URI.
@@ -437,7 +527,11 @@ public class DeficiencyParser {
 			InputStream is = assMan.open(file);
 			bmap = BitmapFactory.decodeStream(is);
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			try {
+				bmap = BitmapFactory.decodeStream(assMan.open("images/nopic.jpg"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return bmap.getWidth();
@@ -452,7 +546,7 @@ public class DeficiencyParser {
 			InputStream is = assMan.open(file);
 			bmap = BitmapFactory.decodeStream(is);
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			return -1;
 		}
 		
 		return bmap.getHeight();

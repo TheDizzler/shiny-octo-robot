@@ -1,0 +1,27 @@
+package vdindustries.networking;
+
+import java.io.File;
+import java.util.Map;
+
+import android.os.AsyncTask;
+
+
+public class DownloadImages extends AsyncTask {
+	
+	public DownloadImages(Map<String, String> floorUris, Map<String, String> roomUris, Map<String, File> floorImages, Map<String, File> roomImages) {
+	
+		
+	}
+	
+	@Override protected Object doInBackground(Object... params) {
+	
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	protected void onPostExecute(String result) {
+	
+	}
+	
+}

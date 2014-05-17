@@ -5,6 +5,8 @@ import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
 import vdindustries.Qdap.R;
+import vdindustries.content.Deficiency;
+import vdindustries.content.DeficiencyParser;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * Code source:
+ * Wheel project code source:
  * https://code.google.com/p/android-wheel/
  */
 public class DeficiencyWheel extends ActionBarActivity {
@@ -23,6 +25,7 @@ public class DeficiencyWheel extends ActionBarActivity {
 	// Scrolling flag
 	private boolean	scrolling;
 	
+	Deficiency		currentDef;
 	String			id, object_str, item_str, verb_str, direction_str, location_str;
 	int				x, y;
 	
@@ -77,29 +80,34 @@ public class DeficiencyWheel extends ActionBarActivity {
 		
 		if (!extras.getBoolean("new")) {
 			
-			title.setText("Edit deficiency");
+			currentDef = new Deficiency();
+			currentDef.reportID = extras.getString("id");
 			
-			repID.setText(extras.getString("id"));
-			x = extras.getInt("x");
-			y = extras.getInt("y");
-			object_str = extras.getString("object");
-			item_str = extras.getString("item");
-			verb_str = extras.getString("verb");
-			direction_str = extras.getString("direction");
-			location_str = extras.getString("location");
+			currentDef.X = x = extras.getInt("x");
+			currentDef.Y = y = extras.getInt("y");
+			currentDef.object = object_str = extras.getString("object");
+			currentDef.item = item_str = extras.getString("item");
+			currentDef.verb = verb_str = extras.getString("verb");
+			currentDef.direction = direction_str = extras.getString("direction");
+			currentDef.location = location_str = extras.getString("location");
 			
 			specificItem.setCurrentItem(specItemAdapter.getItemIndex(object_str));
 			item.setCurrentItem(itemAdapter.getItemIndex(item_str));
 			verb.setCurrentItem(verbAdapter.getItemIndex(verb_str));
 			direction.setCurrentItem(dirAdapter.getItemIndex(direction_str));
 			location.setCurrentItem(locationAdapter.getItemIndex(location_str));
+			
+			title.setText("Edit deficiency");
+			repID.setText(currentDef.reportID);
 		} else {
 			
-			title.setText("Create new deficiency");
+			currentDef = new Deficiency();
+			currentDef.reportID = DeficiencyParser.generateReportId();
+			currentDef.X = x = extras.getInt("x");
+			currentDef.Y = y = extras.getInt("y");
 			
-			x = extras.getInt("x");
-			y = extras.getInt("y");
-			repID.setText("ProjectXXXXXXX\n" + x + ", " + y);
+			title.setText("Create new deficiency");
+			repID.setText(currentDef.reportID + "\n" + x + ", " + y);
 		}
 		
 		//gets the current item of the wheel for specific item
@@ -140,8 +148,9 @@ public class DeficiencyWheel extends ActionBarActivity {
 	
 	public void save(View view) {
 	
-//		Toast.makeText(this, "This feature is not yet implemented", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "This feature is implemented?", Toast.LENGTH_SHORT).show();
 		
+		DeficiencyParser.addNewDeficiency(currentDef);
 	}
 	
 	/**
