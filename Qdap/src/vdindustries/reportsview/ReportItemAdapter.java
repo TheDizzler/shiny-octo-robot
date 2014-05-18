@@ -47,10 +47,8 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 			
 			holder.reportCheck = (CheckBox) row.findViewById(R.id.reportCheck);
 			holder.reportText = (TextView) row.findViewById(R.id.reportText);
-			
-			
-			holder.reportCheck.setOnCheckedChangeListener(null);
-			
+
+
 			holder.reportCheck
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 					
@@ -66,12 +64,14 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 						TradeListFragment.setDefic();
 					}
 				});
+			
 			row.setTag(holder);
 			row.setTag(R.id.reportText, holder.reportText);
 			row.setTag(R.id.reportCheck, holder.reportCheck);
 		} else {
 			holder = (ReportItemHolder) row.getTag();
 		}
+		
 		ReportItem reportItem = data[position];
 		holder.reportCheck.setTag(position);
 		holder.reportText.setText(reportItem.text);

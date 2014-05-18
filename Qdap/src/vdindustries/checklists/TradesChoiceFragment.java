@@ -49,8 +49,8 @@ public class TradesChoiceFragment extends Fragment {
 		
 		ListView trades = (ListView) view.findViewById(R.id.listview_trade_checklists);
 		
-		View roughins = inflater.inflate(R.layout.roughins, null);
-		trades.addHeaderView(roughins);
+//		View roughins = inflater.inflate(R.layout.roughins, null);
+//		trades.addHeaderView(roughins);
 		tradesList = new ArrayList<String>();
 		tradesList.add("Framing");
 		tradesList.add("Mechanical");
@@ -86,12 +86,12 @@ public class TradesChoiceFragment extends Fragment {
 				TradesChoiceFragment.position = position;
 				
 				
-				if (position > 0) {
-					tradeSelected = tradesList.get(position - 1);
-					
-//				Toast.makeText(context, trade, Toast.LENGTH_SHORT).show();
-					((CheckListsActivity) getActivity()).onTradeSelected(tradeSelected);
-				}
+//				if (position > 0) {
+//					tradeSelected = tradesList.get(position - 1);
+//				}
+				tradeSelected = tradesList.get(position);
+				((CheckListsActivity) getActivity()).onTradeSelected(tradeSelected);
+
 			}
 		});
 		

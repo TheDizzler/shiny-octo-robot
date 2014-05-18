@@ -50,7 +50,7 @@ public class DeficiencyParser {
 	public static Map<String, Bitmap>	floorImages;
 	public static Map<String, Bitmap>	roomImages;
 	
-	private static AssetManager			assMan;
+	public static AssetManager			assMan;
 	
 	private static Document				xmlDoc;
 	private static File					fileXML;
@@ -488,7 +488,7 @@ public class DeficiencyParser {
 			Bitmap bmap = BitmapFactory.decodeStream(is);
 			image.setImageBitmap(bmap);
 		} catch (IOException ex) {
-			ex.printStackTrace();
+//			ex.printStackTrace();
 			image.setImageBitmap(nopic);
 		}
 		
@@ -500,20 +500,19 @@ public class DeficiencyParser {
 	
 		String file = DeficiencyParser.getRoomImageFile(roomNo);
 		loadBitmapFromAsset(image, file);
-		
 	}
 	
 	
-	private static void loadBitmapFromAsset(Bitmap image, String file) {
+	public static void loadBitmapFromAsset(Bitmap image, String file) {
 	
 		try {
 			InputStream is = assMan.open(file);
 			image = BitmapFactory.decodeStream(is);
-//			image.setImageBitmap(bmap);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			image = nopic;
 		}
+		
 	}
 	
 	/** Loads an image from the assets directory. */

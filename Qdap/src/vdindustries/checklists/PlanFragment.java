@@ -72,14 +72,8 @@ public class PlanFragment extends Fragment {
 		currentRoom = null;
 		ImageView currentImage = (ImageView) getActivity().findViewById(R.id.plan_image);
 		
-		
-//		planLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		
-//		currentImage.setLayoutParams(planLayoutParams);
-//		currentImage.setScaleType(ScaleType.FIT_START);
 		DeficiencyParser.loadFloorPlan(currentImage, floorID);
 		currentImage.setLongClickable(false);
-//		((TouchImageView) currentImage).resetZoom();
 	}
 	
 	
@@ -91,19 +85,12 @@ public class PlanFragment extends Fragment {
 		if (currentRoom != null)
 			currentRoom.removeViews();
 		
-//		planLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		
 		currentRoom = new Room(getActivity(), roomNo, currentImage, layout);
 		
 		currentImage.setLongClickable(true);
 		currentImage.setOnTouchListener(new LocationGetter(currentRoom));
 		currentImage.setOnLongClickListener(new LongListener(currentRoom));
-//		Toast.makeText(getActivity(),
-//			"bitmap.getWidth() = " + DeficiencyParser.getImageWidth(roomNo)
-//					+ ", bitmap.getHeight() = " + DeficiencyParser.getImageHeight(roomNo) +
-//					"\nimageview.getWidth()" + currentImage.getWidth() +
-//					"\nimageview.getHeight()" + currentImage.getHeight(), Toast.LENGTH_LONG).show();
-//		((TouchImageView) currentImage).resetZoom();
 	}
 	
 	
