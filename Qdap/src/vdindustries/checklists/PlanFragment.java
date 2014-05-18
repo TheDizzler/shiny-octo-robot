@@ -36,10 +36,10 @@ import android.widget.Toast;
  * @author T-Dawg */
 public class PlanFragment extends Fragment {
 	
-	Room					currentRoom;
-	RelativeLayout			layout;
-	ImageView				currentImage;
-	private LayoutParams	planLayoutParams;
+	Room							currentRoom;
+	RelativeLayout					layout;
+	ImageView						currentImage;
+//	private LayoutParams	planLayoutParams;
 	
 	/** Used to communicate with activity. */
 	private OnItemSelectedListener	listener;
@@ -71,7 +71,7 @@ public class PlanFragment extends Fragment {
 			currentRoom.removeViews();
 		currentRoom = null;
 		ImageView currentImage = (ImageView) getActivity().findViewById(R.id.plan_image);
-
+		
 		
 //		planLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		
@@ -105,8 +105,8 @@ public class PlanFragment extends Fragment {
 //					"\nimageview.getHeight()" + currentImage.getHeight(), Toast.LENGTH_LONG).show();
 //		((TouchImageView) currentImage).resetZoom();
 	}
-
-
+	
+	
 	public void loadDeficiencies(String tradeSelected) {
 	
 //		ImageView currentImage = (ImageView) getActivity().findViewById(R.id.plan_image);
@@ -120,7 +120,7 @@ public class PlanFragment extends Fragment {
 	
 	
 	public void onAttach(Activity activity) {
-		
+	
 		super.onAttach(activity);
 		if (activity instanceof OnItemSelectedListener) {
 			listener = (OnItemSelectedListener) activity;
@@ -189,8 +189,7 @@ class LongListener implements OnLongClickListener {
 //			"Oh HI " + room.roomNo + "\nYou touched me at " +
 //					room.lastClickX + ", " + room.lastClickY, Toast.LENGTH_SHORT).show();
 		
-		((CheckListsActivity)v.getContext()).onLongClick(room.lastClickX, room.lastClickY);
+		((CheckListsActivity) v.getContext()).onLongClick(room.lastClickX, room.lastClickY);
 		return false;
 	}
 }
-	

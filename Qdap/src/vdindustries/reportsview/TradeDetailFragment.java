@@ -65,8 +65,8 @@ public class TradeDetailFragment extends Fragment {
 				.findViewById(R.id.trade_detail);
 			reportListView.setAdapter(adapter);
 			
-//			ImageView plan = (ImageView) getActivity().findViewById(R.id.reportFloorplan);
-//			plan = new Room(getActivity(), roomNo, plan);
+			ImageView plan = (ImageView) getActivity().findViewById(R.id.reportFloorplan);
+			plan = new Room(getActivity(), "201", plan);
 		}
 		return rootView;
 	}

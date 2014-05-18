@@ -1,0 +1,95 @@
+package vdindustries.networking;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import vdindustries.Categories;
+import vdindustries.Qdap.R;
+import vdindustries.content.DeficiencyParser;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.AssetManager;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.ActionBarActivity;
+import android.widget.Toast;
+
+/** Code from:
+ * http://www.androidhive.info/2013/07/how-to-implement-android-splash-screen-2/
+ */
+public class LoadingScreen extends ActionBarActivity {
+	
+	public static Context	context;
+	private AssetManager	assetMan;
+	private DeficiencyParser	parser;
+	
+	
+	@Override protected void onCreate(Bundle savedInstanceState) {
+		
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_loading);
+		
+		context = this;
+		
+		assetMan = getAssets();
+		Intent intent = getIntent();
+		
+		
+		
+		if (intent.getBooleanExtra("test", true)) {
+			Toast.makeText(this, "Test Project loaded", Toast.LENGTH_LONG).show();
+			/* Create test project using xml from storage */
+			parser = new DeficiencyParser(assetMan, true);
+			
+			Intent i = new Intent(this, Categories.class);
+			startActivity(i);
+			
+		} else {
+			try {
+				
+				
+				String xml = intent.getStringExtra("xmlFile");
+				String projname = intent.getStringExtra("projname")  + ".xml";
+//			Toast.makeText(this, xml, Toast.LENGTH_LONG).show();
+				
+				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new
+					File(getFilesDir() + File.separator + projname)));
+				bufferedWriter.write(xml);
+				bufferedWriter.close();
+				
+				
+				DocumentBuilder db = DocumentBuilderFactory.newInstance()
+					.newDocumentBuilder();
+				
+				InputSource is = new InputSource();
+				is.setCharacterStream(new StringReader(xml));
+				Document xmlDoc = db.parse(is);
+				
+				parser = new DeficiencyParser(xmlDoc, projname, assetMan, this);
+				
+			} catch (ParserConfigurationException | SAXException | IOException | NullPointerException e) {
+				
+				Toast.makeText(this,
+					"Error loading project" + "\n\nLoading default Test Project instead",
+					Toast.LENGTH_LONG).show();
+				/* Create test project using xml assets. */
+				parser = new DeficiencyParser(assetMan, false);
+				
+				Intent i = new Intent(this, Categories.class);
+				startActivity(i);
+				
+			}
+		}
+	}
+}

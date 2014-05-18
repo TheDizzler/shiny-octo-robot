@@ -105,11 +105,11 @@ public class Room extends ImageView {
 	
 	private void showRoomReports(String roomNo) {
 	
-		DeficiencyParser.loadRoomPlanBMP(planBMP, roomNo);
+		Bitmap immutable = null;
+		DeficiencyParser.loadRoomPlanBMP(immutable, roomNo);
 //		planBMP.setX(getResources().getDimension(R.dimen.plan_horizontal_margin));
 //		planBMP.setY(getResources().getDimension(R.dimen.plan_vertical_margin));
 		
-		Bitmap immutable = null;
 		planBMP = convertToMutable(context, immutable);
 		canvas = new Canvas(planBMP);
 //		showDeficiency();

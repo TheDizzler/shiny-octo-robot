@@ -1,0 +1,16 @@
+package vdindustries.networking;
+
+import vdindustries.Categories;
+import vdindustries.Qdap.R;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.ActionBarActivity;
+
+/** Code from:
+ * http://www.androidhive.info/2013/07/how-to-implement-android-splash-screen-2/
+ */
+public class LoadingScreen extends ActionBarActivity {
+	
+ 
+}

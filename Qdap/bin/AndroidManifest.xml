@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
+    
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -42,30 +44,18 @@
                 android:value="vdindustries.reportsview.TradeListActivity" />
         </activity>
         <activity
-            android:name="vdindustries.planview.PlanViewActivity"
-            android:label="A test Plan View" >
-        </activity>
-        <activity
             android:name="vdindustries.Categories"
             android:label="@string/title_activity_categories" >
         </activity>
         <activity
             android:name="vdindustries.checklists.CheckListsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_floors"
+            android:label="@string/title_activity_checklist"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="vdindustries.checklists.Checklist"
-            android:label="@string/title_activity_checklist" >
-        </activity>
-        <activity
-            android:name="vdindustries.networking.ConnectActivity"
-            android:label="Test networking activity" >
-        </activity>
-        <activity
-            android:name="vdindustries.planview.NewPlans"
-            android:label="Test Plan" >
+            android:name="vdindustries.networking.LoadingScreen"
+            android:label="Loading Images..." >
         </activity>
         <activity
             android:name="vdindustries.checklists.DeficiencyWheel"
