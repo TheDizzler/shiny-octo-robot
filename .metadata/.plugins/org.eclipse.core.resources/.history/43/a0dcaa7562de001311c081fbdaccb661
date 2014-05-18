@@ -1,7 +1,5 @@
 package vdindustries.reportsview;
 
-import java.util.List;
-
 import vdindustries.reportsview.TradeListFragment;
 import vdindustries.Qdap.R;
 import vdindustries.content.DeficiencyParser;
@@ -19,11 +17,9 @@ import android.widget.TextView;
 
 public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 	
-	Context				context;
-	int					layoutResourceId;
-	ReportItem			data[];
-	List<ReportItem>	dataList;
-	
+	Context		context;
+	int			layoutResourceId;
+	ReportItem	data[]	= null;
 	
 	public ReportItemAdapter(Context context, int layoutResourceId,
 								ReportItem[] data) {
@@ -32,16 +28,6 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
 		this.data = data;
-	}
-	
-	
-	public ReportItemAdapter(Context context, int layoutResourceId,
-								List<ReportItem> data) {
-	
-		super(context, layoutResourceId, data);
-		this.layoutResourceId = layoutResourceId;
-		this.context = context;
-		this.dataList = data;
 	}
 	
 	
@@ -61,8 +47,8 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 			
 			holder.reportCheck = (CheckBox) row.findViewById(R.id.reportCheck);
 			holder.reportText = (TextView) row.findViewById(R.id.reportText);
-			
-			
+
+
 			holder.reportCheck
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 					
@@ -70,14 +56,8 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 															boolean isChecked) {
 					
 						int getPosition = (Integer) buttonView.getTag();
-						ReportItem rItem;
-						if (data != null) {
-							data[getPosition].checked = isChecked;
-							rItem = data[getPosition];
-						} else {
-							dataList.get(getPosition).checked = isChecked;
-							rItem = dataList.get(getPosition);
-						}
+						data[getPosition].checked = isChecked;
+						ReportItem rItem = data[getPosition];
 						DeficiencyParser.setCompletionStatus(
 							rItem.def.roomNo, rItem.def.trade,
 							rItem.reportID, isChecked);
@@ -91,11 +71,8 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 		} else {
 			holder = (ReportItemHolder) row.getTag();
 		}
-		ReportItem reportItem;
-		if (data != null)
-			reportItem = data[position];
-		else
-			reportItem = dataList.get(position);
+		
+		ReportItem reportItem = data[position];
 		holder.reportCheck.setTag(position);
 		holder.reportText.setText(reportItem.text);
 		holder.reportCheck.setChecked(reportItem.checked);

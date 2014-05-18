@@ -102,19 +102,17 @@ public class Room extends ImageView {
 	
 	private void showRoomReports(String roomNo, Deficiency def) {
 	
-//		String file = DeficiencyParser.getRoomImageFile(roomNo);
-//		InputStream is = null;
-//		try {
-//			is = DeficiencyParser.assMan.open(file);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		Bitmap immutable = BitmapFactory.decodeStream(is);
-//		DeficiencyParser.loadBitmapFromAsset(immutable, file);
+		String file = DeficiencyParser.getRoomImageFile(roomNo);
+		InputStream is = null;
+		try {
+			is = DeficiencyParser.assMan.open(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Bitmap immutable = BitmapFactory.decodeStream(is);
+		DeficiencyParser.loadBitmapFromAsset(immutable, file);
 		
 //		DeficiencyParser.loadRoomPlanBMP(immutable, roomNo);
-		
-		Bitmap immutable = DeficiencyParser.loadImmutableBitmap(roomNo);
 		
 		planBMP = convertToMutable(context, immutable);
 		canvas = new Canvas(planBMP);

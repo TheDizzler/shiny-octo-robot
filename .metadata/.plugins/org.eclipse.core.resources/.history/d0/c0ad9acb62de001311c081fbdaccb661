@@ -21,7 +21,7 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 	
 	Context				context;
 	int					layoutResourceId;
-	ReportItem			data[];
+	ReportItem			data[]	= null;
 	List<ReportItem>	dataList;
 	
 	
@@ -70,14 +70,8 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 															boolean isChecked) {
 					
 						int getPosition = (Integer) buttonView.getTag();
-						ReportItem rItem;
-						if (data != null) {
-							data[getPosition].checked = isChecked;
-							rItem = data[getPosition];
-						} else {
-							dataList.get(getPosition).checked = isChecked;
-							rItem = dataList.get(getPosition);
-						}
+						data[getPosition].checked = isChecked;
+						ReportItem rItem = data[getPosition];
 						DeficiencyParser.setCompletionStatus(
 							rItem.def.roomNo, rItem.def.trade,
 							rItem.reportID, isChecked);
@@ -94,8 +88,6 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 		ReportItem reportItem;
 		if (data != null)
 			reportItem = data[position];
-		else
-			reportItem = dataList.get(position);
 		holder.reportCheck.setTag(position);
 		holder.reportText.setText(reportItem.text);
 		holder.reportCheck.setChecked(reportItem.checked);

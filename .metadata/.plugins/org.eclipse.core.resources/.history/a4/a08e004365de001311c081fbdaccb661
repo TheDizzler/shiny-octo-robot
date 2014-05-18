@@ -495,8 +495,6 @@ public class DeficiencyParser {
 	
 	public static Bitmap loadImmutableBitmap(String roomNo) {
 	
-		Bitmap immutable;
-		
 		if (fromAssets) {
 			String file = DeficiencyParser.getRoomImageFile(roomNo);
 			InputStream is = null;
@@ -505,13 +503,12 @@ public class DeficiencyParser {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			immutable = BitmapFactory.decodeStream(is);
+			Bitmap immutable = BitmapFactory.decodeStream(is);
 			
 			loadBitmapFromAsset(immutable, file);
 			
-		} else {
-			immutable = roomImages.get(roomNo);
-		}
+		} else
+			loadBitmapFromMemory(immutable, roomNo);
 		return immutable;
 		
 	}

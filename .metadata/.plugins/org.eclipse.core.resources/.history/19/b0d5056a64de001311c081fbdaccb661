@@ -493,28 +493,6 @@ public class DeficiencyParser {
 	}
 	
 	
-	public static Bitmap loadImmutableBitmap(String roomNo) {
-	
-		Bitmap immutable;
-		
-		if (fromAssets) {
-			String file = DeficiencyParser.getRoomImageFile(roomNo);
-			InputStream is = null;
-			try {
-				is = DeficiencyParser.assMan.open(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			immutable = BitmapFactory.decodeStream(is);
-			
-			loadBitmapFromAsset(immutable, file);
-			
-		} else {
-			immutable = roomImages.get(roomNo);
-		}
-		return immutable;
-		
-	}
 	
 	public static void loadRoomPlanBMP(Bitmap image, String roomNo) {
 	
@@ -523,7 +501,7 @@ public class DeficiencyParser {
 	}
 	
 	
-	private static void loadBitmapFromAsset(Bitmap image, String file) {
+	public static void loadBitmapFromAsset(Bitmap image, String file) {
 	
 		try {
 			InputStream is = assMan.open(file);

@@ -1,8 +1,6 @@
 package vdindustries.reportsview;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import vdindustries.Qdap.R;
 import vdindustries.checklists.Room;
@@ -32,7 +30,7 @@ public class TradeDetailFragment extends Fragment {
 	private TradeContent.TradeItem	tradeItem;
 	
 //	ReportItem						reportListItem[];
-	List<ReportItem>				reportListItem;
+	List<ReportItem>						reportListItem;
 	
 	private static ListView			reportListView;
 	
@@ -61,12 +59,11 @@ public class TradeDetailFragment extends Fragment {
 		// Show the content in a ListView using a custom adapter
 		if (tradeItem != null) {
 //			reportListItem = new ReportItem[tradeItem.deficiencies.size()];
-			reportListItem = new ArrayList<ReportItem>();
+			reportListItem = new ReportItem();
 			for (int i = 0; i < tradeItem.deficiencies.size(); ++i) {
 				
-//				reportListItem[i] = new ReportItem(tradeItem.deficiencies.get(i));
-//				reportListItem[i].position = i;
-				reportListItem.add(new ReportItem(tradeItem.deficiencies.get(i)));
+				reportListItem[i] = new ReportItem(tradeItem.deficiencies.get(i));
+				reportListItem[i].position = i;
 			}
 			
 			ReportItemAdapter adapter = new ReportItemAdapter(
@@ -77,7 +74,7 @@ public class TradeDetailFragment extends Fragment {
 			
 			
 			reportListView.setOnItemClickListener(new OnItemClickListener() {
-				
+
 				@Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				
 					Deficiency def = tradeItem.deficiencies.get(position);

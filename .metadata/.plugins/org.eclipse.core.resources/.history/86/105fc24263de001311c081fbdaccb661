@@ -21,7 +21,7 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 	
 	Context				context;
 	int					layoutResourceId;
-	ReportItem			data[];
+	ReportItem			data[]	= null;
 	List<ReportItem>	dataList;
 	
 	
