@@ -30,6 +30,7 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 		this.data = data;
 	}
 	
+	
 	@Override public View getView(final int position, View convertView,
 									final ViewGroup parent) {
 	

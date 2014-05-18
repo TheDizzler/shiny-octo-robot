@@ -18,6 +18,7 @@ import vdindustries.content.DeficiencyParser;
 import vdindustries.networking.ConnectActivity;
 import vdindustries.reportsview.TradeListActivity;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -34,36 +35,51 @@ public class Categories extends ActionBarActivity {
 	
 	public static DeficiencyParser	parser;
 	public static InputStream		projectXML;
+//	private boolean					fromAssets;
 	
+	private static AssetManager	assMan;
 	
 	@Override protected void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_categories);
 		
+		assMan = getAssets();
+		Intent intent = getIntent();
 		
-		try {
-			Intent intent = getIntent();
-			
-			String xml = intent.getStringExtra("xmlFile");
-			String projname = intent.getStringExtra("projname");
+		
+		
+		if (intent.getBooleanExtra("test", true)) {
+			Toast.makeText(this, "Test Project loaded", Toast.LENGTH_LONG).show();
+//			fromAssets = false;
+		//	parser = new DeficiencyParser(assMan, true);
+			parser = new DeficiencyParser();
+		} else {
+			try {
+				
+				
+				String xml = intent.getStringExtra("xmlFile");
+				String projname = intent.getStringExtra("projname");
 //			Toast.makeText(this, xml, Toast.LENGTH_LONG).show();
-			
-			DocumentBuilder db = DocumentBuilderFactory.newInstance()
-				.newDocumentBuilder();
-			
-			InputSource is = new InputSource();
-			is.setCharacterStream(new StringReader(xml));
-			Document xmlDoc = db.parse(is);
-			
-			parser = new DeficiencyParser(xmlDoc, projname);
-			
-		} catch (ParserConfigurationException | SAXException | IOException | NullPointerException e) {
-			
-			Toast.makeText(this, e.toString() + "\n\nLoading default Test Project", Toast.LENGTH_LONG).show();
-			parser = new DeficiencyParser(getAssets());
+				
+				DocumentBuilder db = DocumentBuilderFactory.newInstance()
+					.newDocumentBuilder();
+				
+				InputSource is = new InputSource();
+				is.setCharacterStream(new StringReader(xml));
+				Document xmlDoc = db.parse(is);
+				
+				parser = new DeficiencyParser(xmlDoc, projname, assMan);
+//				fromAssets = false;
+			} catch (ParserConfigurationException | SAXException | IOException | NullPointerException e) {
+				
+				Toast.makeText(this,
+					"Error loading project" + "\n\nLoading default Test Project instead",
+					Toast.LENGTH_LONG).show();
+//				fromAssets = true;
+				parser = new DeficiencyParser(assMan, false);
+			}
 		}
-		
 		
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
@@ -71,7 +87,6 @@ public class Categories extends ActionBarActivity {
 		}
 		
 	}
-	
 	
 	
 	@Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -141,6 +156,8 @@ public class Categories extends ActionBarActivity {
 	
 	public static void defParse() {
 	
+		//parser = new DeficiencyParser(assMan, true);
+		parser = null;
 		parser = new DeficiencyParser();
 	}
 	
