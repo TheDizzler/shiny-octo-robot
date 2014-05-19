@@ -59,7 +59,7 @@ public class LoadingScreen extends ActionBarActivity {
 		
 		if (intent.getBooleanExtra("test", true)) {
 			
-			Toast.makeText(this, "Test Project loaded", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Test Project loaded", Toast.LENGTH_SHORT).show();
 			/* Create test project using xml from storage */
 			parser = new DeficiencyParser(assetMan, true);
 			
@@ -68,41 +68,14 @@ public class LoadingScreen extends ActionBarActivity {
 			finish();
 			
 		} else {
-			try {
-				
-				
-				String xml = intent.getStringExtra("xmlFile");
-				String projname = intent.getStringExtra("projname") + ".xml";
-//			Toast.makeText(this, xml, Toast.LENGTH_LONG).show();
-				
-				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new
-					File(getFilesDir() + File.separator + projname)));
-				bufferedWriter.write(xml);
-				bufferedWriter.close();
-				
-				
-				DocumentBuilder db = DocumentBuilderFactory.newInstance()
-					.newDocumentBuilder();
-				
-				InputSource is = new InputSource();
-				is.setCharacterStream(new StringReader(xml));
-				Document xmlDoc = db.parse(is);
-				
-				parser = new DeficiencyParser(xmlDoc, projname, assetMan, this);
-				getImagesFromUri();
-//				new DownloadImages(parser.floorImages, parser.roomImages).execute(parser.floorUris, parser.roomUris);
-			} catch (ParserConfigurationException | SAXException | IOException | NullPointerException e) {
-				
-				Toast.makeText(this,
-					"Error loading project" + "\n\nLoading default Test Project instead",
-					Toast.LENGTH_LONG).show();
-				/* Create test project using xml assets. */
-				parser = new DeficiencyParser(assetMan, false);
-				
-				Intent i = new Intent(this, Categories.class);
-				startActivity(i);
-				finish();
-			}
+			
+			
+			
+			String xml = intent.getStringExtra("xmlFile");
+			String projname = intent.getStringExtra("projname") + ".xml";
+			
+			parser = new DeficiencyParser(xml, projname, assetMan, this);
+			getImagesFromUri();
 		}
 	}
 	
@@ -161,11 +134,10 @@ public class LoadingScreen extends ActionBarActivity {
 			while (it_flr.hasNext()) {
 				
 				Map.Entry<String, String> pairs = (Map.Entry<String, String>) it_flr.next();
-//			        System.out.println(pairs.getKey() + " = " + pairs.getValue());
 				InputStream is;
+				
 				try {
 					is = (InputStream) new URL("http://" + pairs.getValue()).getContent();
-//					is = (InputStream) new URL("http://pbs.twimg.com/media/A97F0KzCAAAWU-0.jpg:large").getContent();
 				} catch (IOException e) {
 					e.printStackTrace();
 					is = null;
@@ -183,7 +155,6 @@ public class LoadingScreen extends ActionBarActivity {
 				InputStream is;
 				try {
 					is = (InputStream) new URL("http://" + pairs.getValue()).getContent();
-//					is = (InputStream) new URL("https://pbs.twimg.com/media/AlGdUPnCIAAUwnK.jpg").getContent();
 				} catch (IOException e) {
 					e.printStackTrace();
 					is = null;

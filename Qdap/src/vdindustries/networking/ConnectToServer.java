@@ -75,7 +75,7 @@ public class ConnectToServer extends AsyncTask<String, Integer, String> {
 		// convert response to string
 		try {
 			BufferedReader reader = new BufferedReader(
-				new InputStreamReader(is, "iso-8859-1"), 1000);
+				new InputStreamReader(is, "iso-8859-1"), 100000);
 			StringBuilder sb = new StringBuilder();
 			String line = null;
 			while ((line = reader.readLine()) != null) {

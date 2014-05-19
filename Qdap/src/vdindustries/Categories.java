@@ -40,6 +40,9 @@ public class Categories extends ActionBarActivity {
 	
 	private static AssetManager		assetMan;
 	
+	static View							rootView;
+	
+	
 	@Override protected void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
@@ -83,7 +86,7 @@ public class Categories extends ActionBarActivity {
 		@Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
 											Bundle savedInstanceState) {
 		
-			View rootView = inflater.inflate(R.layout.fragment_categories,
+			rootView = inflater.inflate(R.layout.fragment_categories,
 				container, false);
 			
 			TextView projName = (TextView) rootView.findViewById(R.id.project_name_textview);
@@ -117,10 +120,16 @@ public class Categories extends ActionBarActivity {
 		Toast.makeText(this, "This feature is not yet implemented", Toast.LENGTH_SHORT).show();
 	}
 	
-	
-	public static void defParse() {
-	
-		parser = new DeficiencyParser(assetMan, true);
-	}
+	/** This has got to change */
+//	public static void defParse() {
+//	
+//		if (DeficiencyParser.fromAssets)
+//			parser = new DeficiencyParser(assetMan, true);
+//		else {
+//			Document xmlDoc = DeficiencyParser.xmlDoc;
+//			String projName = DeficiencyParser.projectName;
+//			parser = new DeficiencyParser(xmlDoc, projName, assetMan);
+//		}
+//	}
 	
 }

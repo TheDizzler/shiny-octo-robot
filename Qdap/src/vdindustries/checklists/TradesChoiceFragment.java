@@ -60,11 +60,11 @@ public class TradesChoiceFragment extends Fragment {
 		tradesList.add("Insulation");
 		
 		// View finishes = getLayoutInflater().inflate(R.layout.finishes, null);
-		tradesList.add("FINISHES");
+//		tradesList.add("FINISHES");
 		tradesList.add("Drywall");
 		tradesList.add("Paint");
-		tradesList.add("Mechanical");
-		tradesList.add("Electrical");
+		tradesList.add("Mechanical(f)");
+		tradesList.add("Electrical(f)");
 		tradesList.add("Flooring");
 		tradesList.add("Cabinets");
 		tradesList.add("Countertops");

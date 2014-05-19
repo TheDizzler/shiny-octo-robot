@@ -83,6 +83,12 @@ public class TradeListFragment extends ListFragment {
 		}
 	}
 	
+	@Override public void onResume() {
+	
+		super.onResume();
+		
+		TradeContent.reloadDeficiencies();
+	}
 	
 	@Override public void onAttach(Activity activity) {
 	

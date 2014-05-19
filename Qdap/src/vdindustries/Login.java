@@ -41,9 +41,6 @@ public class Login extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-//		user = (EditText) findViewById(R.id.editUser);
-//		password = (EditText) findViewById(R.id.editPassword);
-//		project = (EditText) findViewById(R.id.editProject);
 		
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
@@ -91,16 +88,13 @@ public class Login extends ActionBarActivity {
 	/** Connect to webserver. */
 	public void login(View view) {
 	
-//		trythis();
-		
 		WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		
 		ConnectivityManager connectivityManager = (ConnectivityManager)
 													this.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = null;
 		if (connectivityManager != null) {
-			networkInfo =
-							connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+			networkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 		}
 		
 		if (!wifi.isWifiEnabled()) {

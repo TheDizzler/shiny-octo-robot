@@ -13,8 +13,8 @@ public class CheckListsActivity extends ActionBarActivity implements ExpandableL
 															PlanFragment.OnCreateDeficiency,
 															Room.OnEditDeficiency {
 	
-	Context					context;
-	private static String	tradeSelected;
+	Context	context;
+	private String	tradeSelected, floorID, roomNo;
 	
 	
 	
@@ -27,12 +27,27 @@ public class CheckListsActivity extends ActionBarActivity implements ExpandableL
 		
 	}
 	
+	protected void onResume() {
+	
+		super.onResume();
+		if (roomNo != null) {
+			PlanFragment fragment = (PlanFragment) getFragmentManager().findFragmentById(
+				R.id.plan_fragment);
+			
+			fragment.loadRoomPlan(roomNo);
+			
+			
+			if (tradeSelected != null)
+				fragment.loadDeficiencies(tradeSelected);
+		}
+	}
 	
 	@Override public void onFloorSelected(String floorID) {
 	
 		PlanFragment fragment = (PlanFragment) getFragmentManager().findFragmentById(
 			R.id.plan_fragment);
 		
+		this.floorID = floorID;
 		fragment.loadFloorPlan(floorID);
 	}
 	
@@ -43,6 +58,7 @@ public class CheckListsActivity extends ActionBarActivity implements ExpandableL
 		PlanFragment fragment = (PlanFragment) getFragmentManager().findFragmentById(
 			R.id.plan_fragment);
 		
+		this.roomNo = roomNo;
 		fragment.loadRoomPlan(roomNo);
 		
 		if (tradeSelected != null)
@@ -67,10 +83,14 @@ public class CheckListsActivity extends ActionBarActivity implements ExpandableL
 			Toast.makeText(context, "Please select a trade before creating defiencies.",
 				Toast.LENGTH_LONG).show();
 		else {
+//			Toast.makeText(context, roomNo, Toast.LENGTH_LONG).show();
 			Intent intent = new Intent(context, DeficiencyWheel.class);
 			intent.putExtra("new", true);
 			intent.putExtra("x", x);
 			intent.putExtra("y", y);
+			intent.putExtra("trade", tradeSelected);
+			intent.putExtra("floor", floorID);
+			intent.putExtra("room", roomNo);
 			startActivity(intent);
 		}
 	}
@@ -79,6 +99,15 @@ public class CheckListsActivity extends ActionBarActivity implements ExpandableL
 	@Override public void onFlagClick(Deficiency def) {
 	
 		Intent intent = new Intent(context, DeficiencyWheel.class);
+		
+		
+		PlanFragment fragment = (PlanFragment) getFragmentManager().findFragmentById(
+			R.id.plan_fragment);
+		roomNo = def.roomNo;
+		fragment.loadRoomPlan(def.roomNo);
+		
+		if (tradeSelected != null)
+			fragment.loadDeficiencies(tradeSelected);
 		
 		intent.putExtra("new", false);
 		
@@ -90,6 +119,10 @@ public class CheckListsActivity extends ActionBarActivity implements ExpandableL
 		intent.putExtra("verb", def.verb);
 		intent.putExtra("direction", def.direction);
 		intent.putExtra("location", def.location);
+		intent.putExtra("trade", tradeSelected);
+		intent.putExtra("floor", floorID);
+		intent.putExtra("room", roomNo);
+		intent.putExtra("priority", def.priority);
 		startActivity(intent);
 		
 	}

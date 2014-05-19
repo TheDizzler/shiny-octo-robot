@@ -39,7 +39,6 @@ public class Room extends ImageView {
 	private RelativeLayout			layout;
 	LayoutParams					params;
 	LayoutParams					buttonLayoutParams;
-//	private LayoutParams			planLayoutParams;
 	
 	private List<Deficiency>		defs;
 	private ArrayList<ImageButton>	defBtns;
@@ -102,24 +101,15 @@ public class Room extends ImageView {
 	
 	private void showRoomReports(String roomNo, Deficiency def) {
 	
-//		String file = DeficiencyParser.getRoomImageFile(roomNo);
-//		InputStream is = null;
-//		try {
-//			is = DeficiencyParser.assMan.open(file);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		Bitmap immutable = BitmapFactory.decodeStream(is);
-//		DeficiencyParser.loadBitmapFromAsset(immutable, file);
-		
-//		DeficiencyParser.loadRoomPlanBMP(immutable, roomNo);
-		
 		Bitmap immutable = DeficiencyParser.loadImmutableBitmap(roomNo);
-		
-		planBMP = convertToMutable(context, immutable);
-		canvas = new Canvas(planBMP);
-		showDeficiency(def);
-		plan.setImageBitmap(planBMP);
+		if (immutable != null) {
+			
+			planBMP = convertToMutable(context, immutable);
+			canvas = new Canvas(planBMP);
+			showDeficiency(def);
+			plan.setImageBitmap(planBMP);
+		} else
+			DeficiencyParser.loadRoomPlan(plan, roomNo);
 	}
 	
 	
@@ -152,8 +142,13 @@ public class Room extends ImageView {
 		for (int i = 0; i < defs.size(); ++i) {
 			
 			Deficiency def = defs.get(i);
-			if (!def.trade.equalsIgnoreCase(tradeToShow))
+			
+			if (def.trade == null)
 				break;
+			
+			if (!def.trade.equalsIgnoreCase(tradeToShow))
+				continue;
+			
 			ImageButton btn = new ImageButton(context);
 			
 			if (def.completed)
@@ -163,8 +158,6 @@ public class Room extends ImageView {
 			else
 				btn.setImageDrawable(getResources().getDrawable(R.drawable.flag_blue));
 			
-			
-//			btn.setBackground(getResources().getDrawable(R.drawable.flag_bg));
 			btn.setOnClickListener(new FlagListener(def, vibrator)); // setLongClickable?
 			btn.setLayoutParams(buttonLayoutParams);
 			btn.setId(i);

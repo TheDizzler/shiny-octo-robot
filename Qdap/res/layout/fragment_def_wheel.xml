@@ -62,11 +62,17 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="save"
             android:text="@string/save" />
+        
+        <CheckBox
+                android:id="@+id/checkBoxPriority"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="High\nPriority" />
     </LinearLayout>
 
     <TextView

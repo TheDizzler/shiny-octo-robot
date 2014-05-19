@@ -4,16 +4,20 @@ import java.util.List;
 
 import vdindustries.reportsview.TradeListFragment;
 import vdindustries.Qdap.R;
+import vdindustries.checklists.Room;
+import vdindustries.content.Deficiency;
 import vdindustries.content.DeficiencyParser;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
@@ -21,18 +25,18 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 	
 	Context				context;
 	int					layoutResourceId;
-	ReportItem			data[];
+//	ReportItem			data[];
 	List<ReportItem>	dataList;
 	
 	
-	public ReportItemAdapter(Context context, int layoutResourceId,
-								ReportItem[] data) {
-	
-		super(context, layoutResourceId, data);
-		this.layoutResourceId = layoutResourceId;
-		this.context = context;
-		this.data = data;
-	}
+//	public ReportItemAdapter(Context context, int layoutResourceId,
+//								ReportItem[] data) {
+//	
+//		super(context, layoutResourceId, data);
+//		this.layoutResourceId = layoutResourceId;
+//		this.context = context;
+//		this.data = data;
+//	}
 	
 	
 	public ReportItemAdapter(Context context, int layoutResourceId,
@@ -45,11 +49,11 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 	}
 	
 	
-	@Override public View getView(final int position, View convertView,
+	@Override public View getView(final int position, final View convertView,
 									final ViewGroup parent) {
 	
 		View row = convertView;
-		ReportItemHolder holder = null;
+		ReportItemHolder holder;
 		
 		if (row == null) {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
@@ -63,27 +67,24 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 			holder.reportText = (TextView) row.findViewById(R.id.reportText);
 			
 			
-			holder.reportCheck
-				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			holder.reportCheck.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override public void onCheckedChanged(CompoundButton buttonView,
+														boolean isChecked) {
+				
+					int getPosition = (Integer) buttonView.getTag();
+					ReportItem rItem;
 					
-					@Override public void onCheckedChanged(CompoundButton buttonView,
-															boolean isChecked) {
+					dataList.get(getPosition).checked = isChecked;
+					rItem = dataList.get(getPosition);
+					DeficiencyParser.setCompletionStatus(
+						rItem.def.roomNo, rItem.def.trade,
+						rItem.reportID, isChecked);
+					TradeListFragment.setDefic();
 					
-						int getPosition = (Integer) buttonView.getTag();
-						ReportItem rItem;
-						if (data != null) {
-							data[getPosition].checked = isChecked;
-							rItem = data[getPosition];
-						} else {
-							dataList.get(getPosition).checked = isChecked;
-							rItem = dataList.get(getPosition);
-						}
-						DeficiencyParser.setCompletionStatus(
-							rItem.def.roomNo, rItem.def.trade,
-							rItem.reportID, isChecked);
-						TradeListFragment.setDefic();
-					}
-				});
+//						TradeDetailFragment.refreshPlan(position);
+				}
+			});
 			
 			row.setTag(holder);
 			row.setTag(R.id.reportText, holder.reportText);
@@ -92,10 +93,7 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 			holder = (ReportItemHolder) row.getTag();
 		}
 		ReportItem reportItem;
-		if (data != null)
-			reportItem = data[position];
-		else
-			reportItem = dataList.get(position);
+		reportItem = dataList.get(position);
 		holder.reportCheck.setTag(position);
 		holder.reportText.setText(reportItem.text);
 		holder.reportCheck.setChecked(reportItem.checked);
@@ -107,9 +105,4 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 		CheckBox	reportCheck;
 		TextView	reportText;
 	}
-	
-	public void OnCheckedChangeListener() {
-	
-	}
-	
 }

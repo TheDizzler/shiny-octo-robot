@@ -26,8 +26,8 @@ public class TradeContent {
 		
 		addItem(new TradeItem("7", "Drywall"));
 		addItem(new TradeItem("8", "Paint"));
-		addItem(new TradeItem("9", "Mechanical"));
-		addItem(new TradeItem("10", "Electrical"));
+		addItem(new TradeItem("9", "Mechanical(f)"));
+		addItem(new TradeItem("10", "Electrical(f)"));
 		addItem(new TradeItem("11", "Flooring"));
 		addItem(new TradeItem("12", "Cabinets"));
 		addItem(new TradeItem("13", "Countertops"));
@@ -42,8 +42,16 @@ public class TradeContent {
 	}
 	
 	
+	public static void reloadDeficiencies() {
+		
+		for (TradeItem trade: ITEMS) {
+			
+			trade.reloadDeficiencies();
+		}
+	}
 	
-	/** A dummy item representing a piece of content. */
+	
+	/** A Trade list item that holds all deficiencies under this trade. */
 	public static class TradeItem {
 		
 		public String	id;
@@ -62,6 +70,11 @@ public class TradeContent {
 		@Override public String toString() {
 		
 			return trade;
+		}
+		
+		private void reloadDeficiencies() {
+			
+			this.deficiencies = DeficiencyParser.getDefsByTrade(trade);
 		}
 	}
 }

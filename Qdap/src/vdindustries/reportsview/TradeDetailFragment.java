@@ -12,6 +12,7 @@ import vdindustries.content.TradeContent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +30,13 @@ public class TradeDetailFragment extends Fragment {
 	 * represents. */
 	public static final String		ARG_ITEM_ID	= "item_id";
 	
-	private TradeContent.TradeItem	tradeItem;
+	private static TradeContent.TradeItem	tradeItem;
 	
-//	ReportItem						reportListItem[];
 	List<ReportItem>				reportListItem;
+
+	private static View	rootView;
+
+	private static FragmentActivity	activity;
 	
 	private static ListView			reportListView;
 	
@@ -56,21 +60,20 @@ public class TradeDetailFragment extends Fragment {
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
 										Bundle savedInstanceState) {
 	
-		final View rootView = inflater.inflate(R.layout.fragment_trade_detail, container, false);
+		rootView = inflater.inflate(R.layout.fragment_trade_detail, container, false);
 		
+		activity = getActivity();
 		// Show the content in a ListView using a custom adapter
 		if (tradeItem != null) {
-//			reportListItem = new ReportItem[tradeItem.deficiencies.size()];
+			
 			reportListItem = new ArrayList<ReportItem>();
 			for (int i = 0; i < tradeItem.deficiencies.size(); ++i) {
 				
-//				reportListItem[i] = new ReportItem(tradeItem.deficiencies.get(i));
-//				reportListItem[i].position = i;
 				reportListItem.add(new ReportItem(tradeItem.deficiencies.get(i)));
 			}
 			
 			ReportItemAdapter adapter = new ReportItemAdapter(
-				getActivity(), R.layout.report_item_layout, reportListItem);
+				activity, R.layout.report_item_layout, reportListItem);
 			
 			reportListView = (ListView) rootView.findViewById(R.id.trade_detail);
 			reportListView.setAdapter(adapter);
@@ -80,13 +83,18 @@ public class TradeDetailFragment extends Fragment {
 				
 				@Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				
-					Deficiency def = tradeItem.deficiencies.get(position);
-					ImageView plan = (ImageView) rootView.findViewById(R.id.reportFloorplan);
-					new Room(getActivity(), def, plan);
-					
+					refreshPlan(position);
 				}
 			});
 		}
 		return rootView;
+	}
+	
+	public static void refreshPlan(int position) {
+		
+		Deficiency def = tradeItem.deficiencies.get(position);
+		ImageView plan = (ImageView) rootView.findViewById(R.id.reportFloorplan);
+		new Room(activity, def, plan);
+		
 	}
 }

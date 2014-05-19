@@ -18,7 +18,6 @@ public class Deficiency {
 	public static final String	YCOORD		= "y";
 	
 	/* Element tags */
-//	public static final String	ELEMENT		= "deficiency";
 	public static final String	ROOM		= "room";
 	public static final String	DESCRIPTION	= "description";
 	public static final String	OBJECT		= "object";
@@ -32,9 +31,9 @@ public class Deficiency {
 	
 	
 	
-	public String				trade;							// unnecessary?
-																
-	public String				reportID;						// Maybe have first three characters of ID from project name?
+	public String				trade;
+	
+	public String				reportID;
 	public boolean				completed;
 	public boolean				priority;
 	public int					X, Y;
@@ -43,11 +42,10 @@ public class Deficiency {
 	public String				roomNo;
 	public String				floor;
 	
-	private int	mData;
 	
 	
 	public Deficiency() {
-		
+	
 		
 	}
 	
@@ -68,11 +66,12 @@ public class Deficiency {
 		this.location = location;
 		
 	}
-
-    
+	
+	
 	public String toString() {
 	
-		return "reportID: " + reportID + "\t" + object
-				+ " " + item + " " + verb + " " + direction + " " + location;
-	}	
+		return "reportID: " + reportID + "\troomNo: " + roomNo +
+				"\n" + object + " " + item + " " + verb + " " +
+				direction + " " + location;
+	}
 }
