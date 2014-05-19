@@ -83,6 +83,7 @@ public class CheckListsActivity extends ActionBarActivity implements ExpandableL
 			Toast.makeText(context, "Please select a trade before creating defiencies.",
 				Toast.LENGTH_LONG).show();
 		else {
+//			Toast.makeText(context, roomNo, Toast.LENGTH_LONG).show();
 			Intent intent = new Intent(context, DeficiencyWheel.class);
 			intent.putExtra("new", true);
 			intent.putExtra("x", x);

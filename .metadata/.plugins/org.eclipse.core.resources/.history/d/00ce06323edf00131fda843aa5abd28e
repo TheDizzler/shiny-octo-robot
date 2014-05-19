@@ -94,15 +94,49 @@ public class DeficiencyParser {
 			projectXML = new FileInputStream(fileXML);
 			xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(projectXML);
 		} catch (IOException | SAXException | ParserConfigurationException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		BufferedWriter bufferedWriter;
+//		try {
+//			
+//			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(
+//				projname, Context.MODE_PRIVATE));
+//			outputStreamWriter.write(xml);
+//			outputStreamWriter.close();
+//			
+//			fileXML = new File(context.getFilesDir() + File.separator + projname);
+////			bufferedWriter = new BufferedWriter(new FileWriter(fileXML));
+////			bufferedWriter.write(xml);
+////			bufferedWriter.close();
+////			
+////			
+////			DocumentBuilder db = DocumentBuilderFactory.newInstance()
+////				.newDocumentBuilder();
+////			
+////			InputSource is = new InputSource();
+////			is.setCharacterStream(new StringReader(xml));
+////			xmlDoc = db.parse(is);
+//			
+//			projectXML = new FileInputStream(fileXML);
+//			xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(projectXML);
+//			projectXML.close();
+//		} catch (IOException | ParserConfigurationException | SAXException e) {
+//			e.printStackTrace();
+//		}
 		
 		setup();
 		
 	}
 	
 	private static void refresh() {
-		
+	
+//		if (fromAssets)
+//			fileXML = new File(Environment.getExternalStorageDirectory() + "/Download/" + "testproject.xml");
+//		
+//		else
+//			fileXML = new File(context.getFilesDir() + File.separator + projname);
+//		
 		try {
 			projectXML = new FileInputStream(fileXML);
 			
@@ -409,20 +443,25 @@ public class DeficiencyParser {
 	public static void loadRoomPlan(ImageView image, String roomNo) {
 	
 		
-		if (fromAssets)
-			loadBitmapFromAsset(image, getRoomImageFile(roomNo));
-		else
+		if (fromAssets) {
+			String file = getRoomImageFile(roomNo);
+			loadBitmapFromAsset(image, file);
+		} else {
 			image.setImageBitmap(roomImages.get(roomNo));
+		}
 	}
 	
 	
 	public static void loadFloorPlan(ImageView image, String floorID) {
 	
 		
-		if (fromAssets)
-			loadBitmapFromAsset(image, getFloorImageFile(floorID));
-		else
+		if (fromAssets) {
+			String file = getFloorImageFile(floorID);
+			loadBitmapFromAsset(image, file);
+		} else {
+//			loadImageFromStorage(image, floorImages.get(floorID));
 			image.setImageBitmap(floorImages.get(floorID));
+		}
 	}
 	
 	
@@ -434,6 +473,7 @@ public class DeficiencyParser {
 			Bitmap bmap = BitmapFactory.decodeStream(is);
 			image.setImageBitmap(bmap);
 		} catch (IOException ex) {
+//			ex.printStackTrace();
 			image.setImageBitmap(nopic);
 		}
 		
@@ -457,7 +497,7 @@ public class DeficiencyParser {
 			loadBitmapFromAsset(immutable, file);
 			
 		} else {
-			immutable = roomImages.get(roomNo).copy(Bitmap.Config.ARGB_8888, true);
+			immutable = roomImages.get(roomNo);
 		}
 		return immutable;
 		

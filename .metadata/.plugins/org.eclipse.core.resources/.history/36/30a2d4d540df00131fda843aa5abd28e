@@ -93,6 +93,7 @@ public class Room extends ImageView {
 	
 	private void showRoom(final String roomNo) {
 	
+		plan.setImageBitmap(null);
 		DeficiencyParser.loadRoomPlan(plan, roomNo);
 		plan.setX(getResources().getDimension(R.dimen.plan_horizontal_margin));
 		plan.setY(getResources().getDimension(R.dimen.plan_vertical_margin));
@@ -101,7 +102,6 @@ public class Room extends ImageView {
 	
 	private void showRoomReports(String roomNo, Deficiency def) {
 	
-		
 		Bitmap immutable = DeficiencyParser.loadImmutableBitmap(roomNo);
 		if (immutable != null) {
 			
@@ -111,7 +111,6 @@ public class Room extends ImageView {
 			plan.setImageBitmap(planBMP);
 		} else
 			DeficiencyParser.loadRoomPlan(plan, roomNo);
-		
 	}
 	
 	

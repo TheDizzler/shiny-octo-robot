@@ -457,7 +457,7 @@ public class DeficiencyParser {
 			loadBitmapFromAsset(immutable, file);
 			
 		} else {
-			immutable = roomImages.get(roomNo).copy(Bitmap.Config.ARGB_8888, true);
+			immutable = roomImages.get(roomNo);
 		}
 		return immutable;
 		
