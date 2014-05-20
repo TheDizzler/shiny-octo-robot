@@ -46,7 +46,7 @@ import android.widget.Toast;
 
 /** A static class that holds the project data. Provides methods for reading and writing
  * to the project xml file, getting deficiencies by room and trade, getting image files,
- * various other convenient tasks.*/
+ * various other useful tasks.*/
 public class DeficiencyParser {
 	
 	public static String				projectName;

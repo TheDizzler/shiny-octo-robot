@@ -46,7 +46,7 @@ import android.widget.Toast;
 
 /** A static class that holds the project data. Provides methods for reading and writing
  * to the project xml file, getting deficiencies by room and trade, getting image files,
- * various other convenient tasks.*/
+ * various other useful tasks.*/
 public class DeficiencyParser {
 	
 	public static String				projectName;
@@ -249,7 +249,7 @@ public class DeficiencyParser {
 		return defList;
 	}
 	
-	/** Retrieves a list of all deficiencies in a room. */
+	/** Retrieves a list of all deficiencies in a room. */ 
 	public static List<Deficiency> getDefsByRoom(String roomNo) {
 	
 		List<Deficiency> defList = new ArrayList<Deficiency>();
@@ -417,12 +417,8 @@ public class DeficiencyParser {
 		
 		if (fromAssets)
 			loadBitmapFromAsset(image, getFloorImageFile(floorID));
-		else {
-			Bitmap floor = floorImages.get(floorID);
-			if (floor == null)
-				floor = nopic;
-			image.setImageBitmap(nopic);
-		}
+		else
+			image.setImageBitmap(floorImages.get(floorID));
 	}
 	
 	

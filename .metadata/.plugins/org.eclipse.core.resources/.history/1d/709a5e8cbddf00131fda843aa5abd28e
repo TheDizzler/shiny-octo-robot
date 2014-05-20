@@ -30,6 +30,7 @@ import android.widget.RelativeLayout;
 /** Extension of ImageView for displaying room images and deficiencies. */
 public class Room extends ImageView {
 	
+	
 	private int						FLAGHEIGHT;
 	
 	private ImageView				plan;
@@ -101,7 +102,6 @@ public class Room extends ImageView {
 	private void showRoomReports(String roomNo, Deficiency def) {
 	
 		Bitmap immutable = DeficiencyParser.loadImmutableBitmap(roomNo);
-		
 		if (immutable != null) {
 			
 			planBMP = convertToMutable(context, immutable);

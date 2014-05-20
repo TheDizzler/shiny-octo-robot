@@ -78,8 +78,8 @@ public class LoadingScreen extends ActionBarActivity {
 		/* Map<roomNo, uri> */
 		Map<String, String> roomUris = new HashMap<String, String>();
 		
-		
 		for (int i = 0; i < parser.listFloorNodes.getLength(); ++i) {
+			
 			Element floor = ((Element) parser.listFloorNodes.item(i));
 			Element floorplan = ((Element) floor.getElementsByTagName("floorplan").item(0));
 			floorUris.put(floor.getAttribute(Deficiency.FLOORID),
@@ -136,6 +136,7 @@ public class LoadingScreen extends ActionBarActivity {
 			while (it_rm.hasNext()) {
 				
 				Map.Entry<String, String> pairs = (Map.Entry<String, String>) it_rm.next();
+//			        System.out.println(pairs.getKey() + " = " + pairs.getValue());
 				InputStream is;
 				try {
 					is = (InputStream) new URL("http://" + pairs.getValue()).getContent();
@@ -143,6 +144,7 @@ public class LoadingScreen extends ActionBarActivity {
 					e.printStackTrace();
 					is = null;
 				}
+//				Toast.makeText(context, is.toString(), Toast.LENGTH_LONG).show();
 				roomImages.put(pairs.getKey(), DeficiencyParser.loadImageFromUri(is));
 				it_rm.remove(); // avoids a ConcurrentModificationException
 			}
@@ -153,6 +155,7 @@ public class LoadingScreen extends ActionBarActivity {
 		
 		@Override protected void onProgressUpdate(Integer... progress) {
 		
+//	      setProgressPercent(progress[0]);
 			Toast.makeText(context, progress[0], Toast.LENGTH_LONG).show();
 		}
 		
@@ -160,10 +163,12 @@ public class LoadingScreen extends ActionBarActivity {
 		@Override protected void onPostExecute(Boolean result) {
 		
 			super.onPostExecute(result);
-			// After completing ASync Task
-			// will close this activity and lauch Categories activity
+			// After completing http call
+			// will close this activity and lauch main activity
 			Intent i = new Intent(LoadingScreen.this, Categories.class);
 			startActivity(i);
+			
+			// close this activity
 			finish();
 		}
 		

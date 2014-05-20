@@ -27,8 +27,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-/** Extension of ImageView for displaying room images and deficiencies. */
+
 public class Room extends ImageView {
+	
 	
 	private int						FLAGHEIGHT;
 	
@@ -93,15 +94,14 @@ public class Room extends ImageView {
 	private void showRoom(final String roomNo) {
 	
 		DeficiencyParser.loadRoomPlan(plan, roomNo);
-		plan.setX(getResources().getDimension(R.dimen.plan_horizontal_margin));
-		plan.setY(getResources().getDimension(R.dimen.plan_vertical_margin));
+//		plan.setX(getResources().getDimension(R.dimen.plan_horizontal_margin));
+//		plan.setY(getResources().getDimension(R.dimen.plan_vertical_margin));
 	}
 	
 	/** Retrieve and display image with selected deficiency from Reporst view. */
 	private void showRoomReports(String roomNo, Deficiency def) {
 	
 		Bitmap immutable = DeficiencyParser.loadImmutableBitmap(roomNo);
-		
 		if (immutable != null) {
 			
 			planBMP = convertToMutable(context, immutable);
@@ -235,6 +235,7 @@ class FlagListener implements OnClickListener {
 	@Override public void onClick(View v) {
 	
 		vibrator.vibrate(500);
+//		Toast.makeText(v.getContext(), def.toString(), Toast.LENGTH_SHORT).show();
 		((CheckListsActivity) v.getContext()).onFlagClick(def);
 	}
 }

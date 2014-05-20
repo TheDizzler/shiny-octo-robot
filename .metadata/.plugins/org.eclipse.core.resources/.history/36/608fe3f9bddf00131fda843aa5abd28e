@@ -101,7 +101,6 @@ public class Room extends ImageView {
 	private void showRoomReports(String roomNo, Deficiency def) {
 	
 		Bitmap immutable = DeficiencyParser.loadImmutableBitmap(roomNo);
-		
 		if (immutable != null) {
 			
 			planBMP = convertToMutable(context, immutable);
