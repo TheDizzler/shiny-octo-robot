@@ -44,7 +44,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
-
+/** A static class that holds the project data. Provides methods for reading and writing
+ * to the project xml file, getting deficiencies by room and trade, getting image files,
+ * various other useful tasks.*/
 public class DeficiencyParser {
 	
 	public static String				projectName;
@@ -79,14 +81,10 @@ public class DeficiencyParser {
 		assetMan = am;
 		fromAssets = false;
 		
-		//set the path where we want to save the file
-		//in this case, going to save it on the root directory of the
-		//sd card.
 		File saveDirectory = new File(Environment.getExternalStorageDirectory() + path);
-		fileXML = new File(saveDirectory, "biteme");
+		fileXML = new File(saveDirectory, "file");
 		
 		//this will be used to write the downloaded data into the file we created
-		
 		try {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileXML));
 			bufferedWriter.write(xml);
@@ -99,18 +97,6 @@ public class DeficiencyParser {
 		
 		setup();
 		
-	}
-	
-	private static void refresh() {
-		
-		try {
-			projectXML = new FileInputStream(fileXML);
-			
-			xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(projectXML);
-		} catch (SAXException | IOException | ParserConfigurationException e) {
-			e.printStackTrace();
-		}
-		setup();
 	}
 	
 	/** Internal true: Create using the DEFAULT project stored on internal storage. 
@@ -137,7 +123,6 @@ public class DeficiencyParser {
 	}
 	
 	
-	
 	private static void setup() {
 	
 		try {
@@ -158,6 +143,18 @@ public class DeficiencyParser {
 		listDeficiencyNodes = root.getElementsByTagName("deficiency");
 	}
 	
+	
+	private static void refresh() {
+	
+		try {
+			projectXML = new FileInputStream(fileXML);
+			xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(projectXML);
+			
+		} catch (SAXException | IOException | ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+		setup();
+	}
 	
 	/** Retrieves number of deficiencies in a room, completed & uncompleted */
 	public static int totalDefsByUnit(String unit) {
@@ -611,19 +608,11 @@ public class DeficiencyParser {
 				return;
 			}
 		}
-		
 	}
 	
 	/** Creates a new deficiency. Called from DeficiencyWheel Save button. */
 	public static void addNewDeficiency(Deficiency newDefic) {
 	
-		
-//		NodeList floorsList = listFloorNodes;
-//		for (int h = 0; h < listFloorNodes.getLength(); ++h) {
-//			
-//			if (((Element) floorsList.item(h)).getAttribute("floorID").equals(newDefic.floor)) {
-//				
-//				NodeList roomsList = ((Element) floorsList.item(h)).getElementsByTagName("room");
 		NodeList roomsList = listRoomNodes;
 		for (int i = 0; i < roomsList.getLength(); ++i) {
 			

@@ -25,18 +25,7 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 	
 	Context				context;
 	int					layoutResourceId;
-//	ReportItem			data[];
 	List<ReportItem>	dataList;
-	
-	
-//	public ReportItemAdapter(Context context, int layoutResourceId,
-//								ReportItem[] data) {
-//	
-//		super(context, layoutResourceId, data);
-//		this.layoutResourceId = layoutResourceId;
-//		this.context = context;
-//		this.data = data;
-//	}
 	
 	
 	public ReportItemAdapter(Context context, int layoutResourceId,
@@ -82,6 +71,7 @@ public class ReportItemAdapter extends ArrayAdapter<ReportItem> {
 						rItem.reportID, isChecked);
 					TradeListFragment.setDefic();
 					
+					// lags when scrolling...why???
 //						TradeDetailFragment.refreshPlan(position);
 				}
 			});

@@ -118,6 +118,10 @@ public class DeficiencyWheel extends ActionBarActivity {
 			direction.setCurrentItem(dirAdapter.getItemIndex(direction_str));
 			location.setCurrentItem(locationAdapter.getItemIndex(location_str));
 			
+			//get the checkbox....
+			CheckBox checkBox = (CheckBox)findViewById(R.id.checkBoxPriority);
+			checkBox.setChecked(priority_def);
+			
 			title.setText("Edit deficiency");
 			repID.setText(currentDef.reportID);
 		} else {
@@ -144,7 +148,7 @@ public class DeficiencyWheel extends ActionBarActivity {
 		location_str = locationAdapter.getCurrentItem(location.getCurrentItem());
 	}
 	
-	
+	/** Action performed on save-button click. */
 	public void save(View view) {
 	
 		

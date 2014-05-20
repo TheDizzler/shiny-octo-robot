@@ -8,6 +8,7 @@ import vdindustries.Qdap.R;
 import vdindustries.checklists.Room;
 import vdindustries.content.Deficiency;
 import vdindustries.content.DeficiencyParser;
+import vdindustries.content.TouchImageView;
 import vdindustries.content.TradeContent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -28,17 +29,15 @@ public class TradeDetailFragment extends Fragment {
 	
 	/** The fragment argument representing the item ID that this fragment
 	 * represents. */
-	public static final String		ARG_ITEM_ID	= "item_id";
+	public static final String				ARG_ITEM_ID	= "item_id";
 	
 	private static TradeContent.TradeItem	tradeItem;
-	
-	List<ReportItem>				reportListItem;
+	List<ReportItem>						reportListItem;
+	private static View						rootView;
+	private static FragmentActivity			activity;
+	private static ListView					reportListView;
 
-	private static View	rootView;
-
-	private static FragmentActivity	activity;
-	
-	private static ListView			reportListView;
+	private static String	currentRoomNo;
 	
 	/** Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes). */
@@ -84,17 +83,24 @@ public class TradeDetailFragment extends Fragment {
 				@Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				
 					refreshPlan(position);
+					
 				}
 			});
 		}
 		return rootView;
 	}
 	
+	/** Set the plan imageview to the room that holds this deficiency. */
 	public static void refreshPlan(int position) {
-		
+	
 		Deficiency def = tradeItem.deficiencies.get(position);
-		ImageView plan = (ImageView) rootView.findViewById(R.id.reportFloorplan);
+		TouchImageView plan = (TouchImageView) rootView.findViewById(R.id.reportFloorplan);
+		
+		// Don't reset zoom if room doesn't change
+		if (def.roomNo != currentRoomNo)
+			plan.resetZoom();
 		new Room(activity, def, plan);
 		
+		currentRoomNo = def.roomNo;
 	}
 }
