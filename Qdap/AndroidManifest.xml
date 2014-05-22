@@ -10,8 +10,6 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    
-    
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -59,7 +57,18 @@
         </activity>
         <activity
             android:name="vdindustries.checklists.DeficiencyWheel"
-            android:label="Deficiency Wheel" >
+            android:label="Deficiency Wheel"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="vdindustries.checklists.DeficiencyWheelMechanical"
+            android:label="Deficiency Wheel Mechanical"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="vdindustries.checklists.DeficiencyWheelElectrical"
+            android:label="Deficiency Wheel Electrical"
+            android:screenOrientation="landscape" >
         </activity>
     </application>
 
